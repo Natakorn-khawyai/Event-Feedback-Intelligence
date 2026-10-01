@@ -16,25 +16,26 @@
 ระบบถูกออกแบบในลักษณะ Managed Services & Serverless Architecture โดยแยกส่วนประกอบออกจากกันเพื่อให้ดูแลรักษาและขยายสเกลได้ง่าย (Decoupled Services)
 
 ```mermaid
-graph TD
-    Client[Client Browser / Mobile] -->|HTTPS| Frontend(Vercel: Next.js UI)
-    Frontend <-->|Server Actions / Internal API| Backend(Vercel: Serverless Functions)
-    
-    Backend <-->|Prisma ORM| Supabase[(Supabase: PostgreSQL)]
-    Backend <-->|REST API| Typhoon[Typhoon AI API]
-    
+graph LR
+    Client[Client Browser / Mobile]
+
     subgraph "Presentation Layer"
-    Frontend
+        Frontend(Vercel: Next.js UI)
     end
     
-    subgraph "Application / Service Layer (Serverless)"
-    Backend
+    subgraph "Application Layer (Serverless)"
+        Backend(Vercel: Serverless Functions)
     end
     
-    subgraph "Data & External Services Layer"
-    Supabase
-    Typhoon
+    subgraph "Data & External Services"
+        Supabase[(Supabase: PostgreSQL)]
+        Typhoon[Typhoon AI API]
     end
+
+    Client -->|HTTPS| Frontend
+    Frontend <-->|Server Actions / API| Backend
+    Backend <-->|Prisma ORM| Supabase
+    Backend <-->|REST API| Typhoon
 ```
 
 ---
