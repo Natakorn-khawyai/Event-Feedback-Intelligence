@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# Event Feedback Intelligence 🎯
 
-## Getting Started
+ระบบจัดทำและประเมินผลความพึงพอใจของการจัดกิจกรรม พร้อมระบบ AI สรุปผลอัจฉริยะ (Deploy บน Vercel + Supabase)
 
-First, run the development server:
+## 📊 ประเมินผลงานตัวเอง (Self-Evaluation)
+**ความคืบหน้าของโปรเจกต์: 100% (ดำเนินการแล้วเสร็จสมบูรณ์)**
+- ✅ **Frontend & UI:** พัฒนาระบบ Dashboard, ระบบสร้าง QR Code, และฟอร์มสำหรับแขกผู้เข้าร่วมงาน (รองรับ Mobile)
+- ✅ **Backend & Auth:** ระบบ Login/Register เข้ารหัสแบบ Bcrypt และ JWT (jose)
+- ✅ **Database:** ออกแบบ Schema และเชื่อมต่อกับ PostgreSQL (Supabase) ผ่าน Prisma ORM
+- ✅ **AI Integration:** เชื่อมต่อกับ Typhoon AI (LLM) เพื่อวิเคราะห์สรุปผล (Insights) จากคำติชมของผู้เข้าร่วมงานโดยอัตโนมัติ
+- ✅ **Deployment:** อัปโหลดขึ้น Production Server (Vercel) และฐานข้อมูลคลาวด์สำเร็จ สามารถใช้งานได้จริง
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏗️ System & Microservices Architecture
+ระบบถูกออกแบบในลักษณะ Managed Services & Serverless Architecture โดยแยกส่วนประกอบออกจากกันเพื่อให้ดูแลรักษาและขยายสเกลได้ง่าย (Decoupled Services)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`mermaid
+graph TD
+    Client[Client Browser / Mobile] -->|HTTPS| Frontend(Vercel: Next.js UI)
+    Frontend <-->|Server Actions / Internal API| Backend(Vercel: Serverless Functions)
+    
+    Backend <-->|Prisma ORM| Supabase[(Supabase: PostgreSQL)]
+    Backend <-->|REST API| Typhoon[Typhoon AI API]
+    
+    subgraph "Presentation Layer"
+    Frontend
+    end
+    
+    subgraph "Application / Service Layer (Serverless)"
+    Backend
+    end
+    
+    subgraph "Data & External Services Layer"
+    Supabase
+    Typhoon
+    end
+`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 💻 Technology Stack Diagram
+เทคโนโลยีที่เลือกใช้ในโปรเจกต์นี้ เป็น Modern Tech Stack ยอดนิยมที่เน้นประสิทธิภาพและความปลอดภัย
 
-To learn more about Next.js, take a look at the following resources:
+`mermaid
+mindmap
+  root((Tech Stack))
+    Frontend
+      Next.js 14 App Router
+      React 18
+      Tailwind CSS
+      Lucide Icons
+      QR Code React
+    Backend
+      Next.js Server Actions
+      Node.js
+      jose JWT Auth
+      bcryptjs Hashing
+    Database & ORM
+      PostgreSQL Supabase
+      Prisma ORM
+    AI
+      Typhoon API LLM
+    DevOps & Hosting
+      Vercel
+      GitHub
+`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Live Demo
+สามารถเข้าใช้งานระบบได้ที่: [https://sub-test-git-main-natakorn1.vercel.app/](https://sub-test-git-main-natakorn1.vercel.app/)
