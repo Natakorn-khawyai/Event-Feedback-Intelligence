@@ -1,5 +1,7 @@
-﻿# Event Feedback Intelligence 🎯
+﻿67160170 นายนนทพัทธ์ วงเครือศร 
+67160213 นายณฐกร ขาวใหญ่
 
+# Event Feedback Intelligence 🎯
 ระบบจัดทำและประเมินผลความพึงพอใจของการจัดกิจกรรม พร้อมระบบ AI สรุปผลอัจฉริยะ (Deploy บน Vercel + Supabase)
 
 ## 📊 ประเมินผลงานตัวเอง (Self-Evaluation)
