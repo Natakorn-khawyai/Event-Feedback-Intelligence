@@ -45,7 +45,7 @@
 
 ---
 
-### 🌟 แผนภาพสรุปการทำงาน (Workflow Diagram)
+### แผนภาพสรุปการทำงาน (Workflow Diagram)
 
 ```mermaid
 journey
