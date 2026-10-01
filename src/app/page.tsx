@@ -1,69 +1,22 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div style={{ textAlign: 'center', marginTop: '10vh' }}>
+      <h1 style={{ fontSize: '3rem', marginBottom: '16px', color: 'var(--text-main)' }}>
+        เปลี่ยน Feedback ธรรมดา<br/>ให้เป็น Insight เพื่อพัฒนาครั้งต่อไป
+      </h1>
+      <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)', marginBottom: '40px' }}>
+        Event Feedback Intelligence Platform สำหรับงานวิ่ง, สัมมนา, คอนเสิร์ต และอื่นๆ
+      </p>
+      
+      <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+        <Link href="/auth">
+          <button className="btn-primary" style={{ padding: '16px 32px', fontSize: '1.1rem' }}>
+            เริ่มต้นสร้างแบบประเมิน (สำหรับผู้จัด)
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

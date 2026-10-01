@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String
+  name          String?
+  events        Event[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  date        DateTime
+  time        String?
+  location    String?
+  eventType   String?
+  
+  questions   Question[]
+  responses   SurveyResponse[]
+  insights    EventInsight[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Question {
+  id          String   @id @default(cuid())
+  eventId     String
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  text        String
+  order       Int      @default(0)
+  
+  answers     Answer[]
+
+  createdAt   DateTime @default(now())
+}
+
+model SurveyResponse {
+  id                   String   @id @default(cuid())
+  eventId              String
+  event                Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  respondentIdentifier String   // Hash หรือ ID ประจำเครื่องเพื่อกันทำซ้ำ
+
+  answers              Answer[]
+  feedback             Feedback?
+
+  createdAt            DateTime @default(now())
+}
+
+model Answer {
+  id           String         @id @default(cuid())
+  responseId   String
+  response     SurveyResponse @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  questionId   String
+  question     Question       @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  score        Int            // สเกล 1-5
+
+  createdAt    DateTime @default(now())
+}
+
+model Feedback {
+  id           String         @id @default(cuid())
+  responseId   String         @unique
+  response     SurveyResponse @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  eventId      String
+  text         String
+  
+  createdAt    DateTime @default(now())
+}
+
+model EventInsight {
+  id             String   @id @default(cuid())
+  eventId        String   @unique
+  event          Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  
+  whyScore       String?
+  keep           String?
+  improve        String?
+  fix            String?
+  priorities     String?  // JSON string เก็บลำดับความสำคัญ
+
+  updatedAt      DateTime @updatedAt
+}
