@@ -15,7 +15,7 @@
 ## 🏗️ System & Microservices Architecture
 ระบบถูกออกแบบในลักษณะ Managed Services & Serverless Architecture โดยแยกส่วนประกอบออกจากกันเพื่อให้ดูแลรักษาและขยายสเกลได้ง่าย (Decoupled Services)
 
-`mermaid
+```mermaid
 graph TD
     Client[Client Browser / Mobile] -->|HTTPS| Frontend(Vercel: Next.js UI)
     Frontend <-->|Server Actions / Internal API| Backend(Vercel: Serverless Functions)
@@ -35,14 +35,14 @@ graph TD
     Supabase
     Typhoon
     end
-`
+```
 
 ---
 
 ## 💻 Technology Stack Diagram
 เทคโนโลยีที่เลือกใช้ในโปรเจกต์นี้ เป็น Modern Tech Stack ยอดนิยมที่เน้นประสิทธิภาพและความปลอดภัย
 
-`mermaid
+```mermaid
 mindmap
   root((Tech Stack))
     Frontend
@@ -64,7 +64,7 @@ mindmap
     DevOps & Hosting
       Vercel
       GitHub
-`
+```
 
 ---
 
