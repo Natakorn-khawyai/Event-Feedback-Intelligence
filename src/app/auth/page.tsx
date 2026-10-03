@@ -67,7 +67,7 @@ export default function AuthPage() {
           type="button"
           style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', textDecoration: 'underline' }}
         >
-          {isLogin ? 'ยังไม่มีบัญชี? สมัครสมาชิก' : 'มีบัญชีอยู่แล้ว? เข้าสู่ระบบ'}
+          {isLogin ? 'สร้างบัญชีใหม่' : 'เข้าสู่ระบบ'}
         </button>
       </div>
     </div>
