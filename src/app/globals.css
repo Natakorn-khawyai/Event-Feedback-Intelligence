@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   /* Cyberpunk Palette */
   --primary-color: #00f3ff;
   --primary-hover: #ff00ea;
@@ -21,7 +21,6 @@
   --font-sans: var(--font-sarabun), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Force dark mode styling for Cyberpunk (neon needs dark bg) */
 @media (prefers-color-scheme: light) {
   :root {
     --bg-color: #050508;
@@ -63,7 +62,7 @@ h1, h2, h3, h4, h5, h6 {
 .glass-card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 2px; /* Edgy, sharp corners */
+  border-radius: 2px;
   box-shadow: var(--shadow);
   padding: 24px;
   backdrop-filter: blur(8px);
@@ -71,7 +70,6 @@ h1, h2, h3, h4, h5, h6 {
   overflow: hidden;
 }
 
-/* Top Neon Line on Cards */
 .glass-card::before {
   content: '';
   position: absolute;
