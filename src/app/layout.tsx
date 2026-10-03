@@ -41,7 +41,7 @@ export default async function RootLayout({
             ) : (
               <>
                 <Link href="/" style={{ textDecoration: 'none', color: 'var(--text-main)' }}>หน้าแรก</Link>
-                <Link href="/auth" style={{ textDecoration: 'none', color: 'var(--primary-color)', fontWeight: 'bold' }}>ผู้จัดงาน (เข้าสู่ระบบ)</Link>
+                <Link href="/auth" style={{ textDecoration: 'none', color: 'var(--primary-color)', fontWeight: 'bold' }}>เข้าสู่ระบบ</Link>
               </>
             )}
           </div>
