@@ -98,7 +98,7 @@ export default function CreateEventPage() {
 
           <h3 style={{ marginBottom: '16px', color: 'var(--text-main)' }}>✨ Smart Question Generation</h3>
           <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
-            ระบบ AI จะทำการสร้างชุดคำถามความพึงพอใจ 5 ระดับ ที่เหมาะสมที่สุดให้โดยอัตโนมัติตามประเภทงานที่คุณเลือก
+            AI จะสร้างชุดคำถามประเมินความพึงพอใจให้เหมาะสมกับประเภทงานของคุณโดยอัตโนมัติ
           </p>
           
           <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>เลือกประเภทงาน (Event Type)</label>
