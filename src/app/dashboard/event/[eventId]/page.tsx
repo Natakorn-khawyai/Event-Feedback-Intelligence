@@ -42,7 +42,7 @@ export default async function EventDashboardPage({ params }: { params: Promise<{
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <div>
           <Link href="/dashboard" style={{ color: 'var(--text-muted)', textDecoration: 'underline', marginBottom: '8px', display: 'inline-block' }}>
-            &larr; กลับไปแดชบอร์ด
+          กลับไปแดชบอร์ด
           </Link>
           <h2>วิเคราะห์ผล: {event.title}</h2>
           <p style={{ color: 'var(--text-muted)' }}>จำนวนผู้ตอบแบบสอบถาม: {totalResponses} คน</p>
