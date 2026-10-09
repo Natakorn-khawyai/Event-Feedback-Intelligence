@@ -2,7 +2,6 @@
 
 import { useState, useTransition } from 'react';
 import { loginUser, registerUser } from '@/app/actions/auth';
-import TopBar from '@/components/ui/TopBar';
 import { User, Lock, Mail, Sparkles, ArrowRight } from 'lucide-react';
 
 export default function AuthPage() {
@@ -22,98 +21,128 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="fade-up" style={{ maxWidth: '480px', margin: '20px auto 0 auto', paddingBottom: '40px' }}>
-      <TopBar
-        title={isLogin ? 'เข้าสู่ระบบ' : 'สมัครสมาชิก'}
-        showBack={true}
-        backHref="/"
-        showSearch={false}
-        showMic={false}
-      />
+    <div className="fade-up" style={{
+      maxWidth: '520px',
+      margin: '40px auto 80px auto',
+      width: '100%',
+      position: 'relative',
+    }}>
+      {/* Ambient desktop glow */}
+      <div style={{
+        position: 'absolute',
+        top: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '380px',
+        height: '380px',
+        background: 'radial-gradient(circle, rgba(255, 209, 227, 0.4) 0%, rgba(230, 220, 250, 0.15) 70%, transparent 100%)',
+        filter: 'blur(50px)',
+        zIndex: 0,
+        pointerEvents: 'none',
+      }} />
 
-      {/* Hero Welcome Card */}
+      {/* Unified Desktop Auth Card */}
       <div
-        className="hero-glass-card"
+        className="surface-card"
         style={{
-          marginBottom: '20px',
-          textAlign: 'center',
-          padding: '24px 20px',
+          position: 'relative',
+          zIndex: 1,
+          padding: '44px 40px',
+          borderRadius: '24px',
+          boxShadow: '0 16px 48px rgba(31, 31, 46, 0.08)',
+          background: 'rgba(255, 255, 255, 0.95)',
+          border: '1px solid var(--border-glass)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
         }}
       >
-        <div style={{
-          width: '52px',
-          height: '52px',
-          borderRadius: '50%',
-          backgroundColor: '#FFFFFF',
-          color: 'var(--accent-pink-hot)',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 12px rgba(232, 70, 124, 0.25)',
-          marginBottom: '12px',
-        }}>
-          <Sparkles size={26} strokeWidth={1.8} />
+        {/* Welcome Header */}
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+          <div style={{
+            width: '56px',
+            height: '56px',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #FFD1E3 0%, #E6DCFA 100%)',
+            color: 'var(--accent-pink-hot)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 16px rgba(232, 70, 124, 0.2)',
+            marginBottom: '16px',
+          }}>
+            <Sparkles size={28} strokeWidth={2} />
+          </div>
+
+          <h1 style={{
+            fontSize: '26px',
+            fontWeight: '800',
+            color: 'var(--text-primary)',
+            marginBottom: '8px',
+            letterSpacing: '-0.02em',
+          }}>
+            ยินดีต้อนรับสู่ <span className="highlight-stroke">Event Insight</span>
+          </h1>
+
+          <p style={{
+            fontSize: '15px',
+            color: 'var(--text-secondary)',
+            lineHeight: '1.5',
+            margin: 0,
+          }}>
+            {isLogin ? 'เข้าสู่ระบบเพื่อจัดการอีเวนต์และดูผลวิเคราะห์ AI' : 'สร้างบัญชีผู้จัดงานเพื่อเริ่มสร้างแบบประเมิน'}
+          </p>
         </div>
-        <h2 style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '4px' }}>
-          ยินดีต้อนรับสู่ <span className="highlight-stroke">Event Insight</span>
-        </h2>
-        <p style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-          {isLogin ? 'เข้าสู่ระบบเพื่อจัดการอีเวนต์และดูผลวิเคราะห์ AI' : 'สร้างบัญชีผู้จัดงานเพื่อเริ่มสร้างแบบประเมิน'}
-        </p>
-      </div>
 
-      {/* Tab Switcher Pills */}
-      <div style={{
-        display: 'flex',
-        background: 'rgba(255, 255, 255, 0.7)',
-        borderRadius: 'var(--radius-full)',
-        padding: '4px',
-        marginBottom: '20px',
-        border: '1px solid var(--border-glass)',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-      }}>
-        <button
-          type="button"
-          onClick={() => { setIsLogin(true); setError(null); }}
-          style={{
-            flex: 1,
-            padding: '10px 0',
-            borderRadius: 'var(--radius-full)',
-            border: 'none',
-            background: isLogin ? 'var(--accent-pink-hot)' : 'transparent',
-            color: isLogin ? '#FFFFFF' : 'var(--text-secondary)',
-            fontWeight: '700',
-            fontSize: '13px',
-            cursor: 'pointer',
-            boxShadow: isLogin ? 'var(--shadow-pill)' : 'none',
-            transition: 'all 0.15s ease-out',
-          }}
-        >
-          เข้าสู่ระบบ
-        </button>
-        <button
-          type="button"
-          onClick={() => { setIsLogin(false); setError(null); }}
-          style={{
-            flex: 1,
-            padding: '10px 0',
-            borderRadius: 'var(--radius-full)',
-            border: 'none',
-            background: !isLogin ? 'var(--accent-pink-hot)' : 'transparent',
-            color: !isLogin ? '#FFFFFF' : 'var(--text-secondary)',
-            fontWeight: '700',
-            fontSize: '13px',
-            cursor: 'pointer',
-            boxShadow: !isLogin ? 'var(--shadow-pill)' : 'none',
-            transition: 'all 0.15s ease-out',
-          }}
-        >
-          สร้างบัญชีใหม่
-        </button>
-      </div>
+        {/* Tab Switcher Pills */}
+        <div style={{
+          display: 'flex',
+          background: 'rgba(240, 245, 247, 0.85)',
+          borderRadius: 'var(--radius-full)',
+          padding: '4px',
+          marginBottom: '24px',
+          border: '1px solid var(--border-glass)',
+        }}>
+          <button
+            type="button"
+            onClick={() => { setIsLogin(true); setError(null); }}
+            style={{
+              flex: 1,
+              padding: '11px 0',
+              borderRadius: 'var(--radius-full)',
+              border: 'none',
+              background: isLogin ? 'var(--accent-pink-hot)' : 'transparent',
+              color: isLogin ? '#FFFFFF' : 'var(--text-secondary)',
+              fontWeight: '700',
+              fontSize: '14px',
+              cursor: 'pointer',
+              boxShadow: isLogin ? 'var(--shadow-pill)' : 'none',
+              transition: 'all 0.15s ease-out',
+            }}
+          >
+            เข้าสู่ระบบ
+          </button>
+          <button
+            type="button"
+            onClick={() => { setIsLogin(false); setError(null); }}
+            style={{
+              flex: 1,
+              padding: '11px 0',
+              borderRadius: 'var(--radius-full)',
+              border: 'none',
+              background: !isLogin ? 'var(--accent-pink-hot)' : 'transparent',
+              color: !isLogin ? '#FFFFFF' : 'var(--text-secondary)',
+              fontWeight: '700',
+              fontSize: '14px',
+              cursor: 'pointer',
+              boxShadow: !isLogin ? 'var(--shadow-pill)' : 'none',
+              transition: 'all 0.15s ease-out',
+            }}
+          >
+            สร้างบัญชีใหม่
+          </button>
+        </div>
 
-      {/* Auth Card */}
-      <div className="surface-card">
+
         {error && (
           <div style={{
             padding: '12px 16px',
