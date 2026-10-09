@@ -67,21 +67,9 @@ export default async function DashboardPage() {
             {(session.name || 'U').substring(0, 1).toUpperCase()}
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <h2 style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
-                แดชบอร์ดผู้จัดงาน: {session.name}
-              </h2>
-              <span style={{
-                backgroundColor: 'var(--badge-mint)',
-                color: 'var(--badge-mint-text)',
-                padding: '2px 10px',
-                borderRadius: '999px',
-                fontSize: '11px',
-                fontWeight: '700',
-              }}>
-                Organizer Active
-              </span>
-            </div>
+            <h2 style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
+              แดชบอร์ดผู้จัดงาน: {session.name}
+            </h2>
             <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
               ยินดีต้อนรับกลับมา! จัดการอีเวนต์และตรวจสอบข้อมูลเชิงลึกจาก AI ได้ที่นี่
             </p>
