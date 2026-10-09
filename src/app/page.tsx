@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <div style={{ textAlign: 'center', marginTop: '15vh', maxWidth: '800px', marginInline: 'auto' }}>
-      
+
       {/* Playful Accent Pill */}
       <div style={{
         display: 'inline-block',
@@ -16,14 +16,13 @@ export default function Home() {
         marginBottom: '24px',
         border: '1px solid var(--card-border)'
       }}>
-        🎉 AI-Powered Feedback Platform
       </div>
 
       <h1 className="editorial-heading" style={{ fontSize: '4.5rem', marginBottom: '20px', color: 'var(--text-main)', lineHeight: '1.1' }}>
         เปลี่ยน Feedback ธรรมดา<br />
         <span style={{ fontStyle: 'italic', color: 'var(--primary-color)' }}>ให้เป็น Insight</span>
       </h1>
-      
+
       <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', marginBottom: '48px', maxWidth: '600px', marginInline: 'auto' }}>
         รับฟังเสียงจากผู้เข้าร่วมงาน และใช้ AI วิเคราะห์ความพึงพอใจเพื่อยกระดับประสบการณ์ในงานครั้งถัดไปให้ดียิ่งขึ้น
       </p>
@@ -35,7 +34,7 @@ export default function Home() {
           </button>
         </Link>
       </div>
-      
+
     </div>
   );
 }
