@@ -95,14 +95,21 @@ export default async function EventDashboardPage({ params }: { params: Promise<{
           </div>
         </div>
 
-        <h1 style={{ fontSize: '28px', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '10px', lineHeight: '1.25' }}>
+        <h1 style={{
+          fontSize: 'clamp(32px, 4.5vw, 40px)',
+          fontWeight: '900',
+          color: 'var(--text-primary)',
+          margin: '6px 0 12px 0',
+          lineHeight: '1.2',
+          letterSpacing: '-0.025em',
+        }}>
           {event.title}
         </h1>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <MessageSquare size={16} strokeWidth={1.8} color="var(--accent-pink-hot)" />
-            มีผู้ร่วมตอบแบบสอบถามทั้งหมด <strong>{totalResponses}</strong> คน
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '14px', color: 'var(--text-secondary)' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+            <MessageSquare size={17} strokeWidth={2} color="var(--accent-pink-hot)" />
+            มีผู้ร่วมตอบแบบสอบถามทั้งหมด <strong style={{ color: 'var(--text-primary)' }}>{totalResponses}</strong> คน
           </span>
         </div>
       </div>
