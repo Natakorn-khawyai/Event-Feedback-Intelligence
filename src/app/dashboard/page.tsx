@@ -22,8 +22,6 @@ export default async function DashboardPage() {
     orderBy: { createdAt: 'desc' }
   });
 
-  // Calculate total feedback received
-  const totalResponses = events.reduce((sum, ev) => sum + ev._count.responses, 0);
 
   const mockAvatars = [
     { name: session.name || 'Admin', bg: '#FFD1E3' },
@@ -86,16 +84,6 @@ export default async function DashboardPage() {
           }}>
             <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent-pink-hot)', display: 'block' }}>กิจกรรมทั้งหมด</span>
             <span style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text-primary)' }}>{events.length}</span>
-          </div>
-
-          <div style={{
-            backgroundColor: 'rgba(230, 220, 250, 0.45)',
-            padding: '10px 18px',
-            borderRadius: 'var(--radius-md)',
-            textAlign: 'center',
-          }}>
-            <span style={{ fontSize: '11px', fontWeight: '700', color: '#5B4B8A', display: 'block' }}>ฟีดแบ็กที่ได้รับรวม</span>
-            <span style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text-primary)' }}>{totalResponses} คน</span>
           </div>
 
           <Link href="/create" style={{ textDecoration: 'none' }}>
