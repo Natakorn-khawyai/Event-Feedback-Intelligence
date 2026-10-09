@@ -56,7 +56,7 @@ export default async function RootLayout({
           }}>
             {/* Left: Brand Title */}
             <Link
-              href={session ? "/dashboard" : "/"}
+              href="/"
               style={{
                 textDecoration: 'none',
                 color: 'var(--text-primary)',
@@ -72,23 +72,8 @@ export default async function RootLayout({
             </Link>
 
             {/* Center: Desktop Navigation Links */}
-            <nav className="desktop-only" style={{ alignItems: 'center', gap: '8px' }}>
-              <Link
-                href="/"
-                style={{
-                  textDecoration: 'none',
-                  color: 'var(--text-primary)',
-                  fontSize: '13px',
-                  fontWeight: '700',
-                  padding: '8px 16px',
-                  borderRadius: 'var(--radius-full)',
-                  transition: 'all 0.15s ease',
-                }}
-              >
-                หน้าแรก
-              </Link>
-
-              {session && (
+            {session && (
+              <nav className="desktop-only" style={{ alignItems: 'center', gap: '8px' }}>
                 <Link
                   href="/dashboard"
                   style={{
@@ -106,8 +91,8 @@ export default async function RootLayout({
                   <LayoutDashboard size={15} color="var(--accent-pink-hot)" />
                   <span>แดชบอร์ด</span>
                 </Link>
-              )}
-            </nav>
+              </nav>
+            )}
 
             {/* Right: User / Auth Controls */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

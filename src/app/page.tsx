@@ -13,25 +13,6 @@ export default function Home() {
       maxWidth: '820px',
       marginInline: 'auto',
     }}>
-      {/* Decorative AI Pill */}
-      <div style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '6px',
-        padding: '6px 16px',
-        backgroundColor: 'rgba(255, 209, 227, 0.45)',
-        border: '1px solid rgba(232, 70, 124, 0.25)',
-        borderRadius: 'var(--radius-full)',
-        fontSize: '12px',
-        fontWeight: '700',
-        color: 'var(--accent-pink-hot)',
-        marginBottom: '24px',
-        boxShadow: '0 2px 8px rgba(232, 70, 124, 0.08)',
-      }}>
-        <Sparkles size={14} strokeWidth={2.2} />
-        <span>AI-Powered Event Analytics</span>
-      </div>
-
       {/* Main Heading */}
       <h1 style={{
         fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
@@ -61,13 +42,14 @@ export default function Home() {
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Link href="/dashboard" style={{ textDecoration: 'none' }}>
           <button className="btn-cta" style={{
-            fontSize: '16px',
-            padding: '16px 42px',
-            boxShadow: 'var(--shadow-pill)',
+            fontSize: '19px',
+            padding: '20px 52px',
+            boxShadow: '0 8px 28px rgba(232, 70, 124, 0.35)',
+            gap: '12px',
           }}>
-            <Sparkles size={18} strokeWidth={2} />
+            <Sparkles size={22} strokeWidth={2.2} />
             <span>เข้าสู่หน้าแดชบอร์ดจัดการงาน</span>
-            <ArrowRight size={18} strokeWidth={2.2} />
+            <ArrowRight size={22} strokeWidth={2.4} />
           </button>
         </Link>
       </div>
