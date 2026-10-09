@@ -130,9 +130,6 @@ export default async function DashboardPage() {
           <h2 style={{ fontSize: '24px', fontWeight: '800', margin: 0, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
             รายการแบบประเมินของคุณ ({events.length} งาน)
           </h2>
-          <p style={{ fontSize: '14px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
-            คลิกที่การ์ดเพื่อเปิดดูผลวิเคราะห์ AI Intelligence และคิวอาร์โค้ด
-          </p>
         </div>
       </div>
 
@@ -161,7 +158,6 @@ export default async function DashboardPage() {
               authorName={session.name || 'Organizer'}
               date={new Date(event.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' })}
               responseCount={event._count.responses}
-              likeCount={12 + (event._count.responses * 3)}
               accentColor={accent}
               badge={event._count.responses > 0 ? `${event._count.responses} ฟีดแบ็ก` : 'รอคำตอบแรก'}
               badgeColor={event._count.responses > 0 ? 'var(--badge-mint)' : 'var(--badge-yellow)'}
