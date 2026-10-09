@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useEffect } from 'react';
 import { submitSurvey } from '@/app/actions/survey';
-import { Calendar, MapPin, Sparkles, Send, CheckCircle2 } from 'lucide-react';
+import { Calendar, MapPin, Sparkles, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 
 export default function SurveyClient({ event, questions }: { event: any; questions: any[] }) {
   const [scores, setScores] = useState<{ [key: string]: number }>({});
@@ -240,25 +240,100 @@ export default function SurveyClient({ event, questions }: { event: any; questio
         </div>
 
         {/* Suggestion Textarea Card */}
-        <div className="surface-card" style={{ padding: '22px 20px', borderRadius: '20px', marginBottom: '22px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-            <span style={{ fontSize: '16px' }}>💡</span>
-            <label style={{ fontSize: '15px', fontWeight: '800', color: 'var(--text-primary)' }}>
-              ข้อเสนอแนะเพิ่มเติม (จำเป็นต้องกรอก)
-            </label>
+        <div
+          className="surface-card"
+          style={{
+            padding: '24px 22px',
+            borderRadius: '20px',
+            marginBottom: '22px',
+            border: feedback.trim() === '' ? '1.5px solid rgba(232, 70, 124, 0.35)' : '1px solid var(--border-glass)',
+            boxShadow: feedback.trim() === '' ? '0 4px 18px rgba(232, 70, 124, 0.08)' : 'var(--shadow-soft)',
+            transition: 'all 0.2s ease',
+          }}
+        >
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '10px',
+            marginBottom: '8px',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '18px' }}>💡</span>
+              <label style={{ fontSize: '18px', fontWeight: '800', color: 'var(--text-primary)' }}>
+                ข้อเสนอแนะเพิ่มเติม
+              </label>
+            </div>
+
+            {feedback.trim() === '' ? (
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                backgroundColor: 'rgba(232, 70, 124, 0.12)',
+                color: 'var(--accent-pink-hot)',
+                border: '1.5px solid rgba(232, 70, 124, 0.3)',
+                padding: '4px 12px',
+                borderRadius: 'var(--radius-full)',
+                fontSize: '12px',
+                fontWeight: '800',
+              }}>
+                <AlertCircle size={13} strokeWidth={2.5} />
+                <span>จำเป็นต้องกรอก</span>
+              </span>
+            ) : (
+              <span style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                backgroundColor: 'rgba(16, 185, 129, 0.12)',
+                color: '#059669',
+                border: '1.5px solid rgba(16, 185, 129, 0.3)',
+                padding: '4px 12px',
+                borderRadius: 'var(--radius-full)',
+                fontSize: '12px',
+                fontWeight: '800',
+              }}>
+                <CheckCircle2 size={13} strokeWidth={2.5} />
+                <span>กรอกเรียบร้อยแล้ว</span>
+              </span>
+            )}
           </div>
-          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '0 0 12px 0' }}>
-            สิ่งที่คุณประทับใจ หรือข้อเสนอแนะที่อยากให้ปรับปรุงในครั้งถัดไป
+
+          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '0 0 14px 0', lineHeight: 1.5 }}>
+            สิ่งที่คุณประทับใจ หรือข้อเสนอแนะที่อยากให้ปรับปรุงในครั้งถัดไป เพื่อให้ทีมงานนำไปพัฒนาต่อไป
           </p>
+
           <textarea
             className="input-modern"
             rows={4}
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            placeholder="พิมพ์ความคิดเห็น หรือฟีดแบ็กของคุณที่นี่..."
-            style={{ resize: 'vertical', minHeight: '110px', width: '100%', fontSize: '14px' }}
+            placeholder="พิมพ์ความคิดเห็น หรือฟีดแบ็กของคุณที่นี่... (จำเป็นต้องกรอกข้อมูลส่วนนี้เพื่อส่งแบบประเมิน)"
+            style={{
+              resize: 'vertical',
+              minHeight: '110px',
+              width: '100%',
+              fontSize: '15px',
+              borderColor: feedback.trim() === '' ? 'rgba(232, 70, 124, 0.4)' : undefined,
+            }}
             required
           />
+
+          {feedback.trim() === '' && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              marginTop: '10px',
+              color: 'var(--accent-pink-hot)',
+              fontSize: '13px',
+              fontWeight: '700',
+            }}>
+              <span>* กรุณากรอกข้อเสนอแนะเพิ่มเติมเพื่อปลดล็อกปุ่มส่งแบบประเมิน</span>
+            </div>
+          )}
         </div>
 
         {/* Submit Button */}
