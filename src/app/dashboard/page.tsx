@@ -77,13 +77,34 @@ export default async function DashboardPage() {
         {/* Quick Stats Counter */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <div style={{
-            backgroundColor: 'var(--badge-pink)',
-            padding: '10px 18px',
-            borderRadius: 'var(--radius-md)',
-            textAlign: 'center',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '12px',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            border: '1.5px solid rgba(232, 70, 124, 0.3)',
+            padding: '8px 16px 8px 20px',
+            borderRadius: 'var(--radius-full)',
+            boxShadow: '0 2px 10px rgba(232, 70, 124, 0.1)',
           }}>
-            <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent-pink-hot)', display: 'block' }}>กิจกรรมทั้งหมด</span>
-            <span style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text-primary)' }}>{events.length}</span>
+            <span style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)' }}>
+              กิจกรรมทั้งหมด
+            </span>
+            <span style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minWidth: '32px',
+              height: '32px',
+              padding: '0 10px',
+              borderRadius: 'var(--radius-full)',
+              backgroundColor: 'var(--accent-pink-hot)',
+              color: '#FFFFFF',
+              fontSize: '16px',
+              fontWeight: '800',
+              boxShadow: '0 2px 8px rgba(232, 70, 124, 0.35)',
+            }}>
+              {events.length}
+            </span>
           </div>
 
           <Link href="/create" style={{ textDecoration: 'none' }}>

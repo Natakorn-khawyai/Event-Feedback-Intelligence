@@ -41,30 +41,6 @@ export default async function EventDashboardPage({ params }: { params: Promise<{
 
   return (
     <div className="fade-up" style={{ paddingBottom: '40px' }}>
-      {/* Back to dashboard button */}
-      <div style={{ marginBottom: '16px' }}>
-        <Link
-          href="/dashboard"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            textDecoration: 'none',
-            color: 'var(--text-secondary)',
-            fontSize: '13px',
-            fontWeight: '700',
-            padding: '6px 14px',
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--surface-white)',
-            border: '1px solid var(--border-glass)',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
-          }}
-        >
-          <ArrowLeft size={15} strokeWidth={2.2} />
-          <span>กลับไปหน้าแดชบอร์ด</span>
-        </Link>
-      </div>
-
       {/* Hero Overview Card: Wide Desktop Card */}
       <div className="hero-glass-card" style={{ marginBottom: '28px', padding: '32px 36px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '14px' }}>
