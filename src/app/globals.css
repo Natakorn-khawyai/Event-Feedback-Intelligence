@@ -1,141 +1,330 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* The Browser Company Inspired Palette */
-  --primary-color: #f73b32; /* A playful accent red/orange */
-  --secondary-color: #1c1c1a;
+  /* Color Palette */
+  --bg-gradient-start: #DFF1F5;
+  --bg-gradient-end: #EAF6F8;
+  --bg-gradient: linear-gradient(180deg, #DFF1F5 0%, #EAF6F8 100%);
   
-  --bg-color: #fdfcf8; /* Warm cream paper */
-  --text-main: #1c1c1a;
-  --text-muted: #6b6b66;
+  --surface-white: rgba(255, 255, 255, 0.90);
+  --surface-solid: #FFFFFF;
+  --surface-subtle: rgba(255, 255, 255, 0.65);
   
-  --card-bg: #ffffff;
-  --card-border: rgba(0, 0, 0, 0.06);
-  --shadow: 0 12px 40px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0,0,0,0.02);
+  /* Accents */
+  --accent-pink-pastel: #FFD1E3;
+  --accent-pink-hot: #E8467C;
+  --accent-pink-hover: #d6386d;
   
-  --font-serif: 'Fraunces', serif;
-  --font-sans: var(--font-sarabun), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #161615;
-    --text-main: #fdfcf8;
-    --text-muted: #999995;
-    
-    --card-bg: #1c1c1a;
-    --card-border: rgba(255, 255, 255, 0.08);
-    --shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-  }
+  --accent-lavender-start: #E6DCFA;
+  --accent-lavender-end: #F3D9F5;
+  --accent-lavender-gradient: linear-gradient(135deg, #E6DCFA 0%, #F3D9F5 100%);
+  --hero-gradient: linear-gradient(135deg, #FFD1E3 0%, #E6DCFA 55%, #F3D9F5 100%);
+  
+  /* Highlights & Badges */
+  --badge-yellow: #FFF3B8;
+  --badge-yellow-text: #8A6D14;
+  --badge-mint: #D5F0D0;
+  --badge-mint-text: #236B21;
+  --badge-pink: #FFE2EE;
+  --badge-pink-text: #C12A5E;
+  
+  /* Typography Colors */
+  --text-primary: #1F1F2E;
+  --text-secondary: #8A8A9A;
+  --text-muted: #A3A3B5;
+  --text-light: #FFFFFF;
+  
+  /* Functional / Status */
+  --status-success: #10B981;
+  --status-warning: #F59E0B;
+  --status-danger: #EF4444;
+  --danger: #EF4444;
+  
+  /* Swatches */
+  --swatch-magenta: #E8467C;
+  --swatch-red: #FF6B6B;
+  --swatch-teal: #4ECDC4;
+  --swatch-lilac: #C7A4E8;
+  --swatch-orange: #FFB347;
+  --swatch-blue: #70A1FF;
+  
+  /* Radii */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-card: 28px;
+  --radius-card-lg: 32px;
+  --radius-full: 999px;
+  
+  /* Shadows */
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.06);
+  --shadow-elevated: 0 16px 40px rgba(31, 31, 46, 0.08);
+  --shadow-pill: 0 4px 14px rgba(232, 70, 124, 0.22);
+  --shadow-glow: 0 0 20px rgba(255, 209, 227, 0.6);
+  
+  /* Borders */
+  --border-glass: rgba(255, 255, 255, 0.8);
+  --border-subtle: rgba(31, 31, 46, 0.08);
+  
+  /* Fonts */
+  --font-primary: 'Plus Jakarta Sans', var(--font-sarabun), -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
-body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  line-height: 1.6;
+html, body {
   min-height: 100vh;
-  /* Subtle SVG Noise overlay */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  font-family: var(--font-primary);
+  background: var(--bg-gradient);
   background-attachment: fixed;
+  color: var(--text-primary);
+  line-height: 1.5;
+  overflow-x: hidden;
 }
 
-/* Typography Utilities */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  margin-bottom: 0.5em;
-  letter-spacing: -0.02em;
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(138, 138, 154, 0.25);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(138, 138, 154, 0.4);
 }
 
-.editorial-heading {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.03em;
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Premium Card */
-.glass-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 24px;
-  box-shadow: var(--shadow);
-  padding: 32px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+@keyframes pop {
+  0% { transform: scale(0.9); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
-.glass-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.06);
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.02); }
 }
 
-/* Button Styles - Pill shaped */
-.btn-primary {
-  background: var(--secondary-color);
-  color: #ffffff;
+.fade-up {
+  animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Mobile Frame Container */
+.app-container {
+  max-width: 440px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 16px 16px 80px 16px;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .app-container {
+    max-width: 460px;
+    padding-top: 24px;
+  }
+}
+
+/* Glass Surface Card */
+.surface-card {
+  background: var(--surface-white);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  padding: 24px;
+  position: relative;
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+.surface-card:active {
+  transform: scale(0.985);
+}
+
+/* Hero Glass Card */
+.hero-glass-card {
+  background: var(--hero-gradient);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-card-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.hero-glass-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Hand-drawn Underline effect */
+.highlight-stroke {
+  color: var(--accent-pink-hot);
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+}
+
+.highlight-stroke::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  bottom: 0px;
+  width: calc(100% + 4px);
+  height: 8px;
+  background-color: var(--accent-pink-pastel);
+  border-radius: 4px;
+  z-index: -1;
+  transform: rotate(-1deg);
+}
+
+/* Buttons */
+.btn-cta {
+  background: var(--accent-pink-hot);
+  color: #FFFFFF;
   border: none;
+  border-radius: var(--radius-full);
   padding: 14px 28px;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  box-shadow: var(--shadow-pill);
+  transition: all 0.15s ease-out;
+  text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  .btn-primary {
-    background: #ffffff;
-    color: #1a1a19;
-  }
+.btn-cta:hover {
+  background: var(--accent-pink-hover);
+  transform: translateY(-1px);
 }
 
-.btn-primary:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-.btn-primary:active {
+.btn-cta:active {
   transform: scale(0.97);
 }
 
-/* Form Inputs */
-.input-field {
+.btn-secondary {
+  background: var(--surface-white);
+  color: var(--text-primary);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-full);
+  padding: 12px 22px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: all 0.15s ease-out;
+  text-decoration: none;
+}
+
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+/* Dashed Add Slot */
+.dashed-add-slot {
+  border: 2px dashed #C8CBD9;
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  min-height: 120px;
+}
+
+.dashed-add-slot:hover {
+  border-color: var(--accent-pink-hot);
+  color: var(--accent-pink-hot);
+  background: rgba(255, 209, 227, 0.25);
+  transform: translateY(-2px);
+}
+
+.dashed-add-slot:active {
+  transform: scale(0.97);
+}
+
+/* Inputs */
+.input-modern {
   width: 100%;
-  padding: 14px 20px;
-  border-radius: 16px;
-  border: 1.5px solid var(--card-border);
-  background: var(--bg-color);
-  color: var(--text-main);
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid rgba(138, 138, 154, 0.2);
+  background: #FFFFFF;
+  color: var(--text-primary);
   font-family: inherit;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  margin-bottom: 16px;
-}
-
-.input-field:focus {
+  font-size: 14px;
+  transition: all 0.15s ease;
+  min-height: 48px;
   outline: none;
-  border-color: var(--secondary-color);
-  box-shadow: 0 0 0 4px rgba(28, 28, 26, 0.1);
 }
 
-@media (prefers-color-scheme: dark) {
-  .input-field:focus {
-    border-color: #ffffff;
-    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
-  }
+.input-modern:focus {
+  border-color: var(--accent-pink-hot);
+  box-shadow: 0 0 0 4px rgba(232, 70, 124, 0.15);
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+/* Horizontal scroll containers with snap */
+.scroll-snap-x {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  gap: 12px;
+  padding-bottom: 6px;
+  scrollbar-width: none;
+}
+.scroll-snap-x::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-snap-item {
+  scroll-snap-align: start;
+  flex-shrink: 0;
 }

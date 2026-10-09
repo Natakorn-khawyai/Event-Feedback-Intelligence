@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { QrCode, Copy, Check, ExternalLink } from 'lucide-react';
 
-export default function QRShare({ eventId, eventTitle }: { eventId: string, eventTitle: string }) {
+export default function QRShare({ eventId, eventTitle }: { eventId: string; eventTitle: string }) {
   const [url, setUrl] = useState('');
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    // Generate the full URL dynamically based on the current window location
     const surveyUrl = `${window.location.origin}/scan/${eventId}`;
     setUrl(surveyUrl);
   }, [eventId]);
@@ -20,34 +20,115 @@ export default function QRShare({ eventId, eventTitle }: { eventId: string, even
     setTimeout(() => setCopied(false), 2000);
   };
 
-  if (!url) return null; // Avoid rendering on server
+  if (!url) return null;
 
   return (
-    <div className="glass-card" style={{ textAlign: 'center', marginBottom: '40px' }}>
-      <h3 style={{ marginBottom: '8px' }}>สแกน QR Code เพื่อทำแบบประเมิน</h3>
-      <p style={{ color: 'var(--text-muted)', marginBottom: '24px' }}>
-        ให้ผู้เข้าร่วมงานสแกนคิวอาร์โค้ดนี้ หรือส่งลิงก์ด้านล่างเพื่อเริ่มทำแบบประเมินของงาน "{eventTitle}"
-      </p>
-
-      <div style={{ display: 'inline-block', padding: '16px', background: '#ffffff', borderRadius: '12px', marginBottom: '24px' }}>
-        <QRCodeSVG value={url} size={200} level="H" />
+    <div className="surface-card" style={{ textAlign: 'center' }}>
+      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+        <div style={{
+          width: '28px',
+          height: '28px',
+          borderRadius: '50%',
+          backgroundColor: 'var(--accent-pink-pastel)',
+          color: 'var(--accent-pink-hot)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <QrCode size={16} strokeWidth={2} />
+        </div>
+        <h3 style={{ fontSize: '16px', fontWeight: '800', margin: 0, color: 'var(--text-primary)' }}>
+          QR Code สำหรับผู้ร่วมงาน
+        </h3>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', maxWidth: '400px', margin: '0 auto' }}>
-        <input 
-          type="text" 
-          readOnly 
-          value={url} 
-          className="input-field" 
-          style={{ flex: 1, marginBottom: 0, fontSize: '0.9rem', color: 'var(--text-muted)', cursor: 'text' }}
+      <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '18px', maxWidth: '320px', marginInline: 'auto' }}>
+        สแกนเพื่อเข้าทำแบบประเมินของงาน "{eventTitle}" ได้ทันที
+      </p>
+
+      {/* QR Code Container */}
+      <div style={{
+        display: 'inline-block',
+        padding: '16px',
+        backgroundColor: '#FFFFFF',
+        borderRadius: '24px',
+        boxShadow: 'var(--shadow-soft)',
+        border: '1px solid var(--border-glass)',
+        marginBottom: '20px',
+      }}>
+        <QRCodeSVG value={url} size={190} level="H" />
+      </div>
+
+      {/* Copy Link Input Bar */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        borderRadius: 'var(--radius-full)',
+        padding: '4px 6px 4px 14px',
+        border: '1px solid var(--border-glass)',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+        marginBottom: '14px',
+      }}>
+        <input
+          type="text"
+          readOnly
+          value={url}
+          style={{
+            flex: 1,
+            border: 'none',
+            background: 'transparent',
+            fontSize: '12px',
+            color: 'var(--text-secondary)',
+            outline: 'none',
+            textOverflow: 'ellipsis',
+          }}
         />
-        <button 
+        <button
           onClick={copyToClipboard}
-          className="btn-primary"
-          style={{ padding: '12px 16px', whiteSpace: 'nowrap' }}
+          type="button"
+          aria-label="คัดลอกลิงก์"
+          className="btn-cta"
+          style={{
+            padding: '8px 16px',
+            minHeight: '36px',
+            fontSize: '12px',
+          }}
         >
-          {copied ? '✅ คัดลอกแล้ว' : 'คัดลอกลิงก์'}
+          {copied ? (
+            <>
+              <Check size={14} strokeWidth={2.5} />
+              <span>คัดลอกแล้ว</span>
+            </>
+          ) : (
+            <>
+              <Copy size={14} strokeWidth={2} />
+              <span>คัดลอก</span>
+            </>
+          )}
         </button>
+      </div>
+
+      {/* Open Survey in New Tab Link */}
+      <div>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '4px',
+            fontSize: '12px',
+            fontWeight: '600',
+            color: 'var(--accent-pink-hot)',
+            textDecoration: 'none',
+          }}
+        >
+          <span>ทดลองเปิดหน้าทำแบบสอบถาม</span>
+          <ExternalLink size={13} strokeWidth={2} />
+        </a>
       </div>
     </div>
   );

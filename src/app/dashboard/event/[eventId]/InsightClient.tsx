@@ -2,8 +2,17 @@
 
 import { useState, useTransition, useEffect } from 'react';
 import { generateInsight } from '@/app/actions/insight';
+import { Sparkles, CheckCircle2, AlertCircle, AlertTriangle, RefreshCw } from 'lucide-react';
 
-export default function InsightClient({ eventId, initialInsight, hasResponses }: { eventId: string, initialInsight: any, hasResponses: boolean }) {
+export default function InsightClient({
+  eventId,
+  initialInsight,
+  hasResponses,
+}: {
+  eventId: string;
+  initialInsight: any;
+  hasResponses: boolean;
+}) {
   const [insight, setInsight] = useState(initialInsight);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -29,74 +38,167 @@ export default function InsightClient({ eventId, initialInsight, hasResponses }:
   };
 
   return (
-    <div className="glass-card">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h3 style={{ margin: 0 }}>AI Intelligence Summary</h3>
+    <div className="surface-card">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{
+            width: '28px',
+            height: '28px',
+            borderRadius: '50%',
+            backgroundColor: 'var(--accent-pink-pastel)',
+            color: 'var(--accent-pink-hot)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <Sparkles size={15} strokeWidth={2} />
+          </div>
+          <h3 style={{ fontSize: '16px', fontWeight: '800', margin: 0, color: 'var(--text-primary)' }}>
+            AI Intelligence Summary
+          </h3>
+        </div>
+
         <button
           onClick={handleGenerate}
-          className="btn-primary"
+          className="btn-cta"
           disabled={isPending || !hasResponses}
           style={{
-            padding: '8px 16px',
-            fontSize: '0.9rem',
+            padding: '6px 14px',
+            fontSize: '12px',
+            minHeight: '34px',
             opacity: hasResponses ? 1 : 0.5,
-            cursor: hasResponses ? 'pointer' : 'not-allowed'
+            cursor: hasResponses ? 'pointer' : 'not-allowed',
           }}
         >
-          {isPending ? 'กำลังวิเคราะห์ AI...' : (insight ? 'อัปเดตผลวิเคราะห์ใหม่' : 'สร้างผลวิเคราะห์ (AI)')}
+          {isPending ? (
+            <span>กำลังวิเคราะห์...</span>
+          ) : (
+            <>
+              <RefreshCw size={13} strokeWidth={2} className={isPending ? 'spin' : ''} />
+              <span>{insight ? 'อัปเดต AI' : 'วิเคราะห์ AI'}</span>
+            </>
+          )}
         </button>
       </div>
 
       {error && (
-        <div style={{ padding: '12px', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--danger)', borderLeft: '4px solid var(--danger)', marginBottom: '16px' }}>
-          {error}
+        <div style={{
+          padding: '12px 16px',
+          background: 'rgba(239, 68, 68, 0.08)',
+          color: 'var(--status-danger)',
+          borderRadius: 'var(--radius-md)',
+          border: '1px solid rgba(239, 68, 68, 0.2)',
+          fontSize: '13px',
+          fontWeight: '600',
+          marginBottom: '16px',
+        }}>
+          ⚠️ {error}
         </div>
       )}
 
       {!insight && !isPending && !error && (
         <div style={{
           textAlign: 'center',
-          padding: '60px 20px',
-          color: 'var(--text-muted)',
-          background: 'var(--card-bg)',
-          borderRadius: '16px',
-          border: '2px dashed var(--card-border)',
-          marginTop: '16px'
+          padding: '36px 16px',
+          color: 'var(--text-secondary)',
+          background: 'rgba(255, 255, 255, 0.6)',
+          borderRadius: 'var(--radius-card)',
+          border: '2px dashed #D1D5DB',
         }}>
-          <div style={{ fontSize: '4rem', marginBottom: '16px', animation: 'float 3s ease-in-out infinite', display: 'inline-block', textShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
-            {hasResponses ? '🤖✨' : '🤖💤'}
+          <div style={{
+            width: '56px',
+            height: '56px',
+            borderRadius: '50%',
+            backgroundColor: '#FFFFFF',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+            marginBottom: '12px',
+            color: 'var(--accent-pink-hot)',
+          }}>
+            <Sparkles size={28} strokeWidth={1.8} />
           </div>
-          <h4 style={{ marginBottom: '8px', color: 'var(--text-main)', fontSize: '1.3rem' }}>
-            {hasResponses ? 'น้อง AI พร้อมทำงานแล้ว!' : 'น้อง AI กำลังสแตนด์บายรอข้อมูลอยู่'}
+          <h4 style={{ fontSize: '15px', fontWeight: '700', marginBottom: '6px', color: 'var(--text-primary)' }}>
+            {hasResponses ? 'น้อง AI พร้อมสรุปข้อมูลให้คุณแล้ว' : 'กำลังรอเสียงตอบรับจากผู้ร่วมงาน'}
           </h4>
-          <p style={{ margin: 0, maxWidth: '400px', marginInline: 'auto', lineHeight: 1.6 }}>
+          <p style={{ fontSize: '12px', margin: 0, maxWidth: '320px', marginInline: 'auto', lineHeight: 1.5 }}>
             {hasResponses
-              ? 'คลิกที่ปุ่มด้านบนเพื่อปลุกน้อง AI มาช่วยสรุปฟีดแบ็กทั้งหมดให้คุณ'
-              : 'เมื่อมีผู้เริ่มสแกนตอบแบบสอบถาม น้องจะตื่นมาวิเคราะห์ให้คุณแบบอัตโนมัติทันที!'}
+              ? 'กดปุ่ม "วิเคราะห์ AI" เพื่อให้ปัญญาประดิษฐ์สรุปใจความสำคัญจากทุกคำตอบ'
+              : 'เมื่อมีผู้เริ่มสแกนตอบแบบสอบถาม ระบบจะช่วยสรุปฟีดแบ็กให้อัตโนมัติทันที'}
           </p>
         </div>
       )}
 
       {insight && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
-          <div style={{ padding: '16px', borderLeft: '4px solid var(--text-muted)', background: 'rgba(0,0,0,0.02)', borderRadius: '0 8px 8px 0' }}>
-            <h4 style={{ marginBottom: '8px' }}>ภาพรวม</h4>
-            <p>{insight.whyScore}</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          {/* ภาพรวม / Overview */}
+          <div style={{
+            padding: '16px',
+            backgroundColor: 'rgba(230, 220, 250, 0.35)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid rgba(230, 220, 250, 0.7)',
+          }}>
+            <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#5B4B8A', marginBottom: '4px' }}>
+              💡 ภาพรวมความคิดเห็น
+            </h4>
+            <p style={{ fontSize: '13px', color: 'var(--text-primary)', lineHeight: '1.5', margin: 0 }}>
+              {insight.whyScore}
+            </p>
           </div>
 
-          <div style={{ padding: '16px', borderLeft: '4px solid #10b981', background: 'rgba(16, 185, 129, 0.05)', borderRadius: '0 8px 8px 0' }}>
-            <h4 style={{ marginBottom: '8px', color: '#047857' }}>Keep (สิ่งที่ทำได้ดีแล้ว)</h4>
-            <p>{insight.keep}</p>
+          {/* Keep: Mint Green Card */}
+          <div style={{
+            padding: '16px',
+            backgroundColor: 'var(--badge-mint)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid rgba(213, 240, 208, 0.8)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+              <CheckCircle2 size={16} color="var(--badge-mint-text)" strokeWidth={2} />
+              <h4 style={{ fontSize: '13px', fontWeight: '800', color: 'var(--badge-mint-text)', margin: 0 }}>
+                Keep (สิ่งที่ทำได้ดีแล้ว)
+              </h4>
+            </div>
+            <p style={{ fontSize: '13px', color: '#1B541A', lineHeight: '1.5', margin: 0 }}>
+              {insight.keep}
+            </p>
           </div>
 
-          <div style={{ padding: '16px', borderLeft: '4px solid #f59e0b', background: 'rgba(245, 158, 11, 0.05)', borderRadius: '0 8px 8px 0' }}>
-            <h4 style={{ marginBottom: '8px', color: '#b45309' }}>Improve (สิ่งที่ควรปรับปรุง)</h4>
-            <p>{insight.improve}</p>
+          {/* Improve: Pale Yellow Card */}
+          <div style={{
+            padding: '16px',
+            backgroundColor: 'var(--badge-yellow)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid rgba(255, 243, 184, 0.8)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+              <AlertCircle size={16} color="var(--badge-yellow-text)" strokeWidth={2} />
+              <h4 style={{ fontSize: '13px', fontWeight: '800', color: 'var(--badge-yellow-text)', margin: 0 }}>
+                Improve (สิ่งที่ควรปรับปรุง)
+              </h4>
+            </div>
+            <p style={{ fontSize: '13px', color: '#6A5610', lineHeight: '1.5', margin: 0 }}>
+              {insight.improve}
+            </p>
           </div>
 
-          <div style={{ padding: '16px', borderLeft: '4px solid #ef4444', background: 'rgba(239, 68, 68, 0.05)', borderRadius: '0 8px 8px 0' }}>
-            <h4 style={{ marginBottom: '8px', color: '#b91c1c' }}>Fix (ปัญหาที่ต้องแก้ไขด่วน)</h4>
-            <p>{insight.fix}</p>
+          {/* Fix: Pastel Rose Card */}
+          <div style={{
+            padding: '16px',
+            backgroundColor: 'var(--badge-pink)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid rgba(255, 226, 238, 0.9)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+              <AlertTriangle size={16} color="var(--badge-pink-text)" strokeWidth={2} />
+              <h4 style={{ fontSize: '13px', fontWeight: '800', color: 'var(--badge-pink-text)', margin: 0 }}>
+                Fix (ปัญหาที่ต้องแก้ไขด่วน)
+              </h4>
+            </div>
+            <p style={{ fontSize: '13px', color: '#9E1C48', lineHeight: '1.5', margin: 0 }}>
+              {insight.fix}
+            </p>
           </div>
         </div>
       )}

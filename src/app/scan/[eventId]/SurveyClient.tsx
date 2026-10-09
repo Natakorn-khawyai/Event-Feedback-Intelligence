@@ -2,8 +2,10 @@
 
 import { useState, useTransition, useEffect } from 'react';
 import { submitSurvey } from '@/app/actions/survey';
+import TopBar from '@/components/ui/TopBar';
+import { Calendar, MapPin, Sparkles, Send, CheckCircle2, Heart } from 'lucide-react';
 
-export default function SurveyClient({ event, questions }: { event: any, questions: any[] }) {
+export default function SurveyClient({ event, questions }: { event: any; questions: any[] }) {
   const [scores, setScores] = useState<{ [key: string]: number }>({});
   const [feedback, setFeedback] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -44,77 +46,219 @@ export default function SurveyClient({ event, questions }: { event: any, questio
 
   if (error && error.includes('เคยทำ')) {
     return (
-      <div style={{ maxWidth: '500px', margin: '10vh auto', textAlign: 'center' }} className="glass-card">
-        <h3>คุณทำแบบสอบถามนี้ไปแล้ว!</h3>
-        <p style={{ color: 'var(--text-muted)' }}>ขอบคุณที่ร่วมเป็นส่วนหนึ่งในงานของเรา</p>
+      <div className="surface-card fade-up" style={{ textAlign: 'center', padding: '40px 20px', marginTop: '40px' }}>
+        <div style={{
+          width: '64px',
+          height: '64px',
+          borderRadius: '50%',
+          backgroundColor: 'var(--badge-mint)',
+          color: 'var(--badge-mint-text)',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '16px',
+        }}>
+          <CheckCircle2 size={36} strokeWidth={2} />
+        </div>
+        <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '8px', color: 'var(--text-primary)' }}>
+          คุณส่งแบบประเมินเรียบร้อยแล้ว
+        </h3>
+        <p style={{ fontSize: '13px', color: 'var(--text-secondary)', maxWidth: '300px', marginInline: 'auto' }}>
+          ขอบคุณที่เป็นส่วนสำคัญในการส่งฟีดแบ็กให้ทีมงานพัฒนาต่อไปครับ
+        </p>
       </div>
     );
   }
 
+  const isComplete = Object.keys(scores).length === questions.length && feedback.trim() !== '';
+
   return (
-    <div style={{ maxWidth: '500px', margin: '0 auto', paddingBottom: '40px' }}>
-      <div className="glass-card" style={{ marginBottom: '24px', textAlign: 'center' }}>
-        <h3 style={{ color: 'var(--text-main)', marginBottom: '8px' }}>Event Feedback</h3>
-        <h2 style={{ marginBottom: '8px' }}>{event.title}</h2>
-        <p style={{ color: 'var(--text-muted)' }}>{new Date(event.date).toLocaleDateString('th-TH')} | {event.location}</p>
+    <div className="fade-up" style={{ paddingBottom: '40px' }}>
+      <TopBar
+        title="แบบประเมินกิจกรรม"
+        showBack={false}
+        showSearch={false}
+        showMic={false}
+      />
+
+      {/* Event Header Hero */}
+      <div className="hero-glass-card" style={{ marginBottom: '20px', textAlign: 'center' }}>
+        <span style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '5px',
+          backgroundColor: 'rgba(255, 255, 255, 0.75)',
+          padding: '4px 12px',
+          borderRadius: '999px',
+          fontSize: '11px',
+          fontWeight: '700',
+          color: 'var(--accent-pink-hot)',
+          marginBottom: '10px',
+        }}>
+          <Sparkles size={13} strokeWidth={2} /> แบบสอบถามความพึงพอใจ
+        </span>
+
+        <h2 style={{ fontSize: '22px', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '8px' }}>
+          {event.title}
+        </h2>
+
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '12px',
+          fontSize: '12px',
+          color: 'var(--text-secondary)',
+        }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <Calendar size={13} strokeWidth={1.8} />
+            {new Date(event.date).toLocaleDateString('th-TH')}
+          </span>
+          {event.location && (
+            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <MapPin size={13} strokeWidth={1.8} />
+              {event.location}
+            </span>
+          )}
+        </div>
       </div>
 
       {error && (
-        <div style={{ padding: '12px', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--danger)', borderLeft: '4px solid var(--danger)', marginBottom: '16px' }}>
-          {error}
+        <div style={{
+          padding: '12px 16px',
+          background: 'rgba(239, 68, 68, 0.08)',
+          color: 'var(--status-danger)',
+          borderRadius: 'var(--radius-md)',
+          border: '1px solid rgba(239, 68, 68, 0.2)',
+          fontSize: '13px',
+          fontWeight: '600',
+          marginBottom: '16px',
+        }}>
+          ⚠️ {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit}>
-        {questions.map((q, index) => (
-          <div key={q.id} className="glass-card" style={{ marginBottom: '16px' }}>
-            <p style={{ fontWeight: 'bold', marginBottom: '16px' }}>{index + 1}. {q.text}</p>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              {[1, 2, 3, 4, 5].map(score => (
-                <button
-                  key={score}
-                  type="button"
-                  onClick={() => handleScoreChange(q.id, score)}
-                  style={{
-                    width: '45px', height: '45px', borderRadius: '50%', 
-                    border: '1px solid var(--primary-color)',
-                    background: scores[q.id] === score ? 'var(--primary-color)' : 'transparent',
-                    color: scores[q.id] === score ? 'var(--bg-color)' : 'var(--text-main)',
-                    fontWeight: 'bold', fontSize: '1.1rem', cursor: 'pointer',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  {score}
-                </button>
-              ))}
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              <span>น้อยที่สุด (1)</span>
-              <span>มากที่สุด (5)</span>
-            </div>
-          </div>
-        ))}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
+          {questions.map((q, index) => {
+            const currentScore = scores[q.id];
+            return (
+              <div
+                key={q.id}
+                className="surface-card"
+                style={{
+                  padding: '18px',
+                  borderRadius: 'var(--radius-card)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+                  <span style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--accent-pink-pastel)',
+                    color: 'var(--accent-pink-hot)',
+                    fontSize: '12px',
+                    fontWeight: '800',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}>
+                    {index + 1}
+                  </span>
+                  <p style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', margin: 0 }}>
+                    {q.text}
+                  </p>
+                </div>
 
-        <div className="glass-card" style={{ marginBottom: '24px' }}>
-          <p style={{ fontWeight: 'bold', marginBottom: '16px' }}>💡 ข้อเสนอแนะเพิ่มเติม (จำเป็นต้องกรอก)</p>
-          <textarea 
-            className="input-field" 
-            rows={4} 
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            placeholder="สิ่งที่คุณชอบ, สิ่งที่ไม่ชอบ หรือสิ่งที่ควรปรับปรุง..."
-            style={{ resize: 'vertical' }}
-            required
-          ></textarea>
+                {/* 5-Star / 5-Score Rating Buttons */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '6px' }}>
+                  {[1, 2, 3, 4, 5].map((score) => {
+                    const isSelected = currentScore === score;
+                    return (
+                      <button
+                        key={score}
+                        type="button"
+                        onClick={() => handleScoreChange(q.id, score)}
+                        aria-label={`ระดับคะแนน ${score}`}
+                        style={{
+                          width: '46px',
+                          height: '46px',
+                          borderRadius: '50%',
+                          border: isSelected ? 'none' : '1px solid var(--border-glass)',
+                          backgroundColor: isSelected ? 'var(--accent-pink-hot)' : 'rgba(255, 255, 255, 0.9)',
+                          color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
+                          fontWeight: '800',
+                          fontSize: '16px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: isSelected ? 'var(--shadow-pill)' : '0 2px 6px rgba(0,0,0,0.03)',
+                          transform: isSelected ? 'scale(1.08)' : 'scale(1)',
+                          transition: 'all 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
+                        }}
+                      >
+                        {score}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginTop: '8px',
+                  fontSize: '11px',
+                  color: 'var(--text-muted)',
+                  fontWeight: '600',
+                }}>
+                  <span>น้อยที่สุด (1)</span>
+                  <span>มากที่สุด (5)</span>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        <button 
-          type="submit" 
-          className="btn-primary" 
-          style={{ width: '100%', fontSize: '1.2rem', padding: '16px' }}
-          disabled={isPending || Object.keys(scores).length < questions.length || feedback.trim() === ''}
+        {/* Suggestion Textarea Card */}
+        <div className="surface-card" style={{ marginBottom: '24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+            <span style={{ fontSize: '15px' }}>💡</span>
+            <label style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)' }}>
+              ข้อเสนอแนะเพิ่มเติม (จำเป็นต้องกรอก)
+            </label>
+          </div>
+          <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
+            สิ่งที่คุณประทับใจ หรือข้อเสนอแนะที่อยากให้ปรับปรุงในครั้งถัดไป
+          </p>
+          <textarea
+            className="input-modern"
+            rows={4}
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            placeholder="พิมพ์ความคิดเห็นของคุณที่นี่..."
+            style={{ resize: 'vertical', minHeight: '100px' }}
+            required
+          />
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="btn-cta"
+          style={{ width: '100%', padding: '16px', fontSize: '16px' }}
+          disabled={isPending || !isComplete}
         >
-          {isPending ? 'กำลังส่งข้อมูล...' : 'ส่งแบบประเมิน'}
+          {isPending ? (
+            <span>กำลังส่งข้อมูล...</span>
+          ) : (
+            <>
+              <Send size={18} strokeWidth={2} />
+              <span>ส่งแบบประเมินความพึงพอใจ</span>
+            </>
+          )}
         </button>
       </form>
     </div>
