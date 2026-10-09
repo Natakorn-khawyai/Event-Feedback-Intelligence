@@ -35,20 +35,25 @@ export default async function RootLayout({
   return (
     <html lang="th" className={`${plusJakartaSans.variable} ${sarabun.variable}`}>
       <body>
-        <div className="app-container">
-          {/* Desktop Glass Navigation Bar */}
-          <header style={{
+        {/* Full-Width Edge-to-Edge Desktop Navigation Bar */}
+        <header style={{
+          width: '100%',
+          background: 'var(--surface-white)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          borderBottom: '1px solid var(--border-glass)',
+          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.03)',
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+        }}>
+          <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '14px 24px',
-            marginBottom: '28px',
-            background: 'var(--surface-white)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            borderRadius: 'var(--radius-full)',
-            border: '1px solid var(--border-glass)',
-            boxShadow: 'var(--shadow-soft)',
+            padding: '14px 32px',
+            width: '100%',
+            maxWidth: '100%',
           }}>
             {/* Left: Brand Logo & Title */}
             <Link
@@ -260,9 +265,11 @@ export default async function RootLayout({
                 </>
               )}
             </div>
-          </header>
+          </div>
+        </header>
 
-          {/* Main View Area */}
+        {/* Content Container */}
+        <div className="app-container" style={{ paddingTop: '28px' }}>
           <main>
             {children}
           </main>
