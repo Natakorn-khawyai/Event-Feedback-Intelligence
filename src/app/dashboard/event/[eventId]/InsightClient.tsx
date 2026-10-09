@@ -109,25 +109,21 @@ export default function InsightClient({
             <div
               className="float-animation"
               style={{
-                width: '124px',
-                height: '124px',
-                borderRadius: '28px',
-                overflow: 'hidden',
-                boxShadow: '0 8px 24px rgba(232, 70, 124, 0.15)',
-                border: '2px solid rgba(255, 209, 227, 0.8)',
-                backgroundColor: '#FFFFFF',
+                width: '120px',
+                height: '135px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                filter: 'drop-shadow(0 10px 20px rgba(232, 70, 124, 0.2))',
               }}
             >
               <img
-                src="/images/cute-waiting-mascot.jpg"
+                src="/images/cute-waiting-mascot.svg"
                 alt="น้อง AI มารอคำตอบ"
                 style={{
                   width: '100%',
                   height: '100%',
-                  objectFit: 'cover',
+                  objectFit: 'contain',
                 }}
               />
             </div>
