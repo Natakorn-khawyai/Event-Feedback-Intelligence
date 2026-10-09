@@ -4,7 +4,7 @@ import './globals.css';
 import { getSession } from '@/lib/auth';
 import { logoutUser } from '@/app/actions/auth';
 import Link from 'next/link';
-import { Sparkles, LogOut, User, LayoutDashboard, Home, Users, Flower2, PlusCircle } from 'lucide-react';
+import { Sparkles, LogOut, User, LayoutDashboard, Home } from 'lucide-react';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -53,7 +53,6 @@ export default async function RootLayout({
             justifyContent: 'space-between',
             padding: '14px 32px',
             width: '100%',
-            maxWidth: '100%',
           }}>
             {/* Left: Brand Logo & Title */}
             <Link
@@ -105,80 +104,24 @@ export default async function RootLayout({
               </Link>
 
               {session && (
-                <>
-                  <Link
-                    href="/dashboard"
-                    style={{
-                      textDecoration: 'none',
-                      color: 'var(--text-primary)',
-                      fontSize: '13px',
-                      fontWeight: '700',
-                      padding: '8px 16px',
-                      borderRadius: 'var(--radius-full)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                    }}
-                  >
-                    <LayoutDashboard size={15} color="var(--accent-pink-hot)" />
-                    <span>แดชบอร์ด</span>
-                  </Link>
-
-                  <Link
-                    href="/create"
-                    style={{
-                      textDecoration: 'none',
-                      color: 'var(--text-primary)',
-                      fontSize: '13px',
-                      fontWeight: '700',
-                      padding: '8px 16px',
-                      borderRadius: 'var(--radius-full)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                    }}
-                  >
-                    <PlusCircle size={15} color="var(--accent-pink-hot)" />
-                    <span>สร้างแบบประเมิน</span>
-                  </Link>
-                </>
+                <Link
+                  href="/dashboard"
+                  style={{
+                    textDecoration: 'none',
+                    color: 'var(--text-primary)',
+                    fontSize: '13px',
+                    fontWeight: '700',
+                    padding: '8px 16px',
+                    borderRadius: 'var(--radius-full)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                  }}
+                >
+                  <LayoutDashboard size={15} color="var(--accent-pink-hot)" />
+                  <span>แดชบอร์ด</span>
+                </Link>
               )}
-
-              <Link
-                href="/community"
-                style={{
-                  textDecoration: 'none',
-                  color: 'var(--text-primary)',
-                  fontSize: '13px',
-                  fontWeight: '700',
-                  padding: '8px 16px',
-                  borderRadius: 'var(--radius-full)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                }}
-              >
-                <Users size={15} color="var(--accent-pink-hot)" />
-                <span>Community</span>
-              </Link>
-
-              <Link
-                href="/builder"
-                style={{
-                  textDecoration: 'none',
-                  color: 'var(--text-primary)',
-                  fontSize: '13px',
-                  fontWeight: '700',
-                  padding: '8px 16px',
-                  borderRadius: 'var(--radius-full)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                }}
-              >
-                <Flower2 size={15} color="var(--accent-pink-hot)" />
-                <span>Bouquet Builder</span>
-              </Link>
             </nav>
 
             {/* Right: User / Auth Controls */}
@@ -284,7 +227,7 @@ export default async function RootLayout({
               left: '50%',
               transform: 'translateX(-50%)',
               width: 'calc(100% - 32px)',
-              maxWidth: '400px',
+              maxWidth: '320px',
               backgroundColor: 'rgba(255, 255, 255, 0.94)',
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
@@ -308,47 +251,11 @@ export default async function RootLayout({
                 color: 'var(--text-secondary)',
                 fontSize: '10px',
                 fontWeight: '700',
-                padding: '4px 8px',
+                padding: '4px 12px',
               }}
             >
               <Home size={19} strokeWidth={1.8} />
-              <span>Home</span>
-            </Link>
-
-            <Link
-              href="/builder"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '2px',
-                textDecoration: 'none',
-                color: 'var(--accent-pink-hot)',
-                fontSize: '10px',
-                fontWeight: '700',
-                padding: '4px 8px',
-              }}
-            >
-              <Flower2 size={19} strokeWidth={1.8} />
-              <span>Builder</span>
-            </Link>
-
-            <Link
-              href="/community"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '2px',
-                textDecoration: 'none',
-                color: 'var(--text-secondary)',
-                fontSize: '10px',
-                fontWeight: '700',
-                padding: '4px 8px',
-              }}
-            >
-              <Users size={19} strokeWidth={1.8} />
-              <span>Community</span>
+              <span>หน้าแรก</span>
             </Link>
 
             <Link
@@ -359,14 +266,14 @@ export default async function RootLayout({
                 alignItems: 'center',
                 gap: '2px',
                 textDecoration: 'none',
-                color: 'var(--text-secondary)',
+                color: 'var(--accent-pink-hot)',
                 fontSize: '10px',
                 fontWeight: '700',
-                padding: '4px 8px',
+                padding: '4px 12px',
               }}
             >
               <LayoutDashboard size={19} strokeWidth={1.8} />
-              <span>Insight</span>
+              <span>แดชบอร์ด</span>
             </Link>
           </nav>
         </div>
