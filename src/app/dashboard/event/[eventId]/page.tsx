@@ -43,7 +43,7 @@ export default async function EventDashboardPage({ params }: { params: Promise<{
     <div className="fade-up" style={{ paddingBottom: '40px' }}>
       {/* Hero Overview Card: Wide Desktop Card */}
       <div className="hero-glass-card" style={{ marginBottom: '28px', padding: '32px 36px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '14px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '6px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span style={{
               backgroundColor: 'rgba(255, 255, 255, 0.85)',
@@ -99,8 +99,8 @@ export default async function EventDashboardPage({ params }: { params: Promise<{
           fontSize: 'clamp(32px, 4.5vw, 40px)',
           fontWeight: '900',
           color: 'var(--text-primary)',
-          margin: '6px 0 12px 0',
-          lineHeight: '1.2',
+          margin: '0 0 10px 0',
+          lineHeight: '1.15',
           letterSpacing: '-0.025em',
         }}>
           {event.title}
