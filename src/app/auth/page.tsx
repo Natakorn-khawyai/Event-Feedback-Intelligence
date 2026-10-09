@@ -22,7 +22,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="fade-up">
+    <div className="fade-up" style={{ maxWidth: '480px', margin: '20px auto 0 auto', paddingBottom: '40px' }}>
       <TopBar
         title={isLogin ? 'เข้าสู่ระบบ' : 'สมัครสมาชิก'}
         showBack={true}

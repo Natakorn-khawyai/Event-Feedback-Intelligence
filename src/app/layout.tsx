@@ -4,7 +4,7 @@ import './globals.css';
 import { getSession } from '@/lib/auth';
 import { logoutUser } from '@/app/actions/auth';
 import Link from 'next/link';
-import { Sparkles, LogOut, User, LayoutDashboard, Home, Users, Flower2 } from 'lucide-react';
+import { Sparkles, LogOut, User, LayoutDashboard, Home, Users, Flower2, PlusCircle } from 'lucide-react';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -36,13 +36,13 @@ export default async function RootLayout({
     <html lang="th" className={`${plusJakartaSans.variable} ${sarabun.variable}`}>
       <body>
         <div className="app-container">
-          {/* Top Floating Glass Navigation */}
-          <nav style={{
+          {/* Desktop Glass Navigation Bar */}
+          <header style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '10px 16px',
-            marginBottom: '16px',
+            padding: '14px 24px',
+            marginBottom: '28px',
             background: 'var(--surface-white)',
             backdropFilter: 'blur(16px)',
             WebkitBackdropFilter: 'blur(16px)',
@@ -50,74 +50,188 @@ export default async function RootLayout({
             border: '1px solid var(--border-glass)',
             boxShadow: 'var(--shadow-soft)',
           }}>
+            {/* Left: Brand Logo & Title */}
             <Link
               href={session ? "/dashboard" : "/"}
               style={{
                 textDecoration: 'none',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
+                gap: '10px',
                 color: 'var(--text-primary)',
                 fontWeight: '800',
-                fontSize: '14px',
+                fontSize: '17px',
               }}
             >
               <div style={{
-                width: '32px',
-                height: '32px',
+                width: '38px',
+                height: '38px',
                 borderRadius: '50%',
                 background: 'linear-gradient(135deg, #FFD1E3 0%, #E6DCFA 100%)',
                 color: 'var(--accent-pink-hot)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 2px 6px rgba(232, 70, 124, 0.2)',
+                boxShadow: '0 2px 8px rgba(232, 70, 124, 0.25)',
               }}>
-                <Sparkles size={16} strokeWidth={2} />
+                <Sparkles size={18} strokeWidth={2.2} />
               </div>
-              <span>Event Insight</span>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ lineHeight: '1.2' }}>Event Feedback Intelligence</span>
+                <span style={{ fontSize: '11px', color: 'var(--text-secondary)', fontWeight: '600' }}>AI Powered Analytics</span>
+              </div>
             </Link>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              {session ? (
+            {/* Center: Desktop Navigation Links */}
+            <nav className="desktop-only" style={{ alignItems: 'center', gap: '8px' }}>
+              <Link
+                href="/"
+                style={{
+                  textDecoration: 'none',
+                  color: 'var(--text-primary)',
+                  fontSize: '13px',
+                  fontWeight: '700',
+                  padding: '8px 16px',
+                  borderRadius: 'var(--radius-full)',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                หน้าแรก
+              </Link>
+
+              {session && (
                 <>
                   <Link
                     href="/dashboard"
                     style={{
                       textDecoration: 'none',
+                      color: 'var(--text-primary)',
+                      fontSize: '13px',
+                      fontWeight: '700',
+                      padding: '8px 16px',
+                      borderRadius: 'var(--radius-full)',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '4px',
-                      fontSize: '12px',
-                      fontWeight: '700',
-                      color: 'var(--text-primary)',
-                      padding: '6px 12px',
-                      borderRadius: 'var(--radius-full)',
-                      background: 'rgba(255, 209, 227, 0.35)',
+                      gap: '6px',
                     }}
                   >
-                    <LayoutDashboard size={14} color="var(--accent-pink-hot)" />
+                    <LayoutDashboard size={15} color="var(--accent-pink-hot)" />
                     <span>แดชบอร์ด</span>
                   </Link>
+
+                  <Link
+                    href="/create"
+                    style={{
+                      textDecoration: 'none',
+                      color: 'var(--text-primary)',
+                      fontSize: '13px',
+                      fontWeight: '700',
+                      padding: '8px 16px',
+                      borderRadius: 'var(--radius-full)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                    }}
+                  >
+                    <PlusCircle size={15} color="var(--accent-pink-hot)" />
+                    <span>สร้างแบบประเมิน</span>
+                  </Link>
+                </>
+              )}
+
+              <Link
+                href="/community"
+                style={{
+                  textDecoration: 'none',
+                  color: 'var(--text-primary)',
+                  fontSize: '13px',
+                  fontWeight: '700',
+                  padding: '8px 16px',
+                  borderRadius: 'var(--radius-full)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                }}
+              >
+                <Users size={15} color="var(--accent-pink-hot)" />
+                <span>Community</span>
+              </Link>
+
+              <Link
+                href="/builder"
+                style={{
+                  textDecoration: 'none',
+                  color: 'var(--text-primary)',
+                  fontSize: '13px',
+                  fontWeight: '700',
+                  padding: '8px 16px',
+                  borderRadius: 'var(--radius-full)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                }}
+              >
+                <Flower2 size={15} color="var(--accent-pink-hot)" />
+                <span>Bouquet Builder</span>
+              </Link>
+            </nav>
+
+            {/* Right: User / Auth Controls */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              {session ? (
+                <>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '6px 14px',
+                    borderRadius: 'var(--radius-full)',
+                    background: 'rgba(255, 209, 227, 0.4)',
+                    border: '1px solid rgba(232, 70, 124, 0.2)',
+                  }}>
+                    <div style={{
+                      width: '26px',
+                      height: '26px',
+                      borderRadius: '50%',
+                      backgroundColor: 'var(--accent-pink-hot)',
+                      color: '#FFFFFF',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '12px',
+                      fontWeight: '800',
+                    }}>
+                      {(session.name || 'U').substring(0, 1).toUpperCase()}
+                    </div>
+                    <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)' }}>
+                      {session.name}
+                    </span>
+                  </div>
+
                   <form action={logoutUser} style={{ margin: 0 }}>
                     <button
                       type="submit"
                       aria-label="ออกจากระบบ"
                       style={{
                         background: 'transparent',
-                        border: 'none',
-                        color: 'var(--text-muted)',
+                        border: '1px solid var(--border-glass)',
+                        backgroundColor: '#FFFFFF',
+                        color: 'var(--text-secondary)',
                         cursor: 'pointer',
-                        padding: '6px',
+                        padding: '8px 14px',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: '50%',
-                        transition: 'color 0.15s ease',
+                        gap: '6px',
+                        borderRadius: 'var(--radius-full)',
+                        fontSize: '12px',
+                        fontWeight: '700',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                        transition: 'all 0.15s ease',
                       }}
                       title="ออกจากระบบ"
                     >
-                      <LogOut size={16} strokeWidth={1.8} />
+                      <LogOut size={15} strokeWidth={1.8} />
+                      <span className="desktop-only">ออกจากระบบ</span>
                     </button>
                   </form>
                 </>
@@ -129,33 +243,34 @@ export default async function RootLayout({
                       textDecoration: 'none',
                       color: '#FFFFFF',
                       backgroundColor: 'var(--accent-pink-hot)',
-                      padding: '7px 16px',
+                      padding: '9px 20px',
                       borderRadius: 'var(--radius-full)',
-                      fontSize: '12px',
+                      fontSize: '13px',
                       fontWeight: '700',
                       boxShadow: 'var(--shadow-pill)',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '4px',
+                      gap: '6px',
                       transition: 'all 0.15s ease-out',
                     }}
                   >
-                    <User size={13} strokeWidth={2} />
+                    <User size={15} strokeWidth={2} />
                     <span>เข้าสู่ระบบ</span>
                   </Link>
                 </>
               )}
             </div>
-          </nav>
+          </header>
 
           {/* Main View Area */}
           <main>
             {children}
           </main>
 
-          {/* Bottom Floating Navigation Pill Bar */}
+          {/* Bottom Floating Navigation Pill Bar (Mobile Only) */}
           <nav
             aria-label="Bottom Navigation"
+            className="mobile-only"
             style={{
               position: 'fixed',
               bottom: '16px',
@@ -163,13 +278,12 @@ export default async function RootLayout({
               transform: 'translateX(-50%)',
               width: 'calc(100% - 32px)',
               maxWidth: '400px',
-              backgroundColor: 'rgba(255, 255, 255, 0.92)',
+              backgroundColor: 'rgba(255, 255, 255, 0.94)',
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
               borderRadius: 'var(--radius-full)',
               border: '1px solid var(--border-glass)',
               boxShadow: '0 8px 30px rgba(31, 31, 46, 0.12)',
-              display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-around',
               padding: '8px 12px',

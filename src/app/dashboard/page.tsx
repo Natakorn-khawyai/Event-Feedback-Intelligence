@@ -6,7 +6,7 @@ import TopBar from '@/components/ui/TopBar';
 import AvatarStack from '@/components/ui/AvatarStack';
 import DashedAddTile from '@/components/ui/DashedAddTile';
 import PhotoCard from '@/components/ui/PhotoCard';
-import { Plus, ArrowRight, Sparkles } from 'lucide-react';
+import { Plus, ArrowRight, Sparkles, BarChart3, MessageSquare, Calendar } from 'lucide-react';
 
 export default async function DashboardPage() {
   const session = await getSession();
@@ -34,86 +34,121 @@ export default async function DashboardPage() {
   const pastelColors = ['#FFD1E3', '#E6DCFA', '#FFF3B8', '#D5F0D0', '#DFF1F5'];
 
   return (
-    <div className="fade-up">
-      {/* Top Bar */}
-      <TopBar
-        title="กิจกรรมของคุณ"
-        showBack={false}
-        showSearch={true}
-        showFilter={true}
-      />
-
-      {/* "Top users →" Pink Pill Banner */}
+    <div className="fade-up" style={{ paddingBottom: '40px' }}>
+      {/* Top Banner with Stats & Profile */}
       <div style={{
-        background: 'var(--badge-pink)',
-        border: '1px solid rgba(232, 70, 124, 0.25)',
-        borderRadius: 'var(--radius-full)',
-        padding: '8px 16px',
+        background: 'var(--surface-white)',
+        backdropFilter: 'blur(14px)',
+        border: '1px solid var(--border-glass)',
+        borderRadius: 'var(--radius-card)',
+        padding: '24px 28px',
+        marginBottom: '24px',
+        boxShadow: 'var(--shadow-soft)',
         display: 'flex',
+        flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: '20px',
-        boxShadow: '0 2px 10px rgba(232, 70, 124, 0.08)',
+        gap: '16px',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <AvatarStack avatars={mockAvatars} limit={3} totalCount={events.length + 3} size={28} />
-          <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--accent-pink-hot)' }}>
-            ผู้จัด: {session.name}
-          </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{
+            width: '52px',
+            height: '52px',
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, #FFD1E3 0%, #E6DCFA 100%)',
+            color: 'var(--accent-pink-hot)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '22px',
+            fontWeight: '800',
+            boxShadow: '0 4px 12px rgba(232, 70, 124, 0.2)',
+          }}>
+            {(session.name || 'U').substring(0, 1).toUpperCase()}
+          </div>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <h2 style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
+                แดชบอร์ดผู้จัดงาน: {session.name}
+              </h2>
+              <span style={{
+                backgroundColor: 'var(--badge-mint)',
+                color: 'var(--badge-mint-text)',
+                padding: '2px 10px',
+                borderRadius: '999px',
+                fontSize: '11px',
+                fontWeight: '700',
+              }}>
+                Organizer Active
+              </span>
+            </div>
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
+              ยินดีต้อนรับกลับมา! จัดการอีเวนต์และตรวจสอบข้อมูลเชิงลึกจาก AI ได้ที่นี่
+            </p>
+          </div>
         </div>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-          fontSize: '12px',
-          fontWeight: '700',
-          color: 'var(--accent-pink-hot)',
-          backgroundColor: '#FFFFFF',
-          padding: '4px 10px',
-          borderRadius: 'var(--radius-full)',
-          boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
-        }}>
-          <span>{totalResponses} ฟีดแบ็ก</span>
-          <ArrowRight size={13} strokeWidth={2.5} />
+
+        {/* Quick Stats Counter */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{
+            backgroundColor: 'var(--badge-pink)',
+            padding: '10px 18px',
+            borderRadius: 'var(--radius-md)',
+            textAlign: 'center',
+          }}>
+            <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent-pink-hot)', display: 'block' }}>กิจกรรมทั้งหมด</span>
+            <span style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text-primary)' }}>{events.length}</span>
+          </div>
+
+          <div style={{
+            backgroundColor: 'rgba(230, 220, 250, 0.45)',
+            padding: '10px 18px',
+            borderRadius: 'var(--radius-md)',
+            textAlign: 'center',
+          }}>
+            <span style={{ fontSize: '11px', fontWeight: '700', color: '#5B4B8A', display: 'block' }}>ฟีดแบ็กที่ได้รับรวม</span>
+            <span style={{ fontSize: '20px', fontWeight: '800', color: 'var(--text-primary)' }}>{totalResponses} คน</span>
+          </div>
+
+          <Link href="/create" style={{ textDecoration: 'none' }}>
+            <button className="btn-cta" style={{ padding: '12px 24px', fontSize: '14px' }}>
+              <Plus size={18} strokeWidth={2.5} />
+              <span>สร้างงานใหม่</span>
+            </button>
+          </Link>
         </div>
       </div>
 
-      {/* Header section with Create Button */}
+      {/* Section Header */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '16px',
+        marginBottom: '18px',
       }}>
         <div>
-          <h2 style={{ fontSize: '20px', fontWeight: '800', margin: 0, color: 'var(--text-primary)' }}>
-            รายการแบบประเมิน ({events.length})
-          </h2>
+          <h3 style={{ fontSize: '18px', fontWeight: '800', margin: 0, color: 'var(--text-primary)' }}>
+            รายการแบบประเมินของคุณ ({events.length} งาน)
+          </h3>
           <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
-            แตะที่การ์ดเพื่อดูผลการประเมินและอินไซต์จาก AI
+            คลิกที่การ์ดเพื่อเปิดดูผลวิเคราะห์ AI Intelligence และคิวอาร์โค้ด
           </p>
         </div>
-        <Link href="/create" style={{ textDecoration: 'none' }}>
-          <button className="btn-cta" style={{ padding: '8px 16px', minHeight: '38px', fontSize: '13px' }}>
-            <Plus size={16} strokeWidth={2.2} />
-            <span>สร้างงาน</span>
-          </button>
-        </Link>
       </div>
 
-      {/* 2-Column Grid */}
+      {/* Desktop Responsive Grid: 3-4 Columns */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-        gap: '14px',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+        gap: '20px',
         marginBottom: '32px',
       }}>
         {/* Dashed Add Slot Tile */}
         <DashedAddTile
-          label="สร้างงานใหม่"
-          sublabel="AI Generate คำถาม"
+          label="สร้างแบบประเมินงานใหม่"
+          sublabel="AI ออกแบบชุดคำถามให้อัตโนมัติ"
           href="/create"
-          minHeight={170}
+          minHeight={210}
         />
 
         {/* Existing Event Cards */}
@@ -125,11 +160,11 @@ export default async function DashboardPage() {
               id={event.id}
               title={event.title}
               authorName={session.name || 'Organizer'}
-              date={new Date(event.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'short' })}
+              date={new Date(event.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' })}
               responseCount={event._count.responses}
-              likeCount={10 + (event._count.responses * 2)}
+              likeCount={12 + (event._count.responses * 3)}
               accentColor={accent}
-              badge={event._count.responses > 0 ? 'มีข้อมูล' : 'รอฟีดแบ็ก'}
+              badge={event._count.responses > 0 ? `${event._count.responses} ฟีดแบ็ก` : 'รอคำตอบแรก'}
               badgeColor={event._count.responses > 0 ? 'var(--badge-mint)' : 'var(--badge-yellow)'}
               href={`/dashboard/event/${event.id}`}
             />
@@ -143,7 +178,7 @@ export default async function DashboardPage() {
           className="surface-card fade-up"
           style={{
             textAlign: 'center',
-            padding: '40px 20px',
+            padding: '60px 24px',
             marginTop: '12px',
             border: '2px dashed #D1D5DB',
             background: 'var(--hero-gradient)',
@@ -151,8 +186,8 @@ export default async function DashboardPage() {
           }}
         >
           <div style={{
-            width: '64px',
-            height: '64px',
+            width: '72px',
+            height: '72px',
             borderRadius: '50%',
             backgroundColor: '#FFFFFF',
             display: 'inline-flex',
@@ -162,24 +197,24 @@ export default async function DashboardPage() {
             marginBottom: '16px',
             color: 'var(--accent-pink-hot)',
           }}>
-            <Sparkles size={32} strokeWidth={1.8} />
+            <Sparkles size={36} strokeWidth={1.8} />
           </div>
-          <h3 style={{ fontSize: '18px', fontWeight: '800', marginBottom: '8px', color: 'var(--text-primary)' }}>
+          <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '8px', color: 'var(--text-primary)' }}>
             ยังไม่มีแบบประเมินในระบบ
           </h3>
           <p style={{
-            fontSize: '13px',
+            fontSize: '14px',
             color: 'var(--text-secondary)',
-            marginBottom: '20px',
-            maxWidth: '300px',
+            marginBottom: '24px',
+            maxWidth: '420px',
             marginInline: 'auto',
-            lineHeight: 1.5,
+            lineHeight: 1.6,
           }}>
-            เริ่มต้นสร้างแบบประเมินแรกของคุณ ให้ AI ออกแบบคำถามความพึงพอใจ 5 ระดับให้ภายใน 3 วินาที
+            เริ่มต้นสร้างแบบประเมินแรกของคุณ ให้ AI ออกแบบคำถามความพึงพอใจ 5 ระดับให้ทันทีภายในไม่กี่วินาที
           </p>
           <Link href="/create" style={{ textDecoration: 'none' }}>
-            <button className="btn-cta">
-              <Plus size={16} strokeWidth={2.2} />
+            <button className="btn-cta" style={{ padding: '14px 32px' }}>
+              <Plus size={18} strokeWidth={2.2} />
               <span>สร้างแบบประเมินแรกทันที</span>
             </button>
           </Link>

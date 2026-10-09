@@ -73,7 +73,7 @@ export default function SurveyClient({ event, questions }: { event: any; questio
   const isComplete = Object.keys(scores).length === questions.length && feedback.trim() !== '';
 
   return (
-    <div className="fade-up" style={{ paddingBottom: '40px' }}>
+    <div className="fade-up" style={{ maxWidth: '680px', margin: '0 auto', paddingBottom: '40px' }}>
       <TopBar
         title="แบบประเมินกิจกรรม"
         showBack={false}

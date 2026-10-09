@@ -15,10 +15,10 @@ export default function ThankYouPage() {
       <div
         className="surface-card"
         style={{
-          maxWidth: '400px',
-          margin: '30px auto 0 auto',
+          maxWidth: '520px',
+          margin: '40px auto 0 auto',
           textAlign: 'center',
-          padding: '36px 24px',
+          padding: '44px 32px',
           borderRadius: 'var(--radius-card-lg)',
         }}
       >

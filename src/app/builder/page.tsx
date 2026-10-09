@@ -218,12 +218,12 @@ export default function BouquetBuilderPage() {
         </div>
       </div>
 
-      {/* Item Grid (3 Columns) */}
+      {/* Responsive Item Grid */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '10px',
-        marginBottom: '24px',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+        gap: '16px',
+        marginBottom: '28px',
       }}>
         {filteredFlowers.map((item) => (
           <ItemCard

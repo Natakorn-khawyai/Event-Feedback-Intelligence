@@ -144,12 +144,12 @@ export default function CommunityPage() {
         onTabChange={setActiveTab}
       />
 
-      {/* 2-Column Masonry Grid of Photo Cards (rounded 16px) */}
+      {/* Responsive Grid of Photo Cards */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '12px',
-        marginTop: '8px',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+        gap: '20px',
+        marginTop: '12px',
       }}>
         {communityPosts.map((post) => (
           <PhotoCard

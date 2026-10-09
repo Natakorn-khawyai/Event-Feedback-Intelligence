@@ -100,7 +100,7 @@ export default function CreateEventPage() {
   };
 
   return (
-    <div className="fade-up">
+    <div className="fade-up" style={{ maxWidth: '780px', margin: '0 auto', paddingBottom: '40px' }}>
       <TopBar
         title={step === 1 ? 'สร้างแบบประเมิน' : 'ตรวจสอบคำถาม'}
         showBack={true}
