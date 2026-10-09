@@ -14,78 +14,82 @@ import {
   Layers, 
   QrCode, 
   BarChart3, 
-  CheckCircle2, 
   ArrowRight,
-  Smile
+  Smile,
+  Heart,
+  Palette,
+  Users
 } from 'lucide-react';
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState('all');
-  const [activeTab, setActiveTab] = useState('ยอดนิยม');
+  const [activeTab, setActiveTab] = useState('Popular');
 
   const categories = [
-    { id: 'all', label: 'ทั้งหมด', icon: <Layers size={22} strokeWidth={1.5} /> },
-    { id: 'date', label: 'สัมมนา', icon: <Calendar size={22} strokeWidth={1.5} /> },
-    { id: 'gift', label: 'เทศกาล', icon: <Gift size={22} strokeWidth={1.5} /> },
-    { id: 'vr', label: 'อีเวนต์ VR', icon: <Glasses size={22} strokeWidth={1.5} /> },
+    { id: 'all', label: 'All', icon: <Layers size={22} strokeWidth={1.5} />, href: undefined },
+    { id: 'date', label: 'Date', icon: <Calendar size={22} strokeWidth={1.5} />, href: '/builder' },
+    { id: 'gifts', label: 'Gifts', icon: <Gift size={22} strokeWidth={1.5} />, href: '/community' },
+    { id: 'vr', label: 'VR', icon: <Glasses size={22} strokeWidth={1.5} />, href: '/dashboard' },
   ];
 
-  const tabs = ['ยอดนิยม', 'สัมมนาวิชาการ', 'งานกีฬา & วิ่ง', 'แนะนำโดย AI'];
+  const tabs = ['Popular', 'School', 'Recommended', 'Event Insight'];
 
   return (
-    <div className="fade-up">
-      {/* Top Bar with hamburger, mic, and search */}
+    <div className="fade-up" style={{ paddingBottom: '32px' }}>
+      {/* 1. Top Bar: hamburger menu (left), mic + search icons (right) */}
       <TopBar 
-        title="Event Insight" 
+        title="Event & Bouquet" 
         showBack={false}
         showSearch={true}
         showMic={true}
       />
 
-      {/* Category Row: 4 circular pink 56px buttons */}
+      {/* 2. Category row: 4 circular pink buttons (All, Date, Gifts, VR) with icon + label beneath */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '8px 10px 20px 10px',
+        padding: '6px 8px 18px 8px',
       }}>
         {categories.map((cat) => (
           <IconButton
             key={cat.id}
             icon={cat.icon}
             label={cat.label}
+            href={cat.href}
             isActive={activeCategory === cat.id}
             onClick={() => setActiveCategory(cat.id)}
           />
         ))}
       </div>
 
-      {/* Hero Card */}
+      {/* 3. Hero card: "Make your own → / bouquet!" with pink emphasized word,
+             and an inner white pill showing [flower] + [leaf] + [ribbon] preview */}
       <HeroCard
-        titlePrefix="เปลี่ยน Feedback ธรรมดา"
-        highlightText="ให้เป็น Insight"
+        titlePrefix="Make your own →"
+        highlightText="bouquet"
         titleSuffix="!"
-        description="รับฟังเสียงจริงจากผู้ร่วมงาน แล้วให้ AI ช่วยสรุปความพึงพอใจและวางแผนพัฒนาอย่างตรงจุด"
-        ctaText="เริ่มต้นสร้างแบบประเมิน"
-        ctaHref="/auth"
+        description="ออกแบบช่อดอกไม้ในสไตล์ของคุณ หรือสร้างแบบประเมินความพึงพอใจด้วยพลัง AI อัจฉริยะ"
+        ctaText="จัดช่อดอกไม้ของคุณ"
+        ctaHref="/builder"
         previewPill={{
           items: [
-            { icon: <Sparkles size={14} />, text: 'AI Gen คำถาม' },
-            { icon: <QrCode size={14} />, text: 'สแกน QR Code' },
-            { icon: <BarChart3 size={14} />, text: 'กราฟสรุปผล' },
+            { icon: <span>🌸</span>, text: 'Flower' },
+            { icon: <span>🍃</span>, text: 'Leaf' },
+            { icon: <span>🎀</span>, text: 'Ribbon' },
           ]
         }}
       />
 
-      {/* Tab Chips with horizontal scroll and snap */}
-      <div style={{ marginBottom: '16px' }}>
+      {/* 4. Tab chips: Popular | School | Recommended (horizontal scroll, cut-off at edge to hint scrolling) */}
+      <div style={{ marginBottom: '14px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
           <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)' }}>
-            หมวดหมู่ฟีดแบ็กยอดนิยม
+            สำรวจหมวดหมู่ยอดฮิต
           </span>
-          <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--accent-pink-hot)', cursor: 'pointer' }}>
+          <Link href="/community" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent-pink-hot)', textDecoration: 'none' }}>
             ดูทั้งหมด →
-          </span>
+          </Link>
         </div>
         <TabChips
           tabs={tabs}
@@ -94,24 +98,24 @@ export default function Home() {
         />
       </div>
 
-      {/* Below: Pastel-colored cards (Yellow & Mint Green) */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '32px' }}>
-        {/* Pale Yellow Card */}
+      {/* 5. Below: Pastel-colored cards (Yellow & Mint Green) with greeting-style text */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+        {/* Pale Yellow Greeting Card */}
         <div
           style={{
             backgroundColor: 'var(--badge-yellow)',
             borderRadius: 'var(--radius-card)',
-            padding: '20px',
+            padding: '18px 20px',
             boxShadow: 'var(--shadow-soft)',
-            border: '1px solid rgba(255, 243, 184, 0.8)',
+            border: '1px solid rgba(255, 243, 184, 0.85)',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
             <div style={{
-              width: '36px',
-              height: '36px',
+              width: '38px',
+              height: '38px',
               borderRadius: '50%',
               backgroundColor: '#FFFFFF',
               color: 'var(--badge-yellow-text)',
@@ -120,41 +124,42 @@ export default function Home() {
               justifyContent: 'center',
               boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
               flexShrink: 0,
+              fontSize: '18px',
             }}>
-              <QrCode size={18} strokeWidth={2} />
+              ☀️
             </div>
             <div>
               <h3 style={{
                 fontSize: '15px',
-                fontWeight: '700',
+                fontWeight: '800',
                 color: 'var(--badge-yellow-text)',
                 marginBottom: '4px',
               }}>
-                สแกนง่าย 1 ครั้งต่ออุปกรณ์
+                สวัสดีตอนเช้า! มีไอเดียช่อดอกไม้ใหม่หรือยัง?
               </h3>
-              <p style={{ fontSize: '12px', color: '#6A5610', lineHeight: '1.45' }}>
-                ผู้ร่วมงานแค่ยกกล้องสแกน ตอบคะแนน 1-5 และพิมพ์ความรู้สึกได้ทันที ระบบป้องกันการทำซ้ำอัตโนมัติ
+              <p style={{ fontSize: '12px', color: '#6A5610', lineHeight: '1.45', margin: 0 }}>
+                สำรวจดอกไม้คอลเลกชันใหม่ หรือสแกนรับฟีดแบ็กกิจกรรมของคุณได้ในคลิกเดียว
               </p>
             </div>
           </div>
         </div>
 
-        {/* Mint Green Card */}
+        {/* Mint Green Greeting Card */}
         <div
           style={{
             backgroundColor: 'var(--badge-mint)',
             borderRadius: 'var(--radius-card)',
-            padding: '20px',
+            padding: '18px 20px',
             boxShadow: 'var(--shadow-soft)',
-            border: '1px solid rgba(213, 240, 208, 0.8)',
+            border: '1px solid rgba(213, 240, 208, 0.85)',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
             <div style={{
-              width: '36px',
-              height: '36px',
+              width: '38px',
+              height: '38px',
               borderRadius: '50%',
               backgroundColor: '#FFFFFF',
               color: 'var(--badge-mint-text)',
@@ -163,31 +168,67 @@ export default function Home() {
               justifyContent: 'center',
               boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
               flexShrink: 0,
+              fontSize: '18px',
             }}>
-              <Smile size={18} strokeWidth={2} />
+              🌿
             </div>
             <div>
               <h3 style={{
                 fontSize: '15px',
-                fontWeight: '700',
+                fontWeight: '800',
                 color: 'var(--badge-mint-text)',
                 marginBottom: '4px',
               }}>
-                AI จำแนก Keep / Improve / Fix
+                Event Feedback Intelligence พร้อมใช้งาน
               </h3>
-              <p style={{ fontSize: '12px', color: '#1B541A', lineHeight: '1.45' }}>
-                ไม่ต้องนั่งอ่านคอมเมนต์นับร้อยข้อความ ปัญญาประดิษฐ์จะสรุปสิ่งที่ดีและสิ่งที่ต้องรีบปรับปรุงให้คุณ
+              <p style={{ fontSize: '12px', color: '#1B541A', lineHeight: '1.45', margin: 0 }}>
+                AI พร้อมช่วยคุณสร้างคำถามแบบประเมินและสรุป Keep / Improve / Fix ให้อัตโนมัติ
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Floating/Primary CTA */}
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+      {/* Quick Action Navigation Buttons */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '10px',
+        marginBottom: '20px',
+      }}>
+        <Link href="/builder" style={{ textDecoration: 'none' }}>
+          <div className="surface-card" style={{
+            padding: '16px',
+            textAlign: 'center',
+            cursor: 'pointer',
+            transition: 'transform 0.15s ease',
+          }}>
+            <div style={{ fontSize: '24px', marginBottom: '6px' }}>💐</div>
+            <div style={{ fontSize: '13px', fontWeight: '800', color: 'var(--text-primary)' }}>Bouquet Builder</div>
+            <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>จัดช่อดอกไม้ 3 คอลัมน์</div>
+          </div>
+        </Link>
+
+        <Link href="/community" style={{ textDecoration: 'none' }}>
+          <div className="surface-card" style={{
+            padding: '16px',
+            textAlign: 'center',
+            cursor: 'pointer',
+            transition: 'transform 0.15s ease',
+          }}>
+            <div style={{ fontSize: '24px', marginBottom: '6px' }}>🌟</div>
+            <div style={{ fontSize: '13px', fontWeight: '800', color: 'var(--text-primary)' }}>Community</div>
+            <div style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>แกลเลอรีผลงานยอดนิยม</div>
+          </div>
+        </Link>
+      </div>
+
+      {/* Bottom Main Action Button */}
+      <div style={{ textAlign: 'center' }}>
         <Link href="/auth" style={{ textDecoration: 'none' }}>
-          <button className="btn-cta" style={{ width: '100%', fontSize: '16px', padding: '16px' }}>
-            <span>เข้าสู่ระบบเพื่อเริ่มสร้างงาน</span>
+          <button className="btn-cta" style={{ width: '100%', fontSize: '15px', padding: '16px' }}>
+            <Sparkles size={18} strokeWidth={2} />
+            <span>เข้าสู่ระบบแดชบอร์ด / สร้างแบบประเมิน</span>
             <ArrowRight size={18} strokeWidth={2.2} />
           </button>
         </Link>

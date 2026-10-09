@@ -4,7 +4,7 @@ import './globals.css';
 import { getSession } from '@/lib/auth';
 import { logoutUser } from '@/app/actions/auth';
 import Link from 'next/link';
-import { Sparkles, LogOut, User, LayoutDashboard } from 'lucide-react';
+import { Sparkles, LogOut, User, LayoutDashboard, Home, Users, Flower2 } from 'lucide-react';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -152,6 +152,102 @@ export default async function RootLayout({
           <main>
             {children}
           </main>
+
+          {/* Bottom Floating Navigation Pill Bar */}
+          <nav
+            aria-label="Bottom Navigation"
+            style={{
+              position: 'fixed',
+              bottom: '16px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: 'calc(100% - 32px)',
+              maxWidth: '400px',
+              backgroundColor: 'rgba(255, 255, 255, 0.92)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              borderRadius: 'var(--radius-full)',
+              border: '1px solid var(--border-glass)',
+              boxShadow: '0 8px 30px rgba(31, 31, 46, 0.12)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              padding: '8px 12px',
+              zIndex: 50,
+            }}
+          >
+            <Link
+              href="/"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '2px',
+                textDecoration: 'none',
+                color: 'var(--text-secondary)',
+                fontSize: '10px',
+                fontWeight: '700',
+                padding: '4px 8px',
+              }}
+            >
+              <Home size={19} strokeWidth={1.8} />
+              <span>Home</span>
+            </Link>
+
+            <Link
+              href="/builder"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '2px',
+                textDecoration: 'none',
+                color: 'var(--accent-pink-hot)',
+                fontSize: '10px',
+                fontWeight: '700',
+                padding: '4px 8px',
+              }}
+            >
+              <Flower2 size={19} strokeWidth={1.8} />
+              <span>Builder</span>
+            </Link>
+
+            <Link
+              href="/community"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '2px',
+                textDecoration: 'none',
+                color: 'var(--text-secondary)',
+                fontSize: '10px',
+                fontWeight: '700',
+                padding: '4px 8px',
+              }}
+            >
+              <Users size={19} strokeWidth={1.8} />
+              <span>Community</span>
+            </Link>
+
+            <Link
+              href="/dashboard"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '2px',
+                textDecoration: 'none',
+                color: 'var(--text-secondary)',
+                fontSize: '10px',
+                fontWeight: '700',
+                padding: '4px 8px',
+              }}
+            >
+              <LayoutDashboard size={19} strokeWidth={1.8} />
+              <span>Insight</span>
+            </Link>
+          </nav>
         </div>
       </body>
     </html>
