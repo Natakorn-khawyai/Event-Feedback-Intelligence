@@ -57,7 +57,7 @@ export default function AuthPage() {
         }}
       >
         {/* Welcome Header */}
-        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <h1 style={{
             fontSize: '26px',
             fontWeight: '800',
@@ -65,7 +65,11 @@ export default function AuthPage() {
             marginBottom: '8px',
             letterSpacing: '-0.02em',
           }}>
-            ยินดีต้อนรับสู่ <span className="highlight-stroke">Event Insight</span>
+            {isLogin ? (
+              <>ยินดีต้อนรับสู่ <span className="highlight-stroke">Event Insight</span></>
+            ) : (
+              <>สร้างบัญชีผู้จัดงาน <span className="highlight-stroke">Event Insight</span></>
+            )}
           </h1>
 
           <p style={{
@@ -76,55 +80,6 @@ export default function AuthPage() {
           }}>
             {isLogin ? 'เข้าสู่ระบบเพื่อจัดการอีเวนต์และดูผลวิเคราะห์ AI' : 'สร้างบัญชีผู้จัดงานเพื่อเริ่มสร้างแบบประเมิน'}
           </p>
-        </div>
-
-        {/* Tab Switcher Pills */}
-        <div style={{
-          display: 'flex',
-          background: 'rgba(240, 245, 247, 0.85)',
-          borderRadius: 'var(--radius-full)',
-          padding: '4px',
-          marginBottom: '24px',
-          border: '1px solid var(--border-glass)',
-        }}>
-          <button
-            type="button"
-            onClick={() => { setIsLogin(true); setError(null); }}
-            style={{
-              flex: 1,
-              padding: '11px 0',
-              borderRadius: 'var(--radius-full)',
-              border: 'none',
-              background: isLogin ? 'var(--accent-pink-hot)' : 'transparent',
-              color: isLogin ? '#FFFFFF' : 'var(--text-secondary)',
-              fontWeight: '700',
-              fontSize: '14px',
-              cursor: 'pointer',
-              boxShadow: isLogin ? 'var(--shadow-pill)' : 'none',
-              transition: 'all 0.15s ease-out',
-            }}
-          >
-            เข้าสู่ระบบ
-          </button>
-          <button
-            type="button"
-            onClick={() => { setIsLogin(false); setError(null); }}
-            style={{
-              flex: 1,
-              padding: '11px 0',
-              borderRadius: 'var(--radius-full)',
-              border: 'none',
-              background: !isLogin ? 'var(--accent-pink-hot)' : 'transparent',
-              color: !isLogin ? '#FFFFFF' : 'var(--text-secondary)',
-              fontWeight: '700',
-              fontSize: '14px',
-              cursor: 'pointer',
-              boxShadow: !isLogin ? 'var(--shadow-pill)' : 'none',
-              transition: 'all 0.15s ease-out',
-            }}
-          >
-            สร้างบัญชีใหม่
-          </button>
         </div>
 
 
@@ -210,34 +165,46 @@ export default function AuthPage() {
           <button
             type="submit"
             className="btn-cta"
-            style={{ width: '100%', marginTop: '8px' }}
+            style={{
+              width: '100%',
+              marginTop: '12px',
+              padding: '16px 28px',
+              fontSize: '16px',
+              fontWeight: '700',
+              boxShadow: 'var(--shadow-pill)',
+            }}
             disabled={isPending}
           >
             {isPending ? (
               <span>กำลังประมวลผล...</span>
             ) : (
               <>
-                <span>{isLogin ? 'เข้าสู่ระบบ' : 'ยืนยันการสมัคร'}</span>
-                <ArrowRight size={16} strokeWidth={2.2} />
+                <span>{isLogin ? 'เข้าสู่ระบบ' : 'ยืนยันการสมัครสมาชิก'}</span>
+                <ArrowRight size={18} strokeWidth={2.2} />
               </>
             )}
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <div style={{ textAlign: 'center', marginTop: '24px' }}>
           <button
             onClick={() => { setIsLogin(!isLogin); setError(null); }}
             type="button"
             style={{
               background: 'none',
               border: 'none',
-              color: 'var(--accent-pink-hot)',
+              color: 'var(--text-secondary)',
               cursor: 'pointer',
-              fontSize: '13px',
-              fontWeight: '600',
+              fontSize: '14px',
+              fontWeight: '500',
+              transition: 'all 0.15s ease',
             }}
           >
-            {isLogin ? 'ยังไม่มีบัญชี? สมัครสมาชิกใหม่ที่นี่' : 'มีบัญชีอยู่แล้ว? เข้าสู่ระบบ'}
+            {isLogin ? (
+              <>ยังไม่มีบัญชีผู้จัดงาน? <span style={{ color: 'var(--accent-pink-hot)', fontWeight: '700', textDecoration: 'underline' }}>สร้างบัญชีใหม่</span></>
+            ) : (
+              <>มีบัญชีผู้จัดงานอยู่แล้ว? <span style={{ color: 'var(--accent-pink-hot)', fontWeight: '700', textDecoration: 'underline' }}>เข้าสู่ระบบ</span></>
+            )}
           </button>
         </div>
       </div>
