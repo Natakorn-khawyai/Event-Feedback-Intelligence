@@ -4,7 +4,7 @@ import './globals.css';
 import { getSession } from '@/lib/auth';
 import { logoutUser } from '@/app/actions/auth';
 import Link from 'next/link';
-import { Sparkles, LogOut, User, LayoutDashboard, Home } from 'lucide-react';
+import { LogOut, User, LayoutDashboard, Home } from 'lucide-react';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -54,36 +54,21 @@ export default async function RootLayout({
             padding: '14px 32px',
             width: '100%',
           }}>
-            {/* Left: Brand Logo & Title */}
+            {/* Left: Brand Title */}
             <Link
               href={session ? "/dashboard" : "/"}
               style={{
                 textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
                 color: 'var(--text-primary)',
                 fontWeight: '800',
-                fontSize: '17px',
+                fontSize: '24px',
+                letterSpacing: '-0.025em',
+                lineHeight: '1.2',
+                display: 'inline-block',
+                transition: 'opacity 0.15s ease',
               }}
             >
-              <div style={{
-                width: '38px',
-                height: '38px',
-                borderRadius: '50%',
-                background: 'linear-gradient(135deg, #FFD1E3 0%, #E6DCFA 100%)',
-                color: 'var(--accent-pink-hot)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 2px 8px rgba(232, 70, 124, 0.25)',
-              }}>
-                <Sparkles size={18} strokeWidth={2.2} />
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ lineHeight: '1.2' }}>Event Feedback Intelligence</span>
-                <span style={{ fontSize: '11px', color: 'var(--text-secondary)', fontWeight: '600' }}>AI Powered Analytics</span>
-              </div>
+              Event Feedback Intelligence
             </Link>
 
             {/* Center: Desktop Navigation Links */}
@@ -240,6 +225,7 @@ export default async function RootLayout({
               zIndex: 50,
             }}
           >
+
             <Link
               href="/"
               style={{
