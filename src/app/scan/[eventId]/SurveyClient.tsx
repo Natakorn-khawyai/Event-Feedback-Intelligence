@@ -2,8 +2,7 @@
 
 import { useState, useTransition, useEffect } from 'react';
 import { submitSurvey } from '@/app/actions/survey';
-import TopBar from '@/components/ui/TopBar';
-import { Calendar, MapPin, Sparkles, Send, CheckCircle2, Heart } from 'lucide-react';
+import { Calendar, MapPin, Sparkles, Send, CheckCircle2 } from 'lucide-react';
 
 export default function SurveyClient({ event, questions }: { event: any; questions: any[] }) {
   const [scores, setScores] = useState<{ [key: string]: number }>({});
@@ -46,24 +45,25 @@ export default function SurveyClient({ event, questions }: { event: any; questio
 
   if (error && error.includes('เคยทำ')) {
     return (
-      <div className="surface-card fade-up" style={{ textAlign: 'center', padding: '40px 20px', marginTop: '40px' }}>
+      <div className="surface-card fade-up" style={{ textAlign: 'center', padding: '48px 24px', margin: '40px auto 0 auto', maxWidth: '540px' }}>
         <div style={{
-          width: '64px',
-          height: '64px',
+          width: '68px',
+          height: '68px',
           borderRadius: '50%',
           backgroundColor: 'var(--badge-mint)',
           color: 'var(--badge-mint-text)',
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
-          marginBottom: '16px',
+          marginBottom: '18px',
+          boxShadow: '0 6px 20px rgba(213, 240, 208, 0.6)',
         }}>
-          <CheckCircle2 size={36} strokeWidth={2} />
+          <CheckCircle2 size={38} strokeWidth={2.2} />
         </div>
-        <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '8px', color: 'var(--text-primary)' }}>
+        <h3 style={{ fontSize: '22px', fontWeight: '800', marginBottom: '8px', color: 'var(--text-primary)' }}>
           คุณส่งแบบประเมินเรียบร้อยแล้ว
         </h3>
-        <p style={{ fontSize: '13px', color: 'var(--text-secondary)', maxWidth: '300px', marginInline: 'auto' }}>
+        <p style={{ fontSize: '14px', color: 'var(--text-secondary)', maxWidth: '340px', marginInline: 'auto', lineHeight: '1.6' }}>
           ขอบคุณที่เป็นส่วนสำคัญในการส่งฟีดแบ็กให้ทีมงานพัฒนาต่อไปครับ
         </p>
       </div>
@@ -73,50 +73,59 @@ export default function SurveyClient({ event, questions }: { event: any; questio
   const isComplete = Object.keys(scores).length === questions.length && feedback.trim() !== '';
 
   return (
-    <div className="fade-up" style={{ maxWidth: '680px', margin: '0 auto', paddingBottom: '40px' }}>
-      <TopBar
-        title="แบบประเมินกิจกรรม"
-        showBack={false}
-        showSearch={false}
-        showMic={false}
-      />
+    <div className="fade-up" style={{ maxWidth: '680px', margin: '0 auto', paddingBottom: '60px', width: '100%' }}>
+      {/* Event Header Hero Card */}
+      <div className="hero-glass-card" style={{
+        marginBottom: '20px',
+        textAlign: 'center',
+        padding: '28px 20px',
+        borderRadius: '24px',
+      }}>
+        <div style={{ marginBottom: '10px' }}>
+          <span style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            backgroundColor: 'rgba(255, 255, 255, 0.85)',
+            padding: '5px 14px',
+            borderRadius: 'var(--radius-full)',
+            fontSize: '12px',
+            fontWeight: '700',
+            color: 'var(--accent-pink-hot)',
+            boxShadow: '0 2px 8px rgba(232, 70, 124, 0.1)',
+          }}>
+            <Sparkles size={13} strokeWidth={2.2} />
+            <span>แบบสอบถามความพึงพอใจ</span>
+          </span>
+        </div>
 
-      {/* Event Header Hero */}
-      <div className="hero-glass-card" style={{ marginBottom: '20px', textAlign: 'center' }}>
-        <span style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '5px',
-          backgroundColor: 'rgba(255, 255, 255, 0.75)',
-          padding: '4px 12px',
-          borderRadius: '999px',
-          fontSize: '11px',
-          fontWeight: '700',
-          color: 'var(--accent-pink-hot)',
-          marginBottom: '10px',
+        <h1 style={{
+          fontSize: 'clamp(20px, 3.5vw, 26px)',
+          fontWeight: '800',
+          color: 'var(--text-primary)',
+          margin: '0 0 10px 0',
+          lineHeight: '1.3',
         }}>
-          <Sparkles size={13} strokeWidth={2} /> แบบสอบถามความพึงพอใจ
-        </span>
-
-        <h2 style={{ fontSize: '22px', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '8px' }}>
           {event.title}
-        </h2>
+        </h1>
 
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          flexWrap: 'wrap',
           gap: '12px',
-          fontSize: '12px',
+          fontSize: '13px',
           color: 'var(--text-secondary)',
+          fontWeight: '600',
         }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Calendar size={13} strokeWidth={1.8} />
-            {new Date(event.date).toLocaleDateString('th-TH')}
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+            <Calendar size={14} strokeWidth={2} color="var(--accent-pink-hot)" />
+            {new Date(event.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' })}
           </span>
           {event.location && (
-            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <MapPin size={13} strokeWidth={1.8} />
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+              <MapPin size={14} strokeWidth={2} color="var(--accent-pink-hot)" />
               {event.location}
             </span>
           )}
@@ -147,33 +156,34 @@ export default function SurveyClient({ event, questions }: { event: any; questio
                 key={q.id}
                 className="surface-card"
                 style={{
-                  padding: '18px',
-                  borderRadius: 'var(--radius-card)',
+                  padding: '22px 20px',
+                  borderRadius: '20px',
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '16px' }}>
                   <span style={{
-                    width: '24px',
-                    height: '24px',
+                    width: '26px',
+                    height: '26px',
                     borderRadius: '50%',
                     backgroundColor: 'var(--accent-pink-pastel)',
                     color: 'var(--accent-pink-hot)',
-                    fontSize: '12px',
+                    fontSize: '13px',
                     fontWeight: '800',
-                    display: 'flex',
+                    display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0,
+                    marginTop: '1px',
                   }}>
                     {index + 1}
                   </span>
-                  <p style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', margin: 0 }}>
+                  <p style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', margin: 0, lineHeight: '1.45' }}>
                     {q.text}
                   </p>
                 </div>
 
-                {/* 5-Star / 5-Score Rating Buttons */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '6px' }}>
+                {/* Responsive 5-Score Rating Buttons */}
+                <div className="rating-scale-grid">
                   {[1, 2, 3, 4, 5].map((score) => {
                     const isSelected = currentScore === score;
                     return (
@@ -182,22 +192,17 @@ export default function SurveyClient({ event, questions }: { event: any; questio
                         type="button"
                         onClick={() => handleScoreChange(q.id, score)}
                         aria-label={`ระดับคะแนน ${score}`}
+                        className="rating-tile-btn"
                         style={{
-                          width: '46px',
-                          height: '46px',
-                          borderRadius: '50%',
-                          border: isSelected ? 'none' : '1px solid var(--border-glass)',
-                          backgroundColor: isSelected ? 'var(--accent-pink-hot)' : 'rgba(255, 255, 255, 0.9)',
+                          border: isSelected ? 'none' : '1.5px solid rgba(220, 220, 230, 0.75)',
+                          background: isSelected
+                            ? 'linear-gradient(135deg, var(--accent-pink-hot) 0%, #D8336D 100%)'
+                            : 'rgba(255, 255, 255, 0.95)',
                           color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
-                          fontWeight: '800',
-                          fontSize: '16px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: isSelected ? 'var(--shadow-pill)' : '0 2px 6px rgba(0,0,0,0.03)',
-                          transform: isSelected ? 'scale(1.08)' : 'scale(1)',
-                          transition: 'all 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
+                          boxShadow: isSelected
+                            ? '0 4px 14px rgba(232, 70, 124, 0.35)'
+                            : '0 2px 6px rgba(0,0,0,0.03)',
+                          transform: isSelected ? 'scale(1.03)' : 'scale(1)',
                         }}
                       >
                         {score}
@@ -209,9 +214,10 @@ export default function SurveyClient({ event, questions }: { event: any; questio
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
-                  marginTop: '8px',
-                  fontSize: '11px',
-                  color: 'var(--text-muted)',
+                  alignItems: 'center',
+                  marginTop: '10px',
+                  fontSize: '12px',
+                  color: 'var(--text-secondary)',
                   fontWeight: '600',
                 }}>
                   <span>น้อยที่สุด (1)</span>
@@ -223,14 +229,14 @@ export default function SurveyClient({ event, questions }: { event: any; questio
         </div>
 
         {/* Suggestion Textarea Card */}
-        <div className="surface-card" style={{ marginBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-            <span style={{ fontSize: '15px' }}>💡</span>
-            <label style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)' }}>
+        <div className="surface-card" style={{ padding: '22px 20px', borderRadius: '20px', marginBottom: '22px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+            <span style={{ fontSize: '16px' }}>💡</span>
+            <label style={{ fontSize: '15px', fontWeight: '800', color: 'var(--text-primary)' }}>
               ข้อเสนอแนะเพิ่มเติม (จำเป็นต้องกรอก)
             </label>
           </div>
-          <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginBottom: '12px' }}>
+          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '0 0 12px 0' }}>
             สิ่งที่คุณประทับใจ หรือข้อเสนอแนะที่อยากให้ปรับปรุงในครั้งถัดไป
           </p>
           <textarea
@@ -238,8 +244,8 @@ export default function SurveyClient({ event, questions }: { event: any; questio
             rows={4}
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            placeholder="พิมพ์ความคิดเห็นของคุณที่นี่..."
-            style={{ resize: 'vertical', minHeight: '100px' }}
+            placeholder="พิมพ์ความคิดเห็น หรือฟีดแบ็กของคุณที่นี่..."
+            style={{ resize: 'vertical', minHeight: '110px', width: '100%', fontSize: '14px' }}
             required
           />
         </div>
@@ -248,14 +254,25 @@ export default function SurveyClient({ event, questions }: { event: any; questio
         <button
           type="submit"
           className="btn-cta"
-          style={{ width: '100%', padding: '16px', fontSize: '16px' }}
+          style={{
+            width: '100%',
+            height: '52px',
+            fontSize: '16px',
+            fontWeight: '800',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px',
+            borderRadius: 'var(--radius-full)',
+            boxShadow: '0 6px 20px rgba(232, 70, 124, 0.35)',
+          }}
           disabled={isPending || !isComplete}
         >
           {isPending ? (
             <span>กำลังส่งข้อมูล...</span>
           ) : (
             <>
-              <Send size={18} strokeWidth={2} />
+              <Send size={18} strokeWidth={2.2} />
               <span>ส่งแบบประเมินความพึงพอใจ</span>
             </>
           )}

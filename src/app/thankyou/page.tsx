@@ -1,16 +1,9 @@
 import Link from 'next/link';
-import TopBar from '@/components/ui/TopBar';
 import { Sparkles, CheckCircle2, Home } from 'lucide-react';
 
 export default function ThankYouPage() {
   return (
     <div className="fade-up" style={{ paddingBottom: '40px' }}>
-      <TopBar
-        title="ส่งข้อมูลสำเร็จ"
-        showBack={false}
-        showSearch={false}
-        showMic={false}
-      />
 
       <div
         className="surface-card"

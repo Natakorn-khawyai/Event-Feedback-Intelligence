@@ -47,26 +47,11 @@ export default async function RootLayout({
           top: 0,
           zIndex: 100,
         }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '14px 32px',
-            width: '100%',
-          }}>
+          <div className="global-header-inner">
             {/* Left: Brand Title */}
             <Link
               href={session ? '/dashboard' : '/'}
-              style={{
-                textDecoration: 'none',
-                color: 'var(--text-primary)',
-                fontWeight: '800',
-                fontSize: '24px',
-                letterSpacing: '-0.025em',
-                lineHeight: '1.2',
-                display: 'inline-block',
-                transition: 'opacity 0.15s ease',
-              }}
+              className="brand-title"
             >
               Event Feedback Intelligence
             </Link>
@@ -164,66 +149,67 @@ export default async function RootLayout({
             {children}
           </main>
 
-          {/* Bottom Floating Navigation Pill Bar (Mobile Only) */}
-          <nav
-            aria-label="Bottom Navigation"
-            className="mobile-only"
-            style={{
-              position: 'fixed',
-              bottom: '16px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: 'calc(100% - 32px)',
-              maxWidth: '320px',
-              backgroundColor: 'rgba(255, 255, 255, 0.94)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              borderRadius: 'var(--radius-full)',
-              border: '1px solid var(--border-glass)',
-              boxShadow: '0 8px 30px rgba(31, 31, 46, 0.12)',
-              alignItems: 'center',
-              justifyContent: 'space-around',
-              padding: '8px 12px',
-              zIndex: 50,
-            }}
-          >
-
-            <Link
-              href="/"
+          {/* Bottom Floating Navigation Pill Bar (Mobile Only - Logged in Organizers) */}
+          {session && (
+            <nav
+              aria-label="Bottom Navigation"
+              className="mobile-only"
               style={{
-                display: 'flex',
-                flexDirection: 'column',
+                position: 'fixed',
+                bottom: '16px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 'calc(100% - 32px)',
+                maxWidth: '320px',
+                backgroundColor: 'rgba(255, 255, 255, 0.94)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                borderRadius: 'var(--radius-full)',
+                border: '1px solid var(--border-glass)',
+                boxShadow: '0 8px 30px rgba(31, 31, 46, 0.12)',
                 alignItems: 'center',
-                gap: '2px',
-                textDecoration: 'none',
-                color: 'var(--text-secondary)',
-                fontSize: '10px',
-                fontWeight: '700',
-                padding: '4px 12px',
+                justifyContent: 'space-around',
+                padding: '8px 12px',
+                zIndex: 50,
               }}
             >
-              <Home size={19} strokeWidth={1.8} />
-              <span>หน้าแรก</span>
-            </Link>
+              <Link
+                href="/"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '2px',
+                  textDecoration: 'none',
+                  color: 'var(--text-secondary)',
+                  fontSize: '10px',
+                  fontWeight: '700',
+                  padding: '4px 12px',
+                }}
+              >
+                <Home size={19} strokeWidth={1.8} />
+                <span>หน้าแรก</span>
+              </Link>
 
-            <Link
-              href="/dashboard"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '2px',
-                textDecoration: 'none',
-                color: 'var(--accent-pink-hot)',
-                fontSize: '10px',
-                fontWeight: '700',
-                padding: '4px 12px',
-              }}
-            >
-              <LayoutDashboard size={19} strokeWidth={1.8} />
-              <span>แดชบอร์ด</span>
-            </Link>
-          </nav>
+              <Link
+                href="/dashboard"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '2px',
+                  textDecoration: 'none',
+                  color: 'var(--accent-pink-hot)',
+                  fontSize: '10px',
+                  fontWeight: '700',
+                  padding: '4px 12px',
+                }}
+              >
+                <LayoutDashboard size={19} strokeWidth={1.8} />
+                <span>แดชบอร์ด</span>
+              </Link>
+            </nav>
+          )}
         </div>
       </body>
     </html>
