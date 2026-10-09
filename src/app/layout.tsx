@@ -71,57 +71,34 @@ export default async function RootLayout({
               Event Feedback Intelligence
             </Link>
 
-            {/* Center: Desktop Navigation Links */}
-            {session && (
-              <nav className="desktop-only" style={{ alignItems: 'center', gap: '8px' }}>
-                <Link
-                  href="/dashboard"
-                  style={{
-                    textDecoration: 'none',
-                    color: 'var(--text-primary)',
-                    fontSize: '13px',
-                    fontWeight: '700',
-                    padding: '8px 16px',
-                    borderRadius: 'var(--radius-full)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                  }}
-                >
-                  <LayoutDashboard size={15} color="var(--accent-pink-hot)" />
-                  <span>แดชบอร์ด</span>
-                </Link>
-              </nav>
-            )}
-
             {/* Right: User / Auth Controls */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               {session ? (
                 <>
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '8px',
-                    padding: '6px 14px',
+                    gap: '10px',
+                    padding: '7px 16px',
                     borderRadius: 'var(--radius-full)',
-                    background: 'rgba(255, 209, 227, 0.4)',
-                    border: '1px solid rgba(232, 70, 124, 0.2)',
+                    background: 'rgba(255, 209, 227, 0.45)',
+                    border: '1px solid rgba(232, 70, 124, 0.25)',
                   }}>
                     <div style={{
-                      width: '26px',
-                      height: '26px',
+                      width: '30px',
+                      height: '30px',
                       borderRadius: '50%',
                       backgroundColor: 'var(--accent-pink-hot)',
                       color: '#FFFFFF',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: '12px',
+                      fontSize: '14px',
                       fontWeight: '800',
                     }}>
                       {(session.name || 'U').substring(0, 1).toUpperCase()}
                     </div>
-                    <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)' }}>
+                    <span style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)' }}>
                       {session.name}
                     </span>
                   </div>
@@ -136,19 +113,19 @@ export default async function RootLayout({
                         backgroundColor: '#FFFFFF',
                         color: 'var(--text-secondary)',
                         cursor: 'pointer',
-                        padding: '8px 14px',
+                        padding: '9px 18px',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '6px',
+                        gap: '8px',
                         borderRadius: 'var(--radius-full)',
-                        fontSize: '12px',
+                        fontSize: '14px',
                         fontWeight: '700',
                         boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
                         transition: 'all 0.15s ease',
                       }}
                       title="ออกจากระบบ"
                     >
-                      <LogOut size={15} strokeWidth={1.8} />
+                      <LogOut size={16} strokeWidth={2} />
                       <span className="desktop-only">ออกจากระบบ</span>
                     </button>
                   </form>
