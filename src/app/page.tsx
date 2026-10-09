@@ -7,11 +7,15 @@ import { Sparkles, ArrowRight } from 'lucide-react';
 export default function Home() {
   return (
     <div className="fade-up" style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: 'calc(100vh - 160px)',
       textAlign: 'center',
-      paddingTop: '8vh',
-      paddingBottom: '8vh',
-      maxWidth: '820px',
+      maxWidth: '840px',
       marginInline: 'auto',
+      padding: '20px 24px',
     }}>
       {/* Main Heading */}
       <h1 style={{

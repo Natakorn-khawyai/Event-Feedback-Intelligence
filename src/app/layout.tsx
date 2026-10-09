@@ -161,18 +161,18 @@ export default async function RootLayout({
                       textDecoration: 'none',
                       color: '#FFFFFF',
                       backgroundColor: 'var(--accent-pink-hot)',
-                      padding: '9px 20px',
+                      padding: '11px 24px',
                       borderRadius: 'var(--radius-full)',
-                      fontSize: '13px',
+                      fontSize: '15px',
                       fontWeight: '700',
                       boxShadow: 'var(--shadow-pill)',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '6px',
+                      gap: '8px',
                       transition: 'all 0.15s ease-out',
                     }}
                   >
-                    <User size={15} strokeWidth={2} />
+                    <User size={18} strokeWidth={2.2} />
                     <span>เข้าสู่ระบบ</span>
                   </Link>
                 </>
