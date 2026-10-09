@@ -159,8 +159,6 @@ export default async function DashboardPage() {
               date={new Date(event.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' })}
               responseCount={event._count.responses}
               accentColor={accent}
-              badge={event._count.responses > 0 ? `${event._count.responses} ฟีดแบ็ก` : 'รอคำตอบแรก'}
-              badgeColor={event._count.responses > 0 ? 'var(--badge-mint)' : 'var(--badge-yellow)'}
               href={`/dashboard/event/${event.id}`}
             />
           );

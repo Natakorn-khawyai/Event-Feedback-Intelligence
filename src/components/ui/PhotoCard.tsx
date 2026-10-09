@@ -52,19 +52,7 @@ export default function PhotoCard({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
       }}>
-        {badge && (
-          <span style={{
-            background: badgeColor,
-            color: 'var(--text-primary)',
-            padding: '4px 10px',
-            borderRadius: '999px',
-            fontSize: '11px',
-            fontWeight: '700',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.04)',
-          }}>
-            {badge}
-          </span>
-        )}
+
 
         {/* Author Avatar overlapping bottom-left */}
         <div style={{
