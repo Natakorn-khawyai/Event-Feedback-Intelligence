@@ -243,11 +243,11 @@ export default function SurveyClient({ event, questions }: { event: any; questio
         <div
           className="surface-card"
           style={{
-            padding: '24px 22px',
-            borderRadius: '20px',
-            marginBottom: '22px',
-            border: feedback.trim() === '' ? '1.5px solid rgba(232, 70, 124, 0.35)' : '1px solid var(--border-glass)',
-            boxShadow: feedback.trim() === '' ? '0 4px 18px rgba(232, 70, 124, 0.08)' : 'var(--shadow-soft)',
+            padding: '26px 24px',
+            borderRadius: '22px',
+            marginBottom: '24px',
+            border: feedback.trim() === '' ? '2px solid rgba(232, 70, 124, 0.4)' : '1px solid var(--border-glass)',
+            boxShadow: feedback.trim() === '' ? '0 6px 22px rgba(232, 70, 124, 0.1)' : 'var(--shadow-soft)',
             transition: 'all 0.2s ease',
           }}
         >
@@ -256,12 +256,12 @@ export default function SurveyClient({ event, questions }: { event: any; questio
             alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            gap: '10px',
-            marginBottom: '8px',
+            gap: '12px',
+            marginBottom: '10px',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '18px' }}>💡</span>
-              <label style={{ fontSize: '18px', fontWeight: '800', color: 'var(--text-primary)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span style={{ fontSize: '24px' }}>💡</span>
+              <label style={{ fontSize: '22px', fontWeight: '800', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
                 ข้อเสนอแนะเพิ่มเติม
               </label>
             </div>
@@ -270,38 +270,39 @@ export default function SurveyClient({ event, questions }: { event: any; questio
               <span style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '5px',
-                backgroundColor: 'rgba(232, 70, 124, 0.12)',
+                gap: '7px',
+                backgroundColor: 'rgba(232, 70, 124, 0.14)',
                 color: 'var(--accent-pink-hot)',
-                border: '1.5px solid rgba(232, 70, 124, 0.3)',
-                padding: '4px 12px',
+                border: '1.5px solid rgba(232, 70, 124, 0.35)',
+                padding: '6px 16px',
                 borderRadius: 'var(--radius-full)',
-                fontSize: '12px',
+                fontSize: '15px',
                 fontWeight: '800',
+                boxShadow: '0 2px 8px rgba(232, 70, 124, 0.15)',
               }}>
-                <AlertCircle size={13} strokeWidth={2.5} />
+                <AlertCircle size={16} strokeWidth={2.6} />
                 <span>จำเป็นต้องกรอก</span>
               </span>
             ) : (
               <span style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '5px',
-                backgroundColor: 'rgba(16, 185, 129, 0.12)',
+                gap: '7px',
+                backgroundColor: 'rgba(16, 185, 129, 0.14)',
                 color: '#059669',
-                border: '1.5px solid rgba(16, 185, 129, 0.3)',
-                padding: '4px 12px',
+                border: '1.5px solid rgba(16, 185, 129, 0.35)',
+                padding: '6px 16px',
                 borderRadius: 'var(--radius-full)',
-                fontSize: '12px',
+                fontSize: '15px',
                 fontWeight: '800',
               }}>
-                <CheckCircle2 size={13} strokeWidth={2.5} />
+                <CheckCircle2 size={16} strokeWidth={2.6} />
                 <span>กรอกเรียบร้อยแล้ว</span>
               </span>
             )}
           </div>
 
-          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '0 0 14px 0', lineHeight: 1.5 }}>
+          <p style={{ fontSize: '15px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.5, fontWeight: '500' }}>
             สิ่งที่คุณประทับใจ หรือข้อเสนอแนะที่อยากให้ปรับปรุงในครั้งถัดไป เพื่อให้ทีมงานนำไปพัฒนาต่อไป
           </p>
 
@@ -313,10 +314,12 @@ export default function SurveyClient({ event, questions }: { event: any; questio
             placeholder="พิมพ์ความคิดเห็น หรือฟีดแบ็กของคุณที่นี่... (จำเป็นต้องกรอกข้อมูลส่วนนี้เพื่อส่งแบบประเมิน)"
             style={{
               resize: 'vertical',
-              minHeight: '110px',
+              minHeight: '120px',
               width: '100%',
-              fontSize: '15px',
-              borderColor: feedback.trim() === '' ? 'rgba(232, 70, 124, 0.4)' : undefined,
+              fontSize: '16px',
+              padding: '16px 18px',
+              borderRadius: '16px',
+              borderColor: feedback.trim() === '' ? 'rgba(232, 70, 124, 0.45)' : undefined,
             }}
             required
           />
@@ -325,12 +328,17 @@ export default function SurveyClient({ event, questions }: { event: any; questio
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              marginTop: '10px',
+              gap: '8px',
+              marginTop: '12px',
               color: 'var(--accent-pink-hot)',
-              fontSize: '13px',
-              fontWeight: '700',
+              fontSize: '15px',
+              fontWeight: '800',
+              backgroundColor: 'rgba(232, 70, 124, 0.08)',
+              padding: '8px 14px',
+              borderRadius: '10px',
+              border: '1px solid rgba(232, 70, 124, 0.18)',
             }}>
+              <AlertCircle size={16} strokeWidth={2.5} style={{ flexShrink: 0 }} />
               <span>* กรุณากรอกข้อเสนอแนะเพิ่มเติมเพื่อปลดล็อกปุ่มส่งแบบประเมิน</span>
             </div>
           )}
