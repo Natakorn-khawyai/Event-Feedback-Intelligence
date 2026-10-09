@@ -77,34 +77,37 @@ export default function SurveyClient({ event, questions }: { event: any; questio
       {/* Event Header Hero Card */}
       <div className="hero-glass-card" style={{
         marginBottom: '20px',
-        textAlign: 'center',
-        padding: '28px 20px',
+        textAlign: 'left',
+        padding: '30px 28px',
         borderRadius: '24px',
       }}>
-        <div style={{ marginBottom: '10px' }}>
+        <div style={{ marginBottom: '14px', textAlign: 'left' }}>
           <span style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '6px',
-            backgroundColor: 'rgba(255, 255, 255, 0.85)',
-            padding: '5px 14px',
+            gap: '8px',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            padding: '7px 18px',
             borderRadius: 'var(--radius-full)',
-            fontSize: '12px',
-            fontWeight: '700',
+            fontSize: '15px',
+            fontWeight: '800',
             color: 'var(--accent-pink-hot)',
-            boxShadow: '0 2px 8px rgba(232, 70, 124, 0.1)',
+            boxShadow: '0 2px 10px rgba(232, 70, 124, 0.12)',
+            border: '1.5px solid rgba(232, 70, 124, 0.2)',
           }}>
-            <Sparkles size={13} strokeWidth={2.2} />
+            <Sparkles size={16} strokeWidth={2.4} />
             <span>แบบสอบถามความพึงพอใจ</span>
           </span>
         </div>
 
         <h1 style={{
-          fontSize: 'clamp(20px, 3.5vw, 26px)',
+          fontSize: 'clamp(22px, 4vw, 28px)',
           fontWeight: '800',
           color: 'var(--text-primary)',
-          margin: '0 0 10px 0',
+          margin: '0 0 12px 0',
           lineHeight: '1.3',
+          textAlign: 'left',
+          letterSpacing: '-0.02em',
         }}>
           {event.title}
         </h1>
@@ -112,20 +115,21 @@ export default function SurveyClient({ event, questions }: { event: any; questio
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
           flexWrap: 'wrap',
-          gap: '12px',
+          gap: '14px',
           fontSize: '13px',
           color: 'var(--text-secondary)',
           fontWeight: '600',
+          textAlign: 'left',
         }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-            <Calendar size={14} strokeWidth={2} color="var(--accent-pink-hot)" />
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <Calendar size={15} strokeWidth={2} color="var(--accent-pink-hot)" />
             {new Date(event.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' })}
           </span>
           {event.location && (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-              <MapPin size={14} strokeWidth={2} color="var(--accent-pink-hot)" />
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <MapPin size={15} strokeWidth={2} color="var(--accent-pink-hot)" />
               {event.location}
             </span>
           )}
