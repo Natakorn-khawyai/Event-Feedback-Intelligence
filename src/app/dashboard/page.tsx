@@ -80,13 +80,14 @@ export default async function DashboardPage() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '12px',
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            border: '1.5px solid rgba(232, 70, 124, 0.3)',
-            padding: '8px 16px 8px 20px',
+            background: 'linear-gradient(135deg, #FFF0F6 0%, #FFE4EE 100%)',
+            border: '1.5px solid #FFBCD2',
+            padding: '6px 14px 6px 18px',
             borderRadius: 'var(--radius-full)',
-            boxShadow: '0 2px 10px rgba(232, 70, 124, 0.1)',
+            boxShadow: '0 3px 12px rgba(232, 70, 124, 0.14)',
+            height: '44px',
           }}>
-            <span style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)' }}>
+            <span style={{ fontSize: '15px', fontWeight: '800', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
               กิจกรรมทั้งหมด
             </span>
             <span style={{
@@ -99,8 +100,8 @@ export default async function DashboardPage() {
               borderRadius: 'var(--radius-full)',
               backgroundColor: 'var(--accent-pink-hot)',
               color: '#FFFFFF',
-              fontSize: '16px',
-              fontWeight: '800',
+              fontSize: '17px',
+              fontWeight: '900',
               boxShadow: '0 2px 8px rgba(232, 70, 124, 0.35)',
             }}>
               {events.length}
@@ -108,7 +109,7 @@ export default async function DashboardPage() {
           </div>
 
           <Link href="/create" style={{ textDecoration: 'none' }}>
-            <button className="btn-cta" style={{ padding: '12px 24px', fontSize: '14px' }}>
+            <button className="btn-cta" style={{ padding: '0 24px', height: '44px', fontSize: '14px', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
               <Plus size={18} strokeWidth={2.5} />
               <span>สร้างงานใหม่</span>
             </button>
