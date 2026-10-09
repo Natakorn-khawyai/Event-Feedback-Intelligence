@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -51,7 +51,6 @@ export default function Home() {
             boxShadow: '0 8px 28px rgba(232, 70, 124, 0.35)',
             gap: '12px',
           }}>
-            <Sparkles size={22} strokeWidth={2.2} />
             <span>เข้าสู่หน้าแดชบอร์ดจัดการงาน</span>
             <ArrowRight size={22} strokeWidth={2.4} />
           </button>

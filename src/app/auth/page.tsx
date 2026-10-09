@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { loginUser, registerUser } from '@/app/actions/auth';
-import { User, Lock, Mail, Sparkles, ArrowRight } from 'lucide-react';
+import { User, Lock, Mail, ArrowRight } from 'lucide-react';
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -58,21 +58,6 @@ export default function AuthPage() {
       >
         {/* Welcome Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <div style={{
-            width: '56px',
-            height: '56px',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, #FFD1E3 0%, #E6DCFA 100%)',
-            color: 'var(--accent-pink-hot)',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 16px rgba(232, 70, 124, 0.2)',
-            marginBottom: '16px',
-          }}>
-            <Sparkles size={28} strokeWidth={2} />
-          </div>
-
           <h1 style={{
             fontSize: '26px',
             fontWeight: '800',
