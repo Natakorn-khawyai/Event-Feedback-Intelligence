@@ -104,7 +104,7 @@ export default async function DashboardPage() {
       }}>
         <div>
           <h2 style={{ fontSize: '24px', fontWeight: '800', margin: 0, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-            รายการแบบประเมินของคุณ ({events.length} งาน)
+            รายการแบบประเมินของคุณ
           </h2>
         </div>
       </div>
