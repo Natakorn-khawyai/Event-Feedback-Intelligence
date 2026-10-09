@@ -146,9 +146,8 @@ export default async function DashboardPage() {
         {/* Dashed Add Slot Tile */}
         <DashedAddTile
           label="สร้างแบบประเมินงานใหม่"
-          sublabel="AI ออกแบบชุดคำถามให้อัตโนมัติ"
           href="/create"
-          minHeight={210}
+          minHeight={260}
         />
 
         {/* Existing Event Cards */}
