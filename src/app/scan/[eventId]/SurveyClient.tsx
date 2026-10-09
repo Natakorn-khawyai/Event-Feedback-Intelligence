@@ -164,14 +164,14 @@ export default function SurveyClient({ event, questions }: { event: any; questio
                   borderRadius: '20px',
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '18px' }}>
                   <span style={{
-                    width: '26px',
-                    height: '26px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '50%',
                     backgroundColor: 'var(--accent-pink-pastel)',
                     color: 'var(--accent-pink-hot)',
-                    fontSize: '13px',
+                    fontSize: '15px',
                     fontWeight: '800',
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -181,7 +181,14 @@ export default function SurveyClient({ event, questions }: { event: any; questio
                   }}>
                     {index + 1}
                   </span>
-                  <p style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', margin: 0, lineHeight: '1.45' }}>
+                  <p style={{
+                    fontSize: '18px',
+                    fontWeight: '800',
+                    color: 'var(--text-primary)',
+                    margin: 0,
+                    lineHeight: '1.45',
+                    letterSpacing: '-0.01em',
+                  }}>
                     {q.text}
                   </p>
                 </div>
