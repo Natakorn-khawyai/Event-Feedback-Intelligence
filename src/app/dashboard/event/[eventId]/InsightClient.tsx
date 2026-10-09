@@ -31,13 +31,13 @@ export default function InsightClient({ eventId, initialInsight, hasResponses }:
   return (
     <div className="glass-card">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h3 style={{ margin: 0 }}>✨ AI Intelligence Summary</h3>
-        <button 
-          onClick={handleGenerate} 
-          className="btn-primary" 
+        <h3 style={{ margin: 0 }}>AI Intelligence Summary</h3>
+        <button
+          onClick={handleGenerate}
+          className="btn-primary"
           disabled={isPending || !hasResponses}
-          style={{ 
-            padding: '8px 16px', 
+          style={{
+            padding: '8px 16px',
             fontSize: '0.9rem',
             opacity: hasResponses ? 1 : 0.5,
             cursor: hasResponses ? 'pointer' : 'not-allowed'
@@ -54,9 +54,9 @@ export default function InsightClient({ eventId, initialInsight, hasResponses }:
       )}
 
       {!insight && !isPending && !error && (
-        <div style={{ 
-          textAlign: 'center', 
-          padding: '60px 20px', 
+        <div style={{
+          textAlign: 'center',
+          padding: '60px 20px',
           color: 'var(--text-muted)',
           background: 'var(--card-bg)',
           borderRadius: '16px',
@@ -70,7 +70,7 @@ export default function InsightClient({ eventId, initialInsight, hasResponses }:
             {hasResponses ? 'น้อง AI พร้อมทำงานแล้ว!' : 'น้อง AI กำลังสแตนด์บายรอข้อมูลอยู่'}
           </h4>
           <p style={{ margin: 0, maxWidth: '400px', marginInline: 'auto', lineHeight: 1.6 }}>
-            {hasResponses 
+            {hasResponses
               ? 'คลิกที่ปุ่มด้านบนเพื่อปลุกน้อง AI มาช่วยสรุปฟีดแบ็กทั้งหมดให้คุณ'
               : 'เมื่อมีผู้เริ่มสแกนตอบแบบสอบถาม น้องจะตื่นมาวิเคราะห์ให้คุณแบบอัตโนมัติทันที!'}
           </p>
@@ -83,19 +83,19 @@ export default function InsightClient({ eventId, initialInsight, hasResponses }:
             <h4 style={{ marginBottom: '8px' }}>ภาพรวม</h4>
             <p>{insight.whyScore}</p>
           </div>
-          
+
           <div style={{ padding: '16px', borderLeft: '4px solid #10b981', background: 'rgba(16, 185, 129, 0.05)', borderRadius: '0 8px 8px 0' }}>
-            <h4 style={{ marginBottom: '8px', color: '#047857' }}>✅ Keep (สิ่งที่ทำได้ดีแล้ว)</h4>
+            <h4 style={{ marginBottom: '8px', color: '#047857' }}>Keep (สิ่งที่ทำได้ดีแล้ว)</h4>
             <p>{insight.keep}</p>
           </div>
-          
+
           <div style={{ padding: '16px', borderLeft: '4px solid #f59e0b', background: 'rgba(245, 158, 11, 0.05)', borderRadius: '0 8px 8px 0' }}>
-            <h4 style={{ marginBottom: '8px', color: '#b45309' }}>⚠️ Improve (สิ่งที่ควรปรับปรุง)</h4>
+            <h4 style={{ marginBottom: '8px', color: '#b45309' }}>Improve (สิ่งที่ควรปรับปรุง)</h4>
             <p>{insight.improve}</p>
           </div>
-          
+
           <div style={{ padding: '16px', borderLeft: '4px solid #ef4444', background: 'rgba(239, 68, 68, 0.05)', borderRadius: '0 8px 8px 0' }}>
-            <h4 style={{ marginBottom: '8px', color: '#b91c1c' }}>🚨 Fix (ปัญหาที่ต้องแก้ไขด่วน)</h4>
+            <h4 style={{ marginBottom: '8px', color: '#b91c1c' }}>Fix (ปัญหาที่ต้องแก้ไขด่วน)</h4>
             <p>{insight.fix}</p>
           </div>
         </div>

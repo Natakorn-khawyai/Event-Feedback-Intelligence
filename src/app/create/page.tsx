@@ -96,18 +96,18 @@ export default function CreateEventPage() {
 
           <hr style={{ margin: '24px 0', border: 'none', borderTop: '1px solid var(--card-border)' }} />
 
-          <h3 style={{ marginBottom: '16px', color: 'var(--text-main)' }}>✨ Smart Question Generation</h3>
+          <h3 style={{ marginBottom: '16px', color: 'var(--text-main)' }}>Smart Question Generation</h3>
           <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
-            ระบบ AI จะทำการสร้างชุดคำถามความพึงพอใจ 5 ระดับ ที่เหมาะสมที่สุดให้โดยอัตโนมัติตามประเภทงานที่คุณเลือก
+            AI จะสร้างชุดคำถามประเมินความพึงพอใจให้เหมาะสมกับประเภทงานของคุณโดยอัตโนมัติ
           </p>
           
           <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>เลือกประเภทงาน (Event Type)</label>
           <select name="eventType" className="input-field" required style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-main)' }} defaultValue={eventData?.eventType || ''}>
             <option value="">-- กรุณาเลือกประเภทงาน --</option>
-            <option value="seminar">งานสัมมนา / อบรม (Seminar / Workshop)</option>
-            <option value="concert">งานคอนเสิร์ต / เทศกาลดนตรี (Concert / Music Fest)</option>
-            <option value="sports">งานวิ่ง / กีฬา (Sports Event / Marathon)</option>
-            <option value="exhibition">งานจัดแสดงสินค้า / นิทรรศการ (Exhibition)</option>
+            <option value="seminar">งานสัมมนา / อบรม </option>
+            <option value="concert">งานคอนเสิร์ต / เทศกาลดนตรี</option>
+            <option value="sports">งานวิ่ง / กีฬา </option>
+            <option value="exhibition">งานจัดแสดงสินค้า / นิทรรศการ</option>
             <option value="other">อื่นๆ (ระบบ AI จะวิเคราะห์จากชื่องาน)</option>
           </select>
 
