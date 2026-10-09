@@ -56,7 +56,7 @@ export default async function RootLayout({
           }}>
             {/* Left: Brand Title */}
             <Link
-              href="/"
+              href={session ? '/dashboard' : '/'}
               style={{
                 textDecoration: 'none',
                 color: 'var(--text-primary)',
