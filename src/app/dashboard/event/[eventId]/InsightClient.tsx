@@ -99,30 +99,44 @@ export default function InsightClient({
       {!insight && !isPending && !error && (
         <div style={{
           textAlign: 'center',
-          padding: '36px 16px',
+          padding: '32px 20px',
           color: 'var(--text-secondary)',
-          background: 'rgba(255, 255, 255, 0.6)',
+          background: 'rgba(255, 255, 255, 0.75)',
           borderRadius: 'var(--radius-card)',
-          border: '2px dashed #D1D5DB',
+          border: '2px dashed rgba(232, 70, 124, 0.25)',
         }}>
-          <div style={{
-            width: '56px',
-            height: '56px',
-            borderRadius: '50%',
-            backgroundColor: '#FFFFFF',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-            marginBottom: '12px',
-            color: 'var(--accent-pink-hot)',
-          }}>
-            <Sparkles size={28} strokeWidth={1.8} />
+          <div style={{ marginBottom: '14px', display: 'flex', justifyContent: 'center' }}>
+            <div
+              className="float-animation"
+              style={{
+                width: '124px',
+                height: '124px',
+                borderRadius: '28px',
+                overflow: 'hidden',
+                boxShadow: '0 8px 24px rgba(232, 70, 124, 0.15)',
+                border: '2px solid rgba(255, 209, 227, 0.8)',
+                backgroundColor: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <img
+                src="/images/cute-waiting-mascot.jpg"
+                alt="น้อง AI มารอคำตอบ"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                }}
+              />
+            </div>
           </div>
-          <h4 style={{ fontSize: '15px', fontWeight: '700', marginBottom: '6px', color: 'var(--text-primary)' }}>
+
+          <h4 style={{ fontSize: '16px', fontWeight: '800', marginBottom: '6px', color: 'var(--text-primary)' }}>
             {hasResponses ? 'น้อง AI พร้อมสรุปข้อมูลให้คุณแล้ว' : 'กำลังรอเสียงตอบรับจากผู้ร่วมงาน'}
           </h4>
-          <p style={{ fontSize: '12px', margin: 0, maxWidth: '320px', marginInline: 'auto', lineHeight: 1.5 }}>
+          <p style={{ fontSize: '13px', margin: 0, maxWidth: '320px', marginInline: 'auto', lineHeight: 1.5, color: 'var(--text-secondary)' }}>
             {hasResponses
               ? 'กดปุ่ม "วิเคราะห์ AI" เพื่อให้ปัญญาประดิษฐ์สรุปใจความสำคัญจากทุกคำตอบ'
               : 'เมื่อมีผู้เริ่มสแกนตอบแบบสอบถาม ระบบจะช่วยสรุปฟีดแบ็กให้อัตโนมัติทันที'}

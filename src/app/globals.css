@@ -390,3 +390,17 @@ html, body {
   scroll-snap-align: start;
   flex-shrink: 0;
 }
+
+/* Gentle floating animation */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.float-animation {
+  animation: floatGentle 3.5s ease-in-out infinite;
+}
