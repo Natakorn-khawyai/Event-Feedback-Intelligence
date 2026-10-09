@@ -127,10 +127,10 @@ export default async function DashboardPage() {
         marginBottom: '18px',
       }}>
         <div>
-          <h3 style={{ fontSize: '18px', fontWeight: '800', margin: 0, color: 'var(--text-primary)' }}>
+          <h2 style={{ fontSize: '24px', fontWeight: '800', margin: 0, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
             รายการแบบประเมินของคุณ ({events.length} งาน)
-          </h3>
-          <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
+          </h2>
+          <p style={{ fontSize: '14px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
             คลิกที่การ์ดเพื่อเปิดดูผลวิเคราะห์ AI Intelligence และคิวอาร์โค้ด
           </p>
         </div>
