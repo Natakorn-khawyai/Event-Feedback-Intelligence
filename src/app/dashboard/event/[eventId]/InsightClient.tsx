@@ -118,7 +118,7 @@ export default function InsightClient({
               }}
             >
               <img
-                src="/images/cute-waiting-mascot.svg"
+                src="/images/presentation-deck-mascot.svg"
                 alt="น้อง AI มารอคำตอบ"
                 style={{
                   width: '100%',
