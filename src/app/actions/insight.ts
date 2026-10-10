@@ -71,9 +71,9 @@ export async function generateInsight(eventId: string) {
     
     กรุณาวิเคราะห์และส่งกลับผลลัพธ์เป็น JSON โครงสร้างดังนี้เท่านั้น (ไม่ต้องมีฟิลด์อื่น):
     {
-      "keep": "สรุปสิ่งที่ทำได้ดีและควรคงไว้ในครั้งหน้า (1 ย่อหน้าสั้นๆ)",
-      "improve": "สรุปสิ่งที่พอใช้ได้แต่ยังพัฒนาให้ดีขึ้นได้อีก (1 ย่อหน้าสั้นๆ)",
-      "fix": "สรุปปัญหาหลักที่ต้องแก้ไขอย่างเร่งด่วน (1 ย่อหน้าสั้นๆ)"
+      "keep": "สรุปสิ่งที่ทำได้ดีและควรคงไว้ในครั้งหน้า โดยแยกเป็นข้อๆ (bullet points 2-3 ข้อ เริ่มต้นแต่ละข้อด้วย • และขึ้นบรรทัดใหม่ เช่น • ข้อ 1\\n• ข้อ 2)",
+      "improve": "สรุปสิ่งที่ควรปรับปรุง โดยแยกเป็นข้อๆ (bullet points 2-3 ข้อ เริ่มต้นแต่ละข้อด้วย • และขึ้นบรรทัดใหม่ เช่น • ข้อ 1\\n• ข้อ 2)",
+      "fix": "สรุปปัญหาหลักที่ต้องแก้ไขอย่างเร่งด่วน โดยแยกเป็นข้อๆ (bullet points 1-3 ข้อ เริ่มต้นแต่ละข้อด้วย • และขึ้นบรรทัดใหม่ เช่น • ข้อ 1\\n• ข้อ 2)"
     }
     `;
 
@@ -97,19 +97,30 @@ export async function generateInsight(eventId: string) {
       return { error: 'ข้อความตอบกลับจาก AI ยาวเกินไป (โดนตัดกลางคัน) กรุณาลองใหม่อีกครั้ง' };
     }
 
+    const formatField = (val: any) => {
+      if (Array.isArray(val)) {
+        return val.map((v) => `• ${v.replace(/^[•\-\*\d\.\s]+/, '')}`).join('\n');
+      }
+      return typeof val === 'string' ? val : '-';
+    };
+
+    const keepStr = formatField(result.keep);
+    const improveStr = formatField(result.improve);
+    const fixStr = formatField(result.fix);
+
     await prisma.eventInsight.upsert({
       where: { eventId },
       update: {
-        keep: result.keep || '-',
-        improve: result.improve || '-',
-        fix: result.fix || '-',
+        keep: keepStr,
+        improve: improveStr,
+        fix: fixStr,
         whyScore: `ได้คะแนนเฉลี่ย ${avgScore}/5 จากผู้ตอบทั้งหมด ${totalResp} คน`
       },
       create: {
         eventId,
-        keep: result.keep || '-',
-        improve: result.improve || '-',
-        fix: result.fix || '-',
+        keep: keepStr,
+        improve: improveStr,
+        fix: fixStr,
         whyScore: `ได้คะแนนเฉลี่ย ${avgScore}/5 จากผู้ตอบทั้งหมด ${totalResp} คน`
       }
     });

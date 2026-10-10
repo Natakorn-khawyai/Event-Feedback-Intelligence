@@ -5,6 +5,8 @@ import { redirect } from 'next/navigation';
 import TopBar from '@/components/ui/TopBar';
 import InsightClient from './InsightClient';
 import QRShare from './QRShare';
+import ExportSystem from './ExportSystem';
+import DataVisualizations from './DataVisualizations';
 import { Star, MessageSquare, Calendar, MapPin, Sparkles, ArrowLeft } from 'lucide-react';
 
 export default async function EventDashboardPage({ params }: { params: Promise<{ eventId: string }> }) {
@@ -16,7 +18,7 @@ export default async function EventDashboardPage({ params }: { params: Promise<{
     where: { id: eventId, userId: session.userId },
     include: {
       questions: { orderBy: { order: 'asc' } },
-      responses: { include: { answers: true } },
+      responses: { include: { answers: true, feedback: true } },
       insights: true
     }
   });
@@ -91,7 +93,7 @@ export default async function EventDashboardPage({ params }: { params: Promise<{
             <span style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text-primary)' }}>
               {totalAvg}
             </span>
-            <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>/ 5.0 ดาว</span>
+            <span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/ 5.0 ดาว</span>
           </div>
         </div>
 
@@ -106,11 +108,22 @@ export default async function EventDashboardPage({ params }: { params: Promise<{
           {event.title}
         </h1>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '14px', color: 'var(--text-secondary)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', fontSize: '16px', color: 'var(--text-secondary)' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-            <MessageSquare size={17} strokeWidth={2} color="var(--accent-pink-hot)" />
+            <MessageSquare size={20} strokeWidth={2} color="var(--accent-pink-hot)" />
             มีผู้ร่วมตอบแบบสอบถามทั้งหมด <strong style={{ color: 'var(--text-primary)' }}>{totalResponses}</strong> คน
           </span>
+
+          <ExportSystem
+            eventTitle={event.title}
+            eventDate={event.date}
+            eventLocation={event.location}
+            totalResponses={totalResponses}
+            totalAvg={totalAvg}
+            questions={questionAverages}
+            responses={event.responses}
+            insight={insight}
+          />
         </div>
       </div>
 
@@ -124,75 +137,12 @@ export default async function EventDashboardPage({ params }: { params: Promise<{
         </div>
       </div>
 
-      {/* Question Score Breakdown */}
-      <div style={{ marginBottom: '28px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <div>
-            <h3 style={{ fontSize: '18px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
-              คะแนนเฉลี่ยรายข้อคำถาม ({questionAverages.length} ข้อ)
-            </h3>
-            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
-              ผลคะแนนเฉลี่ยประเมินจากผู้เข้าร่วมกิจกรรมทั้งหมด
-            </p>
-          </div>
-          <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600' }}>
-            คะแนนเต็ม 5.0
-          </span>
-        </div>
-
-        <div className="desktop-grid-2" style={{ gap: '14px' }}>
-          {questionAverages.map((q, index) => (
-            <div
-              key={q.id}
-              className="surface-card"
-              style={{
-                padding: '18px 22px',
-                borderRadius: 'var(--radius-card)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '16px',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
-                <span style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--accent-pink-pastel)',
-                  color: 'var(--accent-pink-hot)',
-                  fontSize: '12px',
-                  fontWeight: '800',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}>
-                  {index + 1}
-                </span>
-                <span style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: '1.4' }}>
-                  {q.text}
-                </span>
-              </div>
-
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                backgroundColor: 'rgba(232, 70, 124, 0.08)',
-                padding: '6px 14px',
-                borderRadius: 'var(--radius-full)',
-                flexShrink: 0,
-              }}>
-                <Star size={15} fill="var(--accent-pink-hot)" color="var(--accent-pink-hot)" />
-                <span style={{ fontSize: '16px', fontWeight: '800', color: 'var(--accent-pink-hot)' }}>
-                  {q.avg}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Interactive Data Visualizations (Bar & Donut / Pie Charts) */}
+      <DataVisualizations
+        questions={questionAverages}
+        responses={event.responses}
+        totalAvg={totalAvg}
+      />
     </div>
   );
 }

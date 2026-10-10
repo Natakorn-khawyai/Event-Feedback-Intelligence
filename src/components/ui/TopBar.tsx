@@ -108,11 +108,11 @@ export default function TopBar({
       {/* Center: Title / Logo */}
       <div style={{
         textAlign: 'center',
-        fontSize: '17px',
-        fontWeight: '700',
+        fontSize: '20px',
+        fontWeight: '800',
         color: 'var(--text-primary)',
-        letterSpacing: '-0.01em',
-        maxWidth: '200px',
+        letterSpacing: '-0.02em',
+        maxWidth: '320px',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',

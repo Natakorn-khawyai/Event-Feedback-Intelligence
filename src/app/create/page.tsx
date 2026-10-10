@@ -2,8 +2,6 @@
 
 import { useState, useTransition } from 'react';
 import { generateEventQuestions, saveEvent } from '@/app/actions/event';
-import TopBar from '@/components/ui/TopBar';
-import ColorSwatch, { ColorOption } from '@/components/ui/ColorSwatch';
 import DashedAddTile from '@/components/ui/DashedAddTile';
 import { 
   Sparkles, 
@@ -15,16 +13,16 @@ import {
   Trash2, 
   Check, 
   ArrowRight,
-  HelpCircle,
-  Heart
+  ArrowLeft
 } from 'lucide-react';
 
-const eventTypeSwatches: ColorOption[] = [
-  { id: 'seminar', label: 'งานสัมมนา', color: '#E8467C' }, // magenta
-  { id: 'concert', label: 'คอนเสิร์ต', color: '#FF6B6B' }, // red
-  { id: 'sports', label: 'กีฬา / วิ่ง', color: '#4ECDC4' }, // teal
-  { id: 'exhibition', label: 'นิทรรศการ', color: '#C7A4E8' }, // lilac
-  { id: 'other', label: 'อื่นๆ', color: '#FFB347' }, // orange
+const eventCategories = [
+  { id: 'seminar', label: 'งานสัมมนา / อบรม' },
+  { id: 'concert', label: 'คอนเสิร์ต / การแสดง' },
+  { id: 'sports', label: 'กีฬา / วิ่ง / สุขภาพ' },
+  { id: 'exhibition', label: 'นิทรรศการ / แสดงผลงาน' },
+  { id: 'workshop', label: 'เวิร์กช็อป / การเรียนรู้' },
+  { id: 'other', label: 'อื่นๆ / ทั่วไป' },
 ];
 
 export default function CreateEventPage() {
@@ -39,14 +37,16 @@ export default function CreateEventPage() {
   // States to hold step 1 data
   const [eventData, setEventData] = useState<any>(null);
   const [questions, setQuestions] = useState<string[]>([]);
+  const [locationValue, setLocationValue] = useState('บน Website');
 
   const handleGenerate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     const form = e.currentTarget;
     const formData = new FormData(form);
+    const validCount = Math.max(1, numQuestions || 5);
     formData.set('eventType', selectedType === 'all' ? 'other' : selectedType);
-    formData.set('numQuestions', numQuestions.toString());
+    formData.set('numQuestions', validCount.toString());
 
     startTransition(async () => {
       const res = await generateEventQuestions(formData);
@@ -100,153 +100,238 @@ export default function CreateEventPage() {
   };
 
   return (
-    <div className="fade-up" style={{ maxWidth: '780px', margin: '0 auto', paddingBottom: '40px' }}>
-      <TopBar
-        title={step === 1 ? 'สร้างแบบประเมิน' : 'ตรวจสอบคำถาม'}
-        showBack={true}
-        onBack={() => {
-          if (step === 2) setStep(1);
-          else window.location.href = '/dashboard';
+    <div className="fade-up" style={{ maxWidth: '860px', margin: '0 auto', paddingBottom: '48px' }}>
+      {/* Desktop Header & Back Action */}
+      <div style={{ marginBottom: '22px' }}>
+        <button
+          type="button"
+          onClick={() => {
+            if (step === 2) setStep(1);
+            else window.location.href = '/dashboard';
+          }}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '8px 18px',
+            borderRadius: 'var(--radius-full)',
+            backgroundColor: '#FFFFFF',
+            color: 'var(--text-secondary)',
+            border: '1px solid rgba(0, 0, 0, 0.08)',
+            fontSize: '14px',
+            fontWeight: '700',
+            cursor: 'pointer',
+            marginBottom: '14px',
+            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.03)',
+            transition: 'all 0.15s ease',
+          }}
+        >
+          <ArrowLeft size={16} strokeWidth={2.4} />
+          <span>{step === 2 ? 'ย้อนกลับไปแก้ไขข้อมูลงาน' : 'กลับสู่แดชบอร์ด'}</span>
+        </button>
+
+        <h1
+          style={{
+            fontSize: 'clamp(26px, 3.2vw, 34px)',
+            fontWeight: '900',
+            color: 'var(--text-primary)',
+            margin: '0 0 6px 0',
+            letterSpacing: '-0.025em',
+          }}
+        >
+          {step === 1 ? 'สร้างแบบประเมินความพึงพอใจ' : 'ตรวจสอบและปรับแต่งคำถาม'}
+        </h1>
+        <p style={{ fontSize: '15px', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
+          {step === 1
+            ? 'กรอกข้อมูลกิจกรรมของคุณ เพื่อให้ AI ช่วยออกแบบชุดคำถามความพึงพอใจ 5 ระดับที่ตรงกับงานอัตโนมัติ'
+            : `AI ได้ร่างคำถามสำหรับ "${eventData?.title || ''}" แล้ว (${questions.length} ข้อ) คุณสามารถแก้ไข เพิ่ม หรือลบคำถามได้ตามต้องการ`}
+        </p>
+      </div>
+
+      {/* Modern Desktop Stepper Indicator */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '12px',
+          marginBottom: '26px',
         }}
-        showSearch={false}
-        showMic={false}
-      />
-
-      {/* Top Tabs: Step indicators like Flowers, Leaves, Ribbons */}
-      <div style={{
-        display: 'flex',
-        gap: '8px',
-        marginBottom: '20px',
-        overflowX: 'auto',
-        scrollbarWidth: 'none',
-      }}>
-        {/* Tab 1 */}
-        <div style={{
-          flex: 1,
-          padding: '10px 14px',
-          borderRadius: 'var(--radius-md)',
-          background: step === 1 ? 'var(--accent-pink-hot)' : 'var(--surface-white)',
-          color: step === 1 ? '#FFFFFF' : 'var(--text-secondary)',
-          border: step === 1 ? 'none' : '1px solid var(--border-glass)',
-          fontWeight: '700',
-          fontSize: '13px',
-          textAlign: 'center',
-          boxShadow: step === 1 ? 'var(--shadow-pill)' : '0 2px 6px rgba(0,0,0,0.02)',
-          transition: 'all 0.15s ease',
-          whiteSpace: 'nowrap',
-        }}>
-          1. ข้อมูลงาน
+      >
+        <div
+          style={{
+            padding: '14px 20px',
+            borderRadius: '14px',
+            background: step === 1 ? 'var(--accent-pink-hot)' : 'rgba(255, 255, 255, 0.8)',
+            color: step === 1 ? '#FFFFFF' : 'var(--text-secondary)',
+            border: step === 1 ? 'none' : '1px solid rgba(0, 0, 0, 0.06)',
+            fontWeight: '700',
+            fontSize: '15px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            boxShadow: step === 1 ? '0 4px 14px rgba(232, 70, 124, 0.25)' : 'none',
+            transition: 'all 0.2s ease',
+          }}
+        >
+          <span
+            style={{
+              width: '26px',
+              height: '26px',
+              borderRadius: '50%',
+              backgroundColor: step === 1 ? 'rgba(255, 255, 255, 0.25)' : 'rgba(0, 0, 0, 0.06)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '13px',
+              fontWeight: '800',
+            }}
+          >
+            1
+          </span>
+          <span>ข้อมูลงานกิจกรรม</span>
         </div>
 
-        {/* Tab 2 */}
-        <div style={{
-          flex: 1,
-          padding: '10px 14px',
-          borderRadius: 'var(--radius-md)',
-          background: step === 2 ? 'var(--accent-pink-hot)' : 'var(--surface-white)',
-          color: step === 2 ? '#FFFFFF' : 'var(--text-secondary)',
-          border: step === 2 ? 'none' : '1px solid var(--border-glass)',
-          fontWeight: '700',
-          fontSize: '13px',
-          textAlign: 'center',
-          boxShadow: step === 2 ? 'var(--shadow-pill)' : '0 2px 6px rgba(0,0,0,0.02)',
-          transition: 'all 0.15s ease',
-          whiteSpace: 'nowrap',
-        }}>
-          2. ชุดคำถาม AI
+        <div
+          style={{
+            padding: '14px 20px',
+            borderRadius: '14px',
+            background: step === 2 ? 'var(--accent-pink-hot)' : 'rgba(255, 255, 255, 0.8)',
+            color: step === 2 ? '#FFFFFF' : 'var(--text-secondary)',
+            border: step === 2 ? 'none' : '1px solid rgba(0, 0, 0, 0.06)',
+            fontWeight: '700',
+            fontSize: '15px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            boxShadow: step === 2 ? '0 4px 14px rgba(232, 70, 124, 0.25)' : 'none',
+            transition: 'all 0.2s ease',
+          }}
+        >
+          <span
+            style={{
+              width: '26px',
+              height: '26px',
+              borderRadius: '50%',
+              backgroundColor: step === 2 ? 'rgba(255, 255, 255, 0.25)' : 'rgba(0, 0, 0, 0.06)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '13px',
+              fontWeight: '800',
+            }}
+          >
+            2
+          </span>
+          <span>ชุดคำถาม AI ({numQuestions} ข้อ)</span>
         </div>
 
-        {/* Tab 3 Preview */}
-        <div style={{
-          padding: '10px 14px',
-          borderRadius: 'var(--radius-md)',
-          background: 'rgba(255,255,255,0.4)',
-          color: 'var(--text-muted)',
-          border: '1.5px dashed #CBD5E1',
-          fontWeight: '600',
-          fontSize: '12px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          whiteSpace: 'nowrap',
-        }}>
-          + QR Code
+        <div
+          style={{
+            padding: '14px 20px',
+            borderRadius: '14px',
+            background: 'rgba(255, 255, 255, 0.45)',
+            color: 'var(--text-muted)',
+            border: '1.5px dashed rgba(0, 0, 0, 0.12)',
+            fontWeight: '600',
+            fontSize: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+          }}
+        >
+          <span
+            style={{
+              width: '26px',
+              height: '26px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '13px',
+            }}
+          >
+            3
+          </span>
+          <span>QR Code & เผยแพร่</span>
         </div>
       </div>
 
       {error && (
         <div style={{
-          padding: '12px 16px',
+          padding: '14px 18px',
           background: 'rgba(239, 68, 68, 0.08)',
           color: 'var(--status-danger)',
           borderRadius: 'var(--radius-md)',
           border: '1px solid rgba(239, 68, 68, 0.2)',
-          fontSize: '13px',
+          fontSize: '15px',
           fontWeight: '600',
-          marginBottom: '16px',
+          marginBottom: '22px',
         }}>
           ⚠️ {error}
         </div>
       )}
 
-      {/* STEP 1: EVENT DETAILS & AI GENERATOR CONFIG */}
+      {/* STEP 1: EVENT DETAILS FORM */}
       {step === 1 && (
-        <form onSubmit={handleGenerate} className="surface-card">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+        <form onSubmit={handleGenerate} className="surface-card" style={{ padding: '34px 38px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
             <div style={{
-              width: '32px',
-              height: '32px',
+              width: '42px',
+              height: '42px',
               borderRadius: '50%',
               backgroundColor: 'var(--accent-pink-pastel)',
               color: 'var(--accent-pink-hot)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              flexShrink: 0,
             }}>
-              <Sparkles size={16} strokeWidth={2} />
+              <Sparkles size={22} strokeWidth={2.2} />
             </div>
             <div>
-              <h3 style={{ fontSize: '16px', fontWeight: '800', margin: 0, color: 'var(--text-primary)' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: '800', margin: 0, color: 'var(--text-primary)' }}>
                 กำหนดรายละเอียดงาน
               </h3>
-              <p style={{ fontSize: '11px', color: 'var(--text-secondary)', margin: 0 }}>
-                AI จะนำข้อมูลนี้ไปออกแบบคำถามที่สอดคล้องที่สุด
+              <p style={{ fontSize: '13.5px', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
+                AI จะนำข้อมูลนี้ไปออกแบบคำถามความพึงพอใจที่สอดคล้องที่สุด
               </p>
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '6px' }}>
+              <label style={{ display: 'block', fontSize: '15px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '8px' }}>
                 ชื่องานกิจกรรม *
               </label>
               <input
                 name="title"
                 type="text"
                 className="input-modern"
-                placeholder="เช่น งานวิ่งมาราธอน 2026 หรือ งานเปิดตัวสินค้า"
+                placeholder="เช่น งานสัมมนา AI เพื่อธุรกิจ 2026 หรือ งานประเมินเว็บไซต์"
                 required
                 defaultValue={eventData?.title}
+                style={{ fontSize: '16px' }}
               />
             </div>
 
-            <div style={{ display: 'flex', gap: '12px' }}>
-              <div style={{ flex: 1 }}>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '6px' }}>
+            {/* 2-Column Responsive Row on Desktop */}
+            <div className="form-desktop-row-2">
+              <div>
+                <label style={{ display: 'block', fontSize: '15px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '8px' }}>
                   วันที่จัดงาน *
                 </label>
-                <div style={{ position: 'relative' }}>
-                  <input
-                    name="date"
-                    type="date"
-                    className="input-modern"
-                    required
-                    defaultValue={eventData?.date}
-                  />
-                </div>
+                <input
+                  name="date"
+                  type="date"
+                  className="input-modern"
+                  required
+                  defaultValue={eventData?.date}
+                  style={{ fontSize: '16px' }}
+                />
               </div>
-              <div style={{ flex: 1 }}>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '6px' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '15px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '8px' }}>
                   เวลา (ถ้ามี)
                 </label>
                 <input
@@ -254,48 +339,104 @@ export default function CreateEventPage() {
                   type="time"
                   className="input-modern"
                   defaultValue={eventData?.time}
+                  style={{ fontSize: '16px' }}
                 />
               </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                สถานที่จัดงาน *
-              </label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <label style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-secondary)' }}>
+                  สถานที่จัดงาน *
+                </label>
+              </div>
               <input
                 name="location"
                 type="text"
                 className="input-modern"
-                placeholder="เช่น อาคารศูนย์ประชุม หรือ สวนหลวง ร.9"
+                placeholder="เช่น บน Website หรือ อาคารศูนย์ประชุม"
                 required
-                defaultValue={eventData?.location}
+                value={locationValue}
+                onChange={(e) => setLocationValue(e.target.value)}
+                style={{ fontSize: '16px' }}
               />
+
+              {/* Quick Preset Location Chips */}
+              <div style={{ display: 'flex', gap: '8px', marginTop: '10px', flexWrap: 'wrap' }}>
+                {[
+                  { label: 'บน Website', value: 'บน Website' },
+                  { label: 'ออนไลน์ / Zoom', value: 'ออนไลน์ (Zoom / Meet)' },
+                  { label: 'อาคารศูนย์ประชุม', value: 'อาคารศูนย์ประชุม' },
+                  { label: 'สวนหลวง ร.9', value: 'สวนหลวง ร.9' },
+                ].map((item) => (
+                  <button
+                    key={item.value}
+                    type="button"
+                    onClick={() => setLocationValue(item.value)}
+                    style={{
+                      padding: '6px 14px',
+                      borderRadius: '999px',
+                      fontSize: '13px',
+                      fontWeight: '700',
+                      backgroundColor: locationValue === item.value ? 'var(--accent-pink-pastel)' : 'rgba(255, 255, 255, 0.85)',
+                      color: locationValue === item.value ? 'var(--accent-pink-hot)' : 'var(--text-secondary)',
+                      border: locationValue === item.value ? '1.5px solid var(--accent-pink-hot)' : '1px solid rgba(0, 0, 0, 0.08)',
+                      cursor: 'pointer',
+                      boxShadow: locationValue === item.value ? '0 2px 6px rgba(232, 70, 124, 0.2)' : 'none',
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Color Swatch / Category Filter Row */}
-            <div style={{ marginTop: '8px' }}>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '6px' }}>
-                เลือกโทนประเภทงาน (Color Swatches)
-              </label>
-              <ColorSwatch
-                colors={eventTypeSwatches}
-                selectedId={selectedType}
-                onSelect={(id) => setSelectedType(id)}
-                showAllOption={false}
-              />
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '4px 12px',
-                borderRadius: '999px',
-                background: 'var(--badge-pink)',
-                color: 'var(--badge-pink-text)',
-                fontSize: '11px',
-                fontWeight: '700',
-              }}>
-                หมวดที่เลือก: {eventTypeSwatches.find(s => s.id === selectedType)?.label || 'อื่นๆ'}
+            {/* Category Text Selection Pills */}
+            <div style={{ marginTop: '4px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <label style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-secondary)' }}>
+                  เลือกหมวดหมู่ประเภทงาน  *
+                </label>
               </div>
+
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                {eventCategories.map((cat) => {
+                  const isSelected = selectedType === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => setSelectedType(cat.id)}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '10px 18px',
+                        borderRadius: 'var(--radius-full)',
+                        fontSize: '14px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        transition: 'all 0.18s ease-out',
+                        backgroundColor: isSelected ? 'var(--accent-pink-hot)' : 'rgba(255, 255, 255, 0.85)',
+                        color: isSelected ? '#FFFFFF' : 'var(--text-primary)',
+                        border: isSelected ? '1.5px solid var(--accent-pink-hot)' : '1.5px solid rgba(138, 138, 154, 0.22)',
+                        boxShadow: isSelected
+                          ? '0 4px 14px rgba(232, 70, 124, 0.3)'
+                          : '0 2px 6px rgba(0, 0, 0, 0.03)',
+                        transform: isSelected ? 'scale(1.02)' : 'scale(1)',
+                      }}
+                    >
+                      <span>{cat.label}</span>
+                      {isSelected && (
+                        <Check size={15} strokeWidth={2.8} style={{ marginLeft: '2px' }} />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <input type="hidden" name="eventType" value={selectedType} />
             </div>
 
             {/* Stepper for Quantity of Questions (− 5 +) */}
@@ -303,35 +444,35 @@ export default function CreateEventPage() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '14px 16px',
-              backgroundColor: 'rgba(255, 255, 255, 0.7)',
+              padding: '16px 20px',
+              backgroundColor: 'rgba(255, 255, 255, 0.85)',
               borderRadius: 'var(--radius-md)',
               border: '1px solid var(--border-glass)',
-              marginTop: '4px',
+              marginTop: '6px',
             }}>
               <div>
-                <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)', display: 'block' }}>
+                <span style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', display: 'block' }}>
                   จำนวนข้อคำถาม
                 </span>
-                <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
-                  แนะนำ 3 - 7 ข้อ เพื่อความกระชับ
+                <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  แนะนำ 3 - 7 ข้อ เพื่อความกระชับและตอบง่าย
                 </span>
               </div>
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '12px',
+                gap: '14px',
                 backgroundColor: 'rgba(31, 31, 46, 0.05)',
-                padding: '4px 10px',
+                padding: '6px 14px',
                 borderRadius: '999px',
               }}>
                 <button
                   type="button"
-                  onClick={() => setNumQuestions(prev => Math.max(1, prev - 1))}
+                  onClick={() => setNumQuestions(prev => Math.max(1, (prev || 1) - 1))}
                   aria-label="ลดจำนวนคำถาม"
                   style={{
-                    width: '28px',
-                    height: '28px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '50%',
                     border: 'none',
                     backgroundColor: '#FFFFFF',
@@ -343,18 +484,52 @@ export default function CreateEventPage() {
                     boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
                   }}
                 >
-                  <Minus size={14} strokeWidth={2} />
+                  <Minus size={16} strokeWidth={2} />
                 </button>
-                <span style={{ fontSize: '15px', fontWeight: '800', minWidth: '20px', textAlign: 'center' }}>
-                  {numQuestions}
-                </span>
+                <input
+                  type="number"
+                  min={1}
+                  max={20}
+                  value={numQuestions || ''}
+                  onChange={(e) => {
+                    const raw = e.target.value;
+                    if (raw === '') {
+                      setNumQuestions(0);
+                    } else {
+                      const val = parseInt(raw, 10);
+                      if (!isNaN(val)) {
+                        setNumQuestions(Math.min(20, Math.max(0, val)));
+                      }
+                    }
+                  }}
+                  onBlur={() => {
+                    if (!numQuestions || numQuestions < 1) {
+                      setNumQuestions(1);
+                    }
+                  }}
+                  aria-label="จำนวนคำถามที่ต้องการ"
+                  style={{
+                    width: '46px',
+                    height: '32px',
+                    textAlign: 'center',
+                    fontSize: '18px',
+                    fontWeight: '800',
+                    color: 'var(--text-primary)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.75)',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    outline: 'none',
+                    padding: '0',
+                    transition: 'all 0.15s ease',
+                  }}
+                />
                 <button
                   type="button"
-                  onClick={() => setNumQuestions(prev => Math.min(15, prev + 1))}
+                  onClick={() => setNumQuestions(prev => Math.min(20, (prev || 0) + 1))}
                   aria-label="เพิ่มจำนวนคำถาม"
                   style={{
-                    width: '28px',
-                    height: '28px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '50%',
                     border: 'none',
                     backgroundColor: 'var(--accent-pink-hot)',
@@ -366,7 +541,7 @@ export default function CreateEventPage() {
                     boxShadow: '0 2px 6px rgba(232,70,124,0.3)',
                   }}
                 >
-                  <Plus size={14} strokeWidth={2} />
+                  <Plus size={16} strokeWidth={2} />
                 </button>
               </div>
             </div>
@@ -374,16 +549,16 @@ export default function CreateEventPage() {
             <button
               type="submit"
               className="btn-cta"
-              style={{ width: '100%', marginTop: '10px', padding: '16px' }}
+              style={{ width: '100%', marginTop: '10px', padding: '16px 24px', fontSize: '16px' }}
               disabled={isPending}
             >
               {isPending ? (
                 <span>กำลังให้ AI ออกแบบคำถาม...</span>
               ) : (
                 <>
-                  <Sparkles size={16} strokeWidth={2} />
-                  <span>สร้างคำถามด้วย AI ({numQuestions} ข้อ)</span>
-                  <ArrowRight size={16} strokeWidth={2} />
+                  <Sparkles size={18} strokeWidth={2} />
+                  <span>สร้างคำถามด้วย AI</span>
+                  <ArrowRight size={18} strokeWidth={2} />
                 </>
               )}
             </button>
@@ -399,51 +574,55 @@ export default function CreateEventPage() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '14px',
+            marginBottom: '18px',
           }}>
             <div>
-              <h3 style={{ fontSize: '18px', fontWeight: '800', margin: 0, color: 'var(--text-primary)' }}>
+              <h3 style={{ fontSize: '22px', fontWeight: '800', margin: 0, color: 'var(--text-primary)' }}>
                 ชุดคำถามความพึงพอใจ
               </h3>
-              <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
+              <p style={{ fontSize: '14px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
                 สำหรับ "{eventData?.title}" ({questions.length} ข้อ)
               </p>
             </div>
             <span style={{
               backgroundColor: 'var(--badge-mint)',
               color: 'var(--badge-mint-text)',
-              padding: '4px 10px',
+              padding: '6px 14px',
               borderRadius: '999px',
-              fontSize: '11px',
+              fontSize: '13px',
               fontWeight: '700',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
             }}>
-              AI Generated
+              <Sparkles size={14} strokeWidth={2} />
+              <span>AI Generated</span>
             </span>
           </div>
 
-          {/* Item List / Cards */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '16px' }}>
+          {/* Questions Cards List */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '22px' }}>
             {questions.map((q, idx) => (
               <div
                 key={idx}
                 className="surface-card fade-up"
                 style={{
-                  padding: '16px',
+                  padding: '20px 22px',
                   borderRadius: 'var(--radius-card)',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '8px',
+                  gap: '12px',
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{
-                      width: '26px',
-                      height: '26px',
+                      width: '30px',
+                      height: '30px',
                       borderRadius: '50%',
                       backgroundColor: 'var(--accent-pink-pastel)',
                       color: 'var(--accent-pink-hot)',
-                      fontSize: '12px',
+                      fontSize: '14px',
                       fontWeight: '800',
                       display: 'flex',
                       alignItems: 'center',
@@ -451,8 +630,8 @@ export default function CreateEventPage() {
                     }}>
                       {idx + 1}
                     </span>
-                    <span style={{ fontSize: '11px', color: 'var(--text-secondary)', fontWeight: '600' }}>
-                      ประเมิน 1 - 5 คะแนน
+                    <span style={{ fontSize: '13.5px', color: 'var(--text-secondary)', fontWeight: '700' }}>
+                      ประเมิน 1 - 5 คะแนน (Star Rating)
                     </span>
                   </div>
 
@@ -471,7 +650,7 @@ export default function CreateEventPage() {
                       justifyContent: 'center',
                     }}
                   >
-                    <Trash2 size={16} strokeWidth={1.8} />
+                    <Trash2 size={18} strokeWidth={1.8} />
                   </button>
                 </div>
 
@@ -481,12 +660,12 @@ export default function CreateEventPage() {
                   value={q}
                   onChange={(e) => updateQuestion(idx, e.target.value)}
                   placeholder="พิมพ์ข้อความคำถาม..."
-                  style={{ minHeight: '44px', fontSize: '14px' }}
+                  style={{ minHeight: '48px', fontSize: '16px' }}
                 />
               </div>
             ))}
 
-            {/* Dashed Add Slot Tile for new question */}
+            {/* Dashed Add Slot Tile */}
             <DashedAddTile
               label="เพิ่มคำถามข้อถัดไป"
               sublabel="กดเพื่อเพิ่มคำถามแบบพิมพ์เอง"
@@ -496,20 +675,20 @@ export default function CreateEventPage() {
           </div>
 
           {/* Action buttons */}
-          <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+          <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
             <button
               type="button"
               onClick={() => setStep(1)}
               className="btn-secondary"
-              style={{ flex: 1 }}
+              style={{ flex: 1, fontSize: '16px', padding: '15px' }}
             >
-              ย้อนกลับ
+              ย้อนกลับไปแก้ไขข้อมูลงาน
             </button>
             <button
               type="button"
               onClick={handleSave}
               className="btn-cta"
-              style={{ flex: 2 }}
+              style={{ flex: 2, fontSize: '16px', padding: '15px' }}
               disabled={isPending}
             >
               {isPending ? 'กำลังบันทึกงาน...' : 'บันทึก & สร้าง QR Code'}

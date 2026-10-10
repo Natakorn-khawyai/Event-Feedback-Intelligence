@@ -3,6 +3,7 @@
 import { useState, useTransition, useEffect } from 'react';
 import { generateInsight } from '@/app/actions/insight';
 import { Sparkles, CheckCircle2, AlertCircle, AlertTriangle, RefreshCw } from 'lucide-react';
+import InteractiveMascot from './InteractiveMascot';
 
 export default function InsightClient({
   eventId,
@@ -96,6 +97,31 @@ export default function InsightClient({
         </div>
       )}
 
+      {/* Loading / Thinking State */}
+      {isPending && (
+        <div style={{
+          textAlign: 'center',
+          padding: '36px 20px',
+          color: 'var(--text-secondary)',
+          background: 'linear-gradient(180deg, rgba(255, 245, 248, 0.9) 0%, rgba(245, 240, 255, 0.9) 100%)',
+          borderRadius: 'var(--radius-card)',
+          border: '2px solid rgba(232, 70, 124, 0.35)',
+          boxShadow: '0 10px 30px rgba(232, 70, 124, 0.12)',
+          marginBottom: insight ? '16px' : '0',
+        }}>
+          <div style={{ marginBottom: '10px', display: 'flex', justifyContent: 'center' }}>
+            <InteractiveMascot isThinking={true} hasResponses={hasResponses} />
+          </div>
+          <h4 style={{ fontSize: '16px', fontWeight: '800', marginBottom: '6px', color: 'var(--text-primary)' }}>
+            น้อง AI กำลังสแกนและวิเคราะห์ความคิดเห็น...
+          </h4>
+          <p style={{ fontSize: '13px', margin: 0, maxWidth: '340px', marginInline: 'auto', lineHeight: 1.5, color: 'var(--text-secondary)' }}>
+            กำลังรวบรวมฟีดแบ็ก ตรวจจับอารมณ์ และสังเคราะห์ข้อคิดเห็นเชิงกลยุทธ์ให้คุณอัตโนมัติ
+          </p>
+        </div>
+      )}
+
+      {/* Idle / Waiting State */}
       {!insight && !isPending && !error && (
         <div style={{
           textAlign: 'center',
@@ -105,28 +131,12 @@ export default function InsightClient({
           borderRadius: 'var(--radius-card)',
           border: '2px dashed rgba(232, 70, 124, 0.25)',
         }}>
-          <div style={{ marginBottom: '14px', display: 'flex', justifyContent: 'center' }}>
-            <div
-              className="float-animation"
-              style={{
-                width: '120px',
-                height: '135px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                filter: 'drop-shadow(0 10px 20px rgba(232, 70, 124, 0.2))',
-              }}
-            >
-              <img
-                src="/images/presentation-deck-mascot.svg"
-                alt="น้อง AI มารอคำตอบ"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                }}
-              />
-            </div>
+          <div style={{ marginBottom: '10px', display: 'flex', justifyContent: 'center' }}>
+            <InteractiveMascot
+              isThinking={false}
+              hasResponses={hasResponses}
+              onTriggerGenerate={hasResponses ? handleGenerate : undefined}
+            />
           </div>
 
           <h4 style={{ fontSize: '16px', fontWeight: '800', marginBottom: '6px', color: 'var(--text-primary)' }}>
@@ -134,7 +144,7 @@ export default function InsightClient({
           </h4>
           <p style={{ fontSize: '13px', margin: 0, maxWidth: '320px', marginInline: 'auto', lineHeight: 1.5, color: 'var(--text-secondary)' }}>
             {hasResponses
-              ? 'กดปุ่ม "วิเคราะห์ AI" เพื่อให้ปัญญาประดิษฐ์สรุปใจความสำคัญจากทุกคำตอบ'
+              ? 'กดปุ่ม "วิเคราะห์ AI" ด้านบนเพื่อเริ่มประมวลผลข้อมูล'
               : 'เมื่อมีผู้เริ่มสแกนตอบแบบสอบถาม ระบบจะช่วยสรุปฟีดแบ็กให้อัตโนมัติทันที'}
           </p>
         </div>
@@ -149,12 +159,10 @@ export default function InsightClient({
             borderRadius: 'var(--radius-md)',
             border: '1px solid rgba(230, 220, 250, 0.7)',
           }}>
-            <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#5B4B8A', marginBottom: '4px' }}>
+            <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: '#5B4B8A', marginBottom: '8px' }}>
               💡 ภาพรวมความคิดเห็น
             </h4>
-            <p style={{ fontSize: '13px', color: 'var(--text-primary)', lineHeight: '1.5', margin: 0 }}>
-              {insight.whyScore}
-            </p>
+            <BulletList text={insight.whyScore} bulletColor="#7C3AED" textColor="var(--text-primary)" />
           </div>
 
           {/* Keep: Mint Green Card */}
@@ -164,15 +172,13 @@ export default function InsightClient({
             borderRadius: 'var(--radius-md)',
             border: '1px solid rgba(213, 240, 208, 0.8)',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
               <CheckCircle2 size={16} color="var(--badge-mint-text)" strokeWidth={2} />
-              <h4 style={{ fontSize: '13px', fontWeight: '800', color: 'var(--badge-mint-text)', margin: 0 }}>
+              <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: 'var(--badge-mint-text)', margin: 0 }}>
                 Keep (สิ่งที่ทำได้ดีแล้ว)
               </h4>
             </div>
-            <p style={{ fontSize: '13px', color: '#1B541A', lineHeight: '1.5', margin: 0 }}>
-              {insight.keep}
-            </p>
+            <BulletList text={insight.keep} bulletColor="var(--badge-mint-text)" textColor="#1B541A" />
           </div>
 
           {/* Improve: Pale Yellow Card */}
@@ -182,15 +188,13 @@ export default function InsightClient({
             borderRadius: 'var(--radius-md)',
             border: '1px solid rgba(255, 243, 184, 0.8)',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
               <AlertCircle size={16} color="var(--badge-yellow-text)" strokeWidth={2} />
-              <h4 style={{ fontSize: '13px', fontWeight: '800', color: 'var(--badge-yellow-text)', margin: 0 }}>
+              <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: 'var(--badge-yellow-text)', margin: 0 }}>
                 Improve (สิ่งที่ควรปรับปรุง)
               </h4>
             </div>
-            <p style={{ fontSize: '13px', color: '#6A5610', lineHeight: '1.5', margin: 0 }}>
-              {insight.improve}
-            </p>
+            <BulletList text={insight.improve} bulletColor="var(--badge-yellow-text)" textColor="#6A5610" />
           </div>
 
           {/* Fix: Pastel Rose Card */}
@@ -200,18 +204,84 @@ export default function InsightClient({
             borderRadius: 'var(--radius-md)',
             border: '1px solid rgba(255, 226, 238, 0.9)',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
               <AlertTriangle size={16} color="var(--badge-pink-text)" strokeWidth={2} />
-              <h4 style={{ fontSize: '13px', fontWeight: '800', color: 'var(--badge-pink-text)', margin: 0 }}>
+              <h4 style={{ fontSize: '13.5px', fontWeight: '800', color: 'var(--badge-pink-text)', margin: 0 }}>
                 Fix (ปัญหาที่ต้องแก้ไขด่วน)
               </h4>
             </div>
-            <p style={{ fontSize: '13px', color: '#9E1C48', lineHeight: '1.5', margin: 0 }}>
-              {insight.fix}
-            </p>
+            <BulletList text={insight.fix} bulletColor="var(--badge-pink-text)" textColor="#9E1C48" />
           </div>
         </div>
       )}
     </div>
+  );
+}
+
+function parseBullets(text?: string | null): string[] {
+  if (!text || text === '-' || text.trim() === '') return [];
+
+  // 1. If explicit newlines exist or lines start with bullet symbols/numbers
+  const rawLines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  if (rawLines.length > 1 || rawLines.some((l) => /^[•\-\*\d\.]/.test(l))) {
+    return rawLines.map((l) => l.replace(/^[•\-\*\d\.\s]+/, '').trim()).filter(Boolean);
+  }
+
+  // 2. If it's a single paragraph (from existing database entries):
+  // Clean common introductory boilerplates
+  const cleaned = text
+    .replace(/^(มีปัญหาสำคัญที่ต้องแก้ไขอย่างเร่งด่วน ได้แก่|ปัญหาหลักที่ต้องแก้ไขอย่างเร่งด่วนคือ|แม้[^\s]+จะ[^\s]+ แต่ยังมีประเด็นที่สามารถปรับปรุงได้ เช่น)\s*/, '')
+    .trim();
+
+  // Split by Thai conjunctions or periods
+  const parts = cleaned.split(/(?<=[^\s])(?:\s*(?:พร้อมทั้ง|รวมถึง|ทั้งนี้|นอกจากนี้|อย่างไรก็ตาม|อีกทั้ง)\s*|(?:\.\s+))/);
+  const result = parts.map((s) => s.trim()).filter((s) => s.length > 4);
+
+  return result.length > 0 ? result : [text];
+}
+
+function BulletList({
+  text,
+  bulletColor,
+  textColor,
+}: {
+  text?: string | null;
+  bulletColor: string;
+  textColor: string;
+}) {
+  const items = parseBullets(text);
+
+  if (items.length === 0) {
+    return <p style={{ fontSize: '13.5px', color: textColor, margin: 0 }}>-</p>;
+  }
+
+  return (
+    <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      {items.map((item, idx) => (
+        <li
+          key={idx}
+          style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: '8px',
+            fontSize: '13.5px',
+            color: textColor,
+            lineHeight: '1.5',
+          }}
+        >
+          <span
+            style={{
+              width: '6px',
+              height: '6px',
+              borderRadius: '50%',
+              backgroundColor: bulletColor,
+              marginTop: '7px',
+              flexShrink: 0,
+            }}
+          />
+          <span style={{ flex: 1 }}>{item}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
