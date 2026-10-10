@@ -12,8 +12,7 @@ import {
   Minus, 
   Trash2, 
   Check, 
-  ArrowRight,
-  ArrowLeft
+  ArrowRight
 } from 'lucide-react';
 
 const eventCategories = [
@@ -101,35 +100,8 @@ export default function CreateEventPage() {
 
   return (
     <div className="fade-up" style={{ maxWidth: '860px', margin: '0 auto', paddingBottom: '48px' }}>
-      {/* Desktop Header & Back Action */}
+      {/* Desktop Header */}
       <div style={{ marginBottom: '22px' }}>
-        <button
-          type="button"
-          onClick={() => {
-            if (step === 2) setStep(1);
-            else window.location.href = '/dashboard';
-          }}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '8px 18px',
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: '#FFFFFF',
-            color: 'var(--text-secondary)',
-            border: '1px solid rgba(0, 0, 0, 0.08)',
-            fontSize: '14px',
-            fontWeight: '700',
-            cursor: 'pointer',
-            marginBottom: '14px',
-            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.03)',
-            transition: 'all 0.15s ease',
-          }}
-        >
-          <ArrowLeft size={16} strokeWidth={2.4} />
-          <span>{step === 2 ? 'ย้อนกลับไปแก้ไขข้อมูลงาน' : 'กลับสู่แดชบอร์ด'}</span>
-        </button>
-
         <h1
           style={{
             fontSize: 'clamp(26px, 3.2vw, 34px)',
